@@ -1,0 +1,68 @@
+<div id="modal_crear_novedad" name="modal_crear_novedad" class="modal modal-esc" style="border-radius:20px; padding:0px; padding-top:0px; padding-bottom:0px; width:1000px; ">
+	<div class="modal-content" style="padding:0px;">
+		<h4 class="titulo_modal center-align" style="padding-bottom:30px; padding-top:30px;">Igresar una nueva novedad de empleado</h4>
+		<form method="POST" action="" name="fmrcrearnovedad" id="fmrcrearnovedad">
+			<p class="text-intro grey-text">Para crear una nueva novedad solo debes de diligenciar el siguiente formulario.</p>
+			<div class="modal-body">
+				<div class="row" style="margin-left:0rem; margin-right:0rem;">
+					<div class="input-field col s3 m3">
+						<input id="codigo_novedad_crear" name="codigo_novedad_crear" type="text" class="validate" maxlength="3"/>
+						<label for="codigo_novedad_crear" id="label_input">Codigo</label>
+					</div>
+					<div class="input-field col s9 m5">
+						<select name="tipo_novedad_crear" id="tipo_novedad_crear" required>
+							<option value="" selected disabled>- Seleccione un tipo de novedad -</option>
+							{% if tipo_novedad %}
+								{% for novedad in tipo_novedad %}
+									<option value="{{novedad.value}}">{{novedad.display}}</option>
+								{% endfor %}
+							{% endif %}
+						</select>
+						<label id="label_input">Tipo novedad</label>
+					</div>
+					<div class="input-field col s8 m4">
+						<input id="nombre_novedad_crear" name="nombre_novedad_crear" type="text" class="validate" required>
+						<label for="nombre_novedad_crear" id="label_input">Nombre novedad</label>
+					</div>	
+				</div>
+				<div class="row" style="margin-left:0rem; margin-right:0rem;">
+					<div class="input-field col s4 m3">
+                        <select name="descuento_auxilio_tranporte" id="descuento_auxilio_tranporte">
+                            <option value="NO">No</option>
+                            <option value="SI">Si</option>
+                        </select>
+                        <label id="label_input">Descuenta auxilio TP</label>                                
+                    </div>
+					<div class="input-field col s12 m3">
+                        <select name="descuento_prestaciones_novedad" id="descuento_prestaciones_novedad">
+                            <option value="SI">Si</option>
+                            <option value="NO">No</option>
+                        </select>
+                        <label id="label_input">Descuenta dias prestaciones</label>                                
+                    </div>
+					<div class="input-field col s12 m3"  >
+                        <select name="paga_salario_novedad" id="paga_salario_novedad" onchange="mostrarCampoSalario(this.value)">
+                            <option value="NO">NO</option>
+                            <option value="SI">SI</option>
+                        </select>
+                        <label id="label_input">Pagar salario</label>                                
+                    </div> 					
+					<div class="input-field col s12 m3 input-salario hide">
+						<input id="porcentaje_salario_novedad" name="porcentaje_salario_novedad" type="number" maxlength="3" class="validate" value="0" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+						<label for="porcentaje_salario_novedad" id="label_input " >% A pagar </label>
+					</div>   
+				</div>
+				<div class="row" style="margin-left:0rem; margin-right:0rem;">
+					<div class="input-field col s12 m12">
+						<input id="observacion" name="observacion" type="text" class="validate">
+						<label for="observacion" id="label_input" >Observacion</label>
+					</div>   
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="modal-close btn-flat" type="reset"><b>CANCELAR</b></button>
+		<button class="btn waves-effect waves-light green btn-paso-1" type="button" style="border-radius:10px;" onclick="crearNovedad();"><b>GUARDAR</b></button>
+	</div>
+</div>

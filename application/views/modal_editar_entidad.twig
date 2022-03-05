@@ -1,0 +1,77 @@
+<div id="modal_editar_entidad" name="modal_editar_entidad" class="modal  modal-esc" style="border-radius:20px; padding-top:0px; padding-bottom:0px; width:700px;">
+	<div class="modal-content"  style="padding:0px;">
+		<form method="POST" action="" name="fmreditarentidad" id="fmreditarentidad" onsubmit="editarEntidad(); return false;">
+			<div  class="row titulo_modal" style="border-radius:10px 10px 0px 0px; margin-left:0rem; margin-right:0rem; ">
+				<center>
+					<h5>Igresar una nueva entidad</h5>
+				</center>
+			</div>                            
+            <input name="ed_id_entidad" id="ed_id_entidad" type="hidden" />
+			<p class="text-intro" style="font-size:20px; text-align:center;">¡Excelente noticias! Para crear una nueva entidad solo debes de diligenciar el siguiente formulario.</p>
+			<div style="margin-top:40px;" class="modal-body">
+				<div class="row" style="margin-left:0rem; margin-right:0rem; margin-top:-20px;" >
+					<div class="input-field col m3">
+						<input id="ed_codigo_entidad_" name="ed_codigo_entidad_" type="number" class="validate">
+						<label id="label_input" for="ed_codigo_entidad_" style="font-size:15px;">Codigo</label>
+					</div>
+					<div class="input-field col m4">
+						<input id="ed_nombre_entidad_" name="ed_nombre_entidad_" type="text" class="validate" required>
+						<label id="label_input" for="ed_nombre_entidad_">Nombre entidad</label>
+					</div>
+					 <div class="input-field col m5">
+						<select name="ed_tipo_entidad_" id="ed_tipo_entidad_" required>
+							<option value="" selected disabled>- Seleccione un tipo de entidad -</option>
+							{% if tipo_entidad %}
+								{% for entidad in tipo_entidad %}
+									<option value="{{entidad.value}}">{{entidad.display}}</option>
+								{% endfor %}
+							{% endif %}
+						</select>
+						<label id="label_input" for="ed_tipo_entidad_">Tipo entidad</label>
+					</div>
+				</div>
+				<div class="row" style="margin-left:0rem; margin-right:0rem; margin-top:-20px;">
+					<div class="input-field col m4">
+						<input id="ed_direccion_entidad_" name="ed_direccion_entidad_" type="text" class="validate">
+						<label id="label_input" for="ed_direccion_entidad_">Direccion entidad</label>
+					</div>					
+					<div class="input-field col m4">
+						<input id="ed_nit_entidad_" name="ed_nit_entidad_" type="text" class="validate">
+						<label id="label_input" for="ed_nit_entidad_">Nit entidad</label>
+					</div>
+					<div class="input-field col m4">
+						<input id="ed_telefono_entidad_" name="ed_telefono_entidad_" type="number" maxlength="10" class="validate">
+						<label id="label_input" for="ed_telefono_entidad_" style="left:-0px;">Telefono</label>
+					</div>
+				</div>
+				<div class="row" style="margin-left:0rem; margin-right:0rem; margin-top:-20px; ">
+                    <div class="input-field col m3">
+						<input id="ed_ministerio_entidad_" name="ed_ministerio_entidad_" type="text" class="validate">
+						<label id="label_input" for="ed_ministerio_entidad_">Codigo ministerio</label>
+					</div>
+					<div class="input-field col m5">
+						<select name="een_deptartamento" id="een_deptartamento" onchange="cargarSelect(this.value,'municipio','id_municipio','nombre','cargar-municipio');" required>
+							<option value="" selected disabled>- Seleccione un departamento -</option>
+							{% if departamentos %}
+								{% for departamento in departamentos %}
+									<option value="{{departamento.id_departamento}}">{{departamento.nombre}}</option>
+								{% endfor %}
+							{% endif %}
+						</select>
+						<label id="label_input" for="een_deptartamento">Deparatamento</label>
+					</div>										
+					<div class="input-field col m4 s12">
+						<select name="een_municipio_id" id="een_municipio_id" class="cargar-municipio-edit-entidad" required>
+							<option>- Seleccione un municipio -</option>
+						</select>
+						<label id="label_input" for="een_municipio_id">Municipios</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="margin-top:-20px;">
+				<button class="modal-close btn-flat" type="reset"style="color:blue;"><b>CANCELAR</b></button>
+				<button class="btn waves-effect waves-light green btn-paso-1" type="submit"style="border-radius:10px;" ><b>GUARDAR</b></button>
+			</div>
+		</form>
+	</div>
+</div>

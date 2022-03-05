@@ -1,0 +1,70 @@
+<div id="modal_editar_novedad" name="modal_editar_novedad" class="modal modal-esc" style="border-radius:20px; width:780px; font-weight:normal;">
+	<div class="modal-content" style="padding:0px;">
+		<h4 class="titulo_modal center-align" style="padding-bottom:30px; padding-top:30px;">Actualizar novedad de empleado</h4>
+		<form method="POST" action="" name="fmreditarnovedad" id="fmreditarnovedad">
+			<p class="text-intro grey-text">
+				Para actualizar una novedad solo debes de diligenciar el siguiente formulario.
+			</p>
+			<div class="modal-body">
+				<div class="row">
+                	<input id="id_novedad_empleado" name="id_novedad_empleado" type="hidden" />
+					<div class="input-field col s3 m3">
+						<input id="codigo_novedad_editar" name="codigo_novedad_editar" type="text" class="validate" />
+						<label for="codigo_novedad_editar">Codigo</label>
+					</div>
+					<div class="input-field col s9 m5">
+						<select name="tipo_novedad_editar" id="tipo_novedad_editar" required>
+							{% if tipo_novedad %}
+								{% for novedad in tipo_novedad %}
+									<option value="{{novedad.value}}">{{novedad.display}}</option>
+								{% endfor %}
+							{% endif %}
+						</select>
+						<label>Tipo novedad</label>
+					</div>
+					<div class="input-field col s8 m4">
+						<input id="nombre_novedad_editar" name="nombre_novedad_editar" type="text" class="validate" required>
+						<label for="nombre_novedad_editar">Nombre novedad</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s4 m3">
+                        <select name="editar_descuento_auxilio_tranporte" id="editar_descuento_auxilio_tranporte">
+                            <option value="NO">No</option>
+                            <option value="SI">Si</option>
+                        </select>
+                        <label>¿Paga auxilio de transporte?</label>                                
+                    </div>
+					<div class="input-field col s12 m3">
+                        <select name="editar_descuento_prestaciones_novedad" id="editar_descuento_prestaciones_novedad">
+                            <option value="NO">No</option>
+                            <option value="SI">Si</option>
+                        </select>
+                        <label>Descontar dias en prestaciones</label>                                
+                    </div>
+					<div class="input-field col s12 m3"  >
+                        <select name="editar_paga_salario_novedad" id="editar_paga_salario_novedad" onchange="mostrarCampoSalario(this.value)">
+                            <option value="NO">NO</option>
+                            <option value="SI">SI</option>
+                        </select>
+                        <label id="label_input">¿Paga salario?</label>                                
+                    </div>					
+					<div class="input-field col s12 m3 input-salario hide">
+						<input id="editar_porcentaje_salario_novedad" name="editar_porcentaje_salario_novedad" type="number" class="validate">
+						<label for="editar_porcentaje_salario_novedad">Pagar salario al %</label>
+					</div>   
+				</div>
+				<div class="row">
+					<div class="input-field col s12 m12">
+						<input id="editar_observacion" name="editar_observacion" type="text" class="validate">
+						<label for="editar_observacion">Observacion</label>
+					</div>   
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="modal-close btn-flat" type="reset"style="color:blue;"><b>CANCELAR</b></button>
+		<button class="btn waves-effect waves-light green btn-paso-1" type="button" onclick="editarNovedad()"style="border-radius:10px;" ><b>GUARDAR</b></button>
+	</div>
+</div>

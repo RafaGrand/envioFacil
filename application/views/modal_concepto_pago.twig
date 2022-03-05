@@ -1,0 +1,95 @@
+<style>
+#modal_concepto_pago{
+    overflow-x: hidden;
+    font-weight:normal;
+}
+.btn{
+    color:white;
+}
+.modal-close {
+    color:#005EB8;
+}
+</style>
+<div id="modal_concepto_pago" name="modal_concepto_pago" class="modal modal-esc" style="border-radius:20px; padding-top:0px; padding-bottom:0px; width:750px;">
+	<div class="modal-content" style="padding:0px; ">
+		<h4 class="titulo_row center-align ">Igresar un nuevo concepto de pago</h4>
+		<form method="POST" action="" name="fmrconceptopago" id="fmrconceptopago" onsubmit="crearConceptoPago(); return false;">        
+            <p class="text-intro grey-text">Para crear un nuevo concepto de pago solo debes de diligenciar el siguiente formulario.</p>
+			<div class="modal-body">
+				<div class="row" style="margin-left:0rem; margin-right:0rem;">
+                    <div class="input-field col s12 m4">
+						<input id="codigo" name="codigo" type="text" class="validate" maxlength="5" required onchange="validarCodigo()"/>
+						<label for="codigo"id="label_input">Codigo</label>
+					</div>					
+                    <div class="input-field col s12 m4" >
+                        <select name="tipo" id="tipo" required onchange="verCodigo(this.value)">
+                            <option value="">- Tipo pago - </option>
+                            <option value="P">Pago </option>
+                            <option value="D">Descuento</option>
+                            <option value="A">Provisión</option>
+                        </select>
+                        <label for="tipo" id="label_input">Tipo</label>                                
+                    </div> 
+                    <div class="input-field col s12 m4" >
+                        <select  name="clase_concepto_pago_id" id="clase_concepto_pago_id">
+                            <option value="">- Clase -</option>
+                            {% if clase_concepto_pago %}
+                                {% for clase_concepto_pago in clase_concepto_pago %}
+                                    <option value="{{clase_concepto_pago.value}}">{{clase_concepto_pago.display}}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        <label id="label_input">Clase del concepto</label>                                
+                    </div>
+                </div>
+                <div class="row" style="margin-left:0rem; margin-right:0rem;">
+                    <div class="input-field col s12 m4">
+						<input id="nombre_concepto" name="nombre_concepto" type="text" class="validate" required>
+						<label for="nombre_concepto" id="label_input">Nombre concepto</label>
+					</div>
+                    <div class="input-field col s12 m4"  >
+                        <select name="maneja_tasa" id="maneja_tasa" onchange="mostrarCampoTasa(this.value)">
+                            <option value="SI">SI</option>
+                            <option value="NO">NO</option>
+                        </select>
+                        <label id="label_input">Maneja tasa</label>                                
+                    </div>                   					
+					<div class="input-field col s12 m4 input-tasa">
+						<input id="tasa" name="tasa" type="number" class="validate" maxlength="4" />
+						<label for="tasa" id="label_input">Tasa</label>
+					</div>
+                </div>
+                <div class="row" style="margin-left:0rem; margin-right:0rem;">
+                    <div class="input-field col s12 m4">
+                        <select name="se_expresa_en" id="se_expresa_en">
+                            <option value="">- Seleccione -</option>
+                            <option value="HORAS">HORAS</option>
+                            <option value="DIAS">DIAS</option>
+                            <option value="UNIDADES">UNIDADES</option>
+                            <option value="NINGUNO">NINGUNO</option>
+                        </select>
+                        <label id="label_input" for="se_expresa_en">Se expresa en</label>                                
+                    </div> 
+                    <div class="input-field col s12 m4" id="ibc" >
+                        <select name="ibc" id="ibc">
+                            <option value="NO">NO</option>
+                            <option value="SI">SI</option>
+                        </select>
+                        <label for="ibc" id="label_input">ibc</label>                                
+                    </div>					
+                    <div class="input-field col s12 m4" >
+                        <select name="base_prestaciones" id="base_prestaciones">
+                            <option value="NO">NO</option>
+                            <option value="SI">SI</option>
+                        </select>
+                        <label for="base_prestaciones" id="label_input">Base prestaciones</label>                                
+                    </div>					
+				</div>
+			</div>
+			<div class="modal-footer" >
+				<button class="modal-close btn-flat" type="reset" ><b>CANCELAR</b></button>
+				<button class="btn waves-effect waves-light green " type="submit" style="border-radius:10px;" ><b>GUARDAR</b></button>
+			</div>
+		</form>
+	</div>
+</div>

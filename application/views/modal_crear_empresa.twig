@@ -1,0 +1,100 @@
+<style>
+#modal_crear_empresa{
+  background-image: url("public/imagenes/plataforma/Background.png");
+    overflow-x: hidden;
+}
+
+</style>
+<div id="modal_crear_empresa" name="modal_crear_empresa" class="modal modal-esc ">
+    <div class="modal-content">
+      <form  method="POST" action="" name="fmrcrearempresa" id="fmrcrearempresa" onsubmit="crearEmpresa(); return false;">
+        <div class="row">
+          <div class="col">
+            <i class="medium material-icons">business</i>
+          </div>
+          <div class="col">
+            <center><h5 style="color:#005EB8;padding-top:5px" ><b>    Crear una nueva empresa</b></h5></center>
+          </div>
+        </div>
+        <p class="text-intro">¡Excelente noticias! Para crear una nueva empresa solo debes de diligenciar el siguiente formulario.</p>
+        <br>
+        <div class="modal-body">
+          
+          <div class="row">        
+            <div class="input-field col m4">
+              <i class="material-icons prefix">tag</i>
+              <input id="documento_empresa_crear" name="documento_empresa_crear" type="text" class="validate" required>
+              <label for="documento_empresa_crear">Nit o Cedula</label>
+            </div>
+            <div class="input-field col m2">
+              <i class="material-icons prefix">-</i>
+              <input id="digito_verificacion_crear" name="digito_verificacion_crear" type="text" maxlength="1">
+              <label for="digito_verificacion_crear">Digito</label>
+            </div>
+            <div class="input-field col m6">
+              <i class="material-icons prefix">business</i>
+              <input id="nombre_crear" name="nombre_crear" type="text" class="validate" required>
+              <label for="nombre_crear">Nombre</label>
+            </div> 
+          </div>
+
+          <div class="row">
+            <div class="input-field col m6">
+              <i class="material-icons prefix">keyboard_arrow_right</i>
+              <select name="naturaleza_crear" id="naturaleza_crear" required>
+                <option value="PJ" selected>Persona Juridica</option>
+                <option value="PN">Persona Natural</option>
+              </select>
+              <label>Naturaleza</label>
+            </div>
+            <div class="input-field col m6">
+              <i class="material-icons prefix">keyboard_arrow_right</i>
+              <select name="sector_comercial_id_crear" id="sector_comercial_id_crear" required>
+                {% if sector_comercial %}
+                  {% for sectores in sector_comercial %}
+                    <option value="{{sectores.id_sector_comercial}}">{{sectores.sector_comercial}}</option>
+                  {% endfor %}
+                {% endif %}
+              </select>
+              <label>Sector Comercial</label>
+            </div>
+          </div> 
+
+          <div class="row">        
+            <div class="input-field col m6">
+              <i class="material-icons prefix">contact_phone</i>
+              <input id="telefono_crear" name="telefono_crear" type="number" maxlength="10" class="validate" required>
+              <label for="telefono_crear">Telefono</label>
+            </div>
+            <div class="input-field col m6">
+              <i class="material-icons prefix">contact_mail</i>
+              <input id="email_crear" name="email_crear" type="text" class="validate" required>
+              <label for="email_crear">Email</label>
+            </div> 
+          </div>
+
+          <div class="row">        
+            <div class="input-field col m6">
+              <i class="material-icons prefix">keyboard_arrow_right</i>
+              <select name="pais_crear" id="pais_crear">
+                <option value="colombia" selected>Colombia</option>
+              </select>
+              <label>Pais</label>
+            </div>
+            <div class="input-field col m6">
+              <i class="material-icons prefix">location_on</i>
+              <input id="direccion_crear" name="direccion_crear" type="text" class="validate" required>
+              <label for="direccion_crear">Direccion</label>
+            </div> 
+          </div>
+
+        </div>
+        <div class="" style="background-color:#CCF3E7; text-align:center;">
+    
+            <button class="modal-close btn waves-effect waves-light green  orange" style="font-size:15px; border-radius:5px;" type="reset" >CANCELAR</button>
+            <button class="btn waves-effect waves-light green btn-paso-1" style="font-size:15px; border-radius:5px;" type="submit" >GUARDAR</button>
+     
+        </div> 
+      </form>  
+    </div>
+  </div>

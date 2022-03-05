@@ -1,0 +1,51 @@
+<style>
+#modal_forma_pago{font-weight:normal;}
+</style>
+<div id="modal_forma_pago" name="modal_forma_pago" class="modal modal-esc" style="border-radius:20px; padding:0px; padding-top:0px; padding-bottom:0px; width:700px; ">
+	<div class="modal-content" style="padding:0px;">
+		<h4 class="titulo_modal center-align" style="padding-bottom:30px; padding-top:30px;">Igresar una nueva forma de pago</h4>
+		<form method="POST" action="" name="fmrcrearformapago" id="fmrcrearformapago">
+			<p class="text-intro grey-text">Para crear una nueva forma de pago solo debes de diligenciar el siguiente formulario.</p>
+			<div class="modal-body">
+				<div class="row" style="margin-left:0rem; margin-right:0rem;">
+					<div class="input-field col s12 m2">
+						<input id="codigo_forma_pago" name="codigo_forma_pago" type="number" class="validate" maxlength="2"  oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+						<label for="codigo_forma_pago" id="label_input">Codigo</label>
+					</div>					
+                    <div class="input-field col s12 m6">
+						<select name="tipo_forma_pago" id="tipo_forma_pago" required>
+							<option value="" selected disabled>- Seleccione un tipo de pago -</option>
+							{% if tipo_forma_pago %}
+								{% for tipoPago in tipo_forma_pago %}
+									<option value="{{tipoPago.value}}">{{tipoPago.display}}</option>
+								{% endfor %}
+							{% endif %}
+						</select>
+						<label for="label_input">Tipo de pago</label>
+					</div>                
+                    <div class="input-field col s12 m4">
+                        <input id="nombre_pago" name="nombre_pago" type="text" class="validate">
+                        <label for="nombre_pago" id="label_input" >Nombre forma de pago</label>
+                    </div>   
+				</div>
+                <div class="row" style="margin-left:0rem; margin-right:0rem;">
+                    <div class="input-field col s12 m12">
+						<select name="catalogo_cuenta_id" id="catalogo_cuenta_id" required>
+							<option value="0" selected>- Seleccione un catalogo de cuenta -</option>
+							{% if lista_catalogo_cuenta %}
+								{% for catalogo in lista_catalogo_cuenta %}
+									<option value="{{catalogo.value}}">{{catalogo.display}}</option>
+								{% endfor %}
+							{% endif %}
+						</select>
+						<label id="label_input">Catalogo de Cuenta</label>
+					</div> 
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="modal-close btn-flat" type="reset"><b>CANCELAR</b></button>
+		<button class="btn waves-effect waves-light green btn-paso-1" type="button" style="border-radius:10px;" onclick="crearFormaPago();"><b>GUARDAR</b></button>
+	</div>
+</div>

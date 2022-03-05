@@ -1,0 +1,165 @@
+<style>
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+    input[type=number] { -moz-appearance:textfield]};
+
+
+
+     th, td{
+        font-size: 13px;
+    }
+    td{
+        padding:0px;
+    }
+
+}
+</style>
+
+<div id="modal_factores_porcentaje" name="modal_factores_porcentaje" class="modal modal-esc modal-fixed-footer" style="border-radius:20px; padding-top:0px; padding-bottom:0px;width :50%; height:80%;">
+	<div class="modal-content" style="padding:0px;">
+        <h4 id="fijo" class="titulo_row center-align">Editar Factores y Porcentajes (%) </h4>
+       	<form method="POST" action="" name="fmrfactoresporcentaje" id="fmrfactoresporcentaje">
+            <div id="subtitle" class="row">
+                <input type="hidden" name="id_factores_porcentajes_empresa" id="id_factores_porcentajes_empresa" value="{{factores_porcentajes.id_factores_porcentajes_empresa}}" />
+                <table class="centered highlight">
+                    <thead>
+                        <tr>
+                            <th>Tipo factor</th>
+                            <th>Factor</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Seguridad Social</td>
+                            <td>Desuento Salud</td>
+                            <td>
+                                <input id="descuento_salud" name="descuento_salud" type="number"  style="width:60px; text-align:center;font-size:14px;"  maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.descuento_salud}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Seguridad Social</td>
+                            <td>Descuento Pension</td>
+                            <td>
+                                <input id="descuento_pension" name="descuento_pension" type="number"  style="width:60px; text-align:center;font-size:14px;" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.descuento_pension}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Seguridad Social</td>
+                            <td>Fondo Solidaridad</td>
+                            <td>
+                                <input id="fondo_solidaridad" name="fondo_solidaridad" type="number" class="validate" style="width:60px; text-align:center;font-size:14px;"  maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.fondo_solidaridad}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ARL</td>
+                            <td>NIVEL 1</td>
+                            <td>
+                                <input id="arl_nivel_1" name="arl_nivel_1" type="number" class="validate" style="width:60px;text-align:center;font-size:14px;"  maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.arl_nivel_1}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ARL</td>
+                            <td>Nivel 2</td>
+                            <td>
+                                <input id="arl_nivel_2" name="arl_nivel_2" type="number" class="validate" style="width:60px; text-align:center;font-size:14px;"  maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.arl_nivel_2}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ARL</td>
+                            <td>Nivel 3</td>
+                            <td>
+                                <input id="arl_nivel_3" name="arl_nivel_3" type="number" class="validate" style="width:60px; text-align:center;font-size:14px;"  maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.arl_nivel_3}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ARL</td>
+                            <td>Nivel 4</td>
+                            <td>
+                                <input id="arl_nivel_4" name="arl_nivel_4" type="number" class="validate" style="width:60px; text-align:center;font-size:14px;"  maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.arl_nivel_4}}">%
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>Provisión Prestaciones</td>
+                            <td>Cesantías</td>
+                            <td>
+                                <input id="cesantias" name="cesantias" type="number" class="validate" style="width:60px; text-align:center;font-size:14px;" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.cesantias}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Provisión Prestaciones</td>
+                            <td>Intereses Cesantías</td>
+                            <td>
+                                <input id="intereses_cesantias" name="intereses_cesantias" type="number" class="validate" style="width:60px;text-align:center; font-size:14px;" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.intereses_cesantias}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Provisión Prestaciones</td>
+                            <td>Vacaciones</td>
+                            <td>
+                                <input id="vacaciones" name="vacaciones" type="number" class="validate" style="width:60px; text-align:center;font-size:14px;" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.vacaciones}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Provisión Prestaciones</td>
+                            <td>Prima</td>
+                            <td>
+                                <input id="prima" name="prima" type="number" class="validate" style="width:60px; text-align:center;font-size:14px" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.prima}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Provisión Prestaciones </td>
+                            <td>Dotacion</td>
+                            <td>
+                                <input id="dotacion" name="dotacion" type="number" class="validate" style="width:60px; text-align:center;font-size:14px;" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.dotacion}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Provisión Parafiscales</td>
+                            <td>Caja Compensación</td>
+                            <td>
+                                <input id="caja_compensacion" name="caja_compensacion" type="number" class="validate" style="width:60px;  text-align:center;font-size:14px;" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.caja_compensacion}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Provisión Parafiscales</td>
+                            <td>ICBF</td>
+                            <td>
+                                <input id="icbf" name="icbf" type="number" class="validate" style="width:60px; text-align:center;font-size:14px" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.icbf}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Provisión Parafiscales</td>
+                            <td>SENA</td>
+                            <td>
+                                <input id="sena" name="sena" type="number" class="validate" style="width:60px; text-align:center;font-size:14px;" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.sena}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Provisión Seguridad Social</td>
+                            <td>Salud Empresa</td>
+                            <td>
+                                <input id="salud_empresa" name="salud_empresa" type="number" class="validate" style="width:60px; text-align:center;font-size:14px" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.salud_empresa}}">%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Provisión Seguridad Social</td>
+                            <td>Pensión Empresa</td>
+                            <td>
+                                <input id="pension_empresa" name="pension_empresa" type="number" class="validate" style="width:60px; text-align:center;font-size:14px;" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="{{factores_porcentajes.pension_empresa}}">%
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+		</form>
+	</div>
+    <div class="modal-footer">
+		<button class="modal-close btn-flat" type="reset" style="color:#005EB8"><b>CANCELAR<b/></button>
+		<button class="btn waves-effect waves-light green btn-paso-1" onclick="editarFactoresPorcentaje();" type="button">GUARDAR</button>
+	</div>
+</div>

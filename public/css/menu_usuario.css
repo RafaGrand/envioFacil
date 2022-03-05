@@ -1,0 +1,32 @@
+.user_head{
+    background-color:#00c389;
+}
+
+#nombre_user{
+    font-size:17px; 
+    text-align:center; 
+    margin-bottom:-20px;
+}
+
+.empresa_user{
+    background: linear-gradient(#fff,rgb(222, 255, 255), #b5ffe9);
+}
+
+.campo_{
+    background: linear-gradient(to left, rgba(216, 216, 216, 0.856) 20%, rgba(255, 255, 255, 0.719) 100%);
+}
+#imagen_user{
+    margin-top:0px;
+    margin-left:15px;  
+    width: 130px; 
+    height: 100px;
+}
+/*.boton_x{
+    font-size:20px;
+    float: left;
+    left: 93%;
+    z-index: 0;
+    margin-top:-40px;
+    position: absolute;
+    cursor:pointer;
+}*/

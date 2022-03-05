@@ -1,0 +1,32 @@
+<div id="modal_crear_costo" name="modal_crear_costo" class="modal modal-esc" style="border-radius:20px; padding-top:0px; padding-bottom:0px; width:520px;">
+	<div class="modal-content" style="padding:0px;">
+		<form method="POST" action="" name="fmrcrearcosto" id="fmrcrearcosto" onsubmit="crearCosto(); return false;">
+			<div class="row titulo_modal" style="border-radius:10px 10px 0px 0px; margin-left:0rem; margin-right:0rem;">
+				<center>
+					<h5>Igresar un nuevo centro de costo</h5>
+				</center>
+			</div>
+			<p style="font-size:20px; margin:10px;" class="text-intro">¡Excelente noticias! Para crear un nuevo centro de costo solo debes de diligenciar el siguiente formulario.</p>
+			<br>
+			<div class="modal-body" style="margin-top:30px;">
+				<div class="row" style="margin-left:0rem; margin-right:0rem; ">
+					<div class="input-field col m3" style="margin-top:-10px;">
+						<input id="codigo_costo_crear" name="codigo_costo_crear" placeholder="Codigo" type="text" class="validate" />
+					</div>
+					<div class="input-field col m4" style="margin-top:-10px;">
+						<input id="nombre_costo_crear" name="nombre_costo_crear" type="text" class="validate" required>
+						<label for="nombre_costo_crear" style="font-size:15px;">Nombre costo</label>
+					</div>
+					<div class="input-field col m5" style="margin-top:-10px;">
+						<input id="ubicacion_costo_crear" name="ubicacion_costo_crear" type="text" class="validate" required>
+						<label for="ubicacion_costo_crear" style="font-size:15px;">Ubicacion costo</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="modal-close btn-flat" type="reset"><b>CANCELAR</b></button>
+				<button class="btn waves-effect waves-light green btn-paso-1" type="submit" style="border-radius:10px;" ><b>GUARDAR</b></button>
+			</div>
+		</form>
+	</div>
+</div>

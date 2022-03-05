@@ -1,0 +1,70 @@
+<section style="padding: 10px;">
+
+    <div class="row">
+        <div class="col">
+            <a class="waves-effect waves-light btn green modal-trigger" href="#modal_crear_empresa"><i class="material-icons left">business</i>Crear Empresa</a>
+            <!--<a class="btn-floating orange modal-trigger tooltipped"  href="#modalCambioEmpresa" data-position="right" data-tooltip="Cambiar Empresa">
+            <i class="material-icons">business</i>-->
+      </a>
+        </div>
+        <div class="col">
+            <!--S<a class="waves-effect waves-light btn blue"><i class="material-icons left">business</i>Cambiar de empresa</a>-->
+            <!--<a class="btn-floating btn-large waves-effect waves-light orange tooltipped modal-trigger" data-position="bottom" data-tooltip="Cambiar Empresa" href="#modalCambioEmpresa"><i class="material-icons">business</i></a>-->
+        </div>
+    </div>
+    <div class="row">
+         {% if lista_empresa %}
+            {% for empresa in lista_empresa %}
+                <div class="col s12 m3">
+                    <div class="card horizontal hoverable" style="cursor:pointer;">
+                        <div class="card-image"  onclick="cambiarEmpresa({{empresa.id_empresa}})">
+                            <img  src="{{base_url}}public/imagenes/empresa/logo/{{empresa.logo}}">
+                        </div>
+                        <div class="card-stacked" >
+                            <div class="card-content" style="padding-bottom:0px;"  onclick="cambiarEmpresa({{empresa.id_empresa}})">
+                                <p><b>{{empresa.nombre_empresa}}</b> <span style="color:green;position: relative; left: 22px">[{{empresa.estado}}]</span></p>
+                                <div class="row" style="padding-top:8px;">
+                                    <div class="col s12 m6">                            
+                                        <p class="p-card-empresa">
+                                            <i class="tiny material-icons prefix tooltipped" data-position="top" data-tooltip="Nit o Cedula">tag
+                                            </i>
+                                            {{empresa.documento_empresa}}
+                                        </p>
+                                        <p class="p-card-empresa">
+                                            <i class="tiny material-icons prefix tooltipped" data-position="bottom" data-tooltip="Fecha de creacion">date_range
+                                            </i>
+                                            {{empresa.fecha_creacion}}
+                                        </p>
+                                    </div>
+                                    <div class="col s12 m6">
+                                        <p class="p-card-empresa">
+                                            <i class="tiny material-icons prefix tooltipped" data-position="top" data-tooltip="Ciudad">location_city
+                                            </i>
+                                            {{empresa.municipio}}
+                                        </p>
+                                        <p class="p-card-empresa" style="padding-bottom : 0px;">
+                                            <i class="tiny material-icons prefix tooltipped" data-position="top" data-tooltip="Avance en la configuración">build
+                                            </i>
+                                            Configuracion
+                                        </p>                                 
+                                        <div class="progress tooltipped" data-position="top" data-tooltip="{{empresa.porcentaje_config}}%">
+                                            <div class="determinate" style="width: {{empresa.porcentaje_config}}%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-action center-align">
+                                <a class=" waves-effect waves-light btn-flat "  onclick="cargarDataEmpresa({{empresa.id_empresa}})">
+                                    <i class="material-icons left">create
+                                    </i>Editar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+{% include 'modal_modificar_empresa.twig' %}
+{% include 'modal_crear_empresa.twig' %}

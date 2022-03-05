@@ -1,0 +1,22 @@
+<div id="modal_crear_area" name="modal_crear_area" class="modal modal-esc" style="border-radius:20px; padding-top:0px; padding-bottom:0px; width:520px;">
+	<div class="modal-content" style="padding:0px;">
+		<form method="POST" action="" name="fmrcreararea" id="fmrcreararea" onsubmit="crearArea(); return false;">
+			<div class="row titulo_modal" style="border-radius:10px 10px 0px 0px; margin-left:0rem; margin-right:0rem;">
+				<center>
+					<h5>Igresar una nueva area</h5>
+				</center>
+			</div>
+			<p style="font-size:20px; margin:10px;">¡Excelente noticias! Para crear una nueva area solo debes de diligenciar el siguiente formulario.</p>
+			<div style="margin-top:40px;" class="modal-body">
+				<div class="row m6" style="margin-left:0rem; margin-right:0rem; ">
+					<div class="input-field col m6" style="margin-top:-10px;">
+						<input id="nombre_area" name="nombre_area" type="text" class="validate" required />
+						<label style="font-size:15px;" for="nombre_area">Area de servicio</label>
+					</div>
+					<button class="modal-close btn-flat" type="reset"><b>CANCELAR</b></button>
+					<button class="btn waves-effect waves-light green btn-paso-1" type="submit" style="border-radius:10px;" ><b>GUARDAR</b></button>
+				</div>			
+			</div>
+		</form>
+	</div>
+</div>

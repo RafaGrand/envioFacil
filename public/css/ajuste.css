@@ -1,0 +1,64 @@
+.titulo_modal{
+
+	padding-top:10px;
+	padding-bottom:10px;
+    background-color:rgb(0, 94, 184); 
+	color:white;
+    font-size: 25px;
+    padding: 15px;
+}
+
+#label_input{
+    font-size:15px;
+}
+
+.contenedor_tarjeta{
+    height:220px;
+}
+
+.boton_add, .boton_ver{
+    justify-content:center;
+    margin-right:30px;
+    position:fixed;
+}
+
+#titulo-card{
+    background-color:#005EB8; 
+    color:white;
+    border-radius:10px 10px 0px 0px; 
+    padding-top:0px; 
+    padding-bottom:0px;
+    font:bold;
+}
+
+#tabla_ver_concepto_pago, 
+#modal_editar_contable, 
+#tabla_ver_novedad, 
+#tabla_ver_entidad, 
+#modal_editar_costo,
+#modal_editar_cargo,
+#modal_editar_area
+#modal_informes
+#modal_catalogo_cuenta{
+    overflow-x: hidden;
+	font-weight:normal;
+}
+
+.titulo_row{
+	color: white;
+  	background-color:#005EB8;
+	padding-top: 8px;
+	height:60px;
+	text-align:center;
+	font-size:25px ;
+	
+}
+#fijo{
+	position: fixed;
+	width: 100%;
+	z-index: 2;
+}
+#subtitle{
+	padding-top:60px;
+	
+}

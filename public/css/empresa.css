@@ -1,0 +1,41 @@
+.p-card-empresa{
+    padding:8px; 
+    color:white;
+}
+
+#card_contenido{
+    padding-bottom:0px;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.856) 10%, rgb(14, 109, 250) 100%);
+    border-radius:10px;
+}
+
+#head_card{
+    margin:-25px -25px 0px -25px;
+    border-radius:10px 10px 0px 0px; 
+    background-color:white;
+}
+
+#barra_progreso{
+    width:130px;
+    height:10px;
+    color:orange;
+    border-radius:10px; 
+    margin-top:0px; 
+    margin-right:0px;
+}
+
+.progreso_text{
+    padding-bottom : 0px; 
+    text-align:center;
+}
+
+.contenedor_progreso{
+    float:right; 
+    margin-right:20px;
+}
+
+#nombre_empresa_{
+    float:left; 
+    font-size:20px; 
+    margin-left:10px;
+}

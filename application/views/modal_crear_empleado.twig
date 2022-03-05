@@ -1,0 +1,222 @@
+<style>
+#modal_crear_empleado{
+   background-image: url("public/imagenes/plataforma/Background.png");
+    overflow-x: hidden;
+}
+</style>
+
+<div id="modal_crear_empleado" name="modal_crear_empleado" class="modal modal-esc modal-fixed-footer"  style="border-radius:10px; width :75%; height: 87%;">
+    <form  method="POST" action="" name="fmrcrearempleado" id="fmrcrearempleado" enctype="multipart/form-data">
+        <div class="modal-content">        
+            <div class="row">
+                <div class="col">
+                    <i class="medium material-icons">person_add</i> 
+                </div>
+                <div class="col">
+                    <center><h5 style="color:#005EB8;padding-top:5px"><b>   Crear un nuevo empleado para {{data_sesion.nombre_empresa}}</b></h5></center>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!--<div class="col s12 m12">
+                        <ul class="tabs" style="background-color: transparent;">
+                            <li class="tab col s3 m4"><a href="#infopersonal">Informacion Personal</a></li>
+                            <li class="tab col s3 m4"><a href="#datosempleado">Datos del Empleado</a></li>
+                            <li class="tab col s3 m4"><a href="#gtupofamiliar">Grupo Familiar</a></li>
+                        </ul>
+                    </div> -->               
+                    <div id="infopersonal" class="col s12 m12">
+                        <h6 class="grey-text">Informacion Personal</h6>
+                        <div class="row pt-12">
+                            <div class="input-field col s12 m3">
+                                <select name="ce_tipo_documento" id="ce_tipo_documento">
+                                {% if tipos_documento %}
+                                    {% for tipo in tipos_documento %}
+                                        <option value="{{tipo.id_tipo_documento_identidad }}">{{tipo.tipo_documento}}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                            <label>Tipo de Documento</label>                                
+                            </div>
+                            <div class="input-field col s12 m3">
+                                <input placeholder="" id="ce_numero_documento" name="ce_numero_documento" type="text" onchange="validarEmpleadoExiste()">
+                                <label for="ce_numero_documento"># Documento</label>                                
+                            </div>
+                            <div class="input-field col s12 m3">
+                                <input placeholder="" id="ce_expedicion_documento" name="ce_expedicion_documento" type="text">                               
+                                <label for="ce_expedicion_documento">Lugar de Expedición</label>
+                            </div>
+                            <div class="input-field col s12 m3">
+                                <input placeholder="" id="ce_lugar_nacimiento" name="ce_lugar_nacimiento" type="text">                                
+                                <label for="ce_lugar_nacimiento">Lugar de Nacimiento</label>
+                            </div>
+                        </div>
+                        <div class="row pt-10">
+                            <div class="input-field col s12 m3">
+                                <input placeholder="" id="ce_primer_nombre" name="ce_primer_nombre" type="text">
+                                <label for="ce_primer_nombre">Primer Nombre</label>                             
+                            </div>
+                            <div class="input-field col s12 m3">
+                                <input placeholder="" id="ce_segundo_nombre" name="ce_segundo_nombre" type="text">
+                                <label for="ce_segundo_nombre">Segundo Nombre</label>                                 
+                            </div>
+                            <div class="input-field col s12 m3">
+                                <input placeholder="" id="ce_primer_apellido" name="ce_primer_apellido" type="text"> 
+                                <label for="ce_primer_apellido">Primer Apellido</label>                                
+                            </div>
+                            <div class="input-field col s12 m3">
+                                <input placeholder="" id="ce_segudno_apellido" name="ce_segudno_apellido" type="text">
+                                <label for="ce_segudno_apellido">Segundo Apellido</label> 
+                            </div>
+                        </div>
+                        <div class="row pt-10">
+                            <div class="input-field col s12 m3">
+                                <input  id="ce_fecha_nacimiento" name="ce_fecha_nacimiento" type="date" >  
+                                <label for="ce_fecha_nacimiento">Fecha Nacimiento</label>                              
+                            </div>
+                            <div class="input-field col s12 m3">
+                                <select name="ce_estado_civil" id="ce_estado_civil">
+                                    <option value="Soltero(a)" selected>Soltero(a)</option>
+                                    <option value="Casado(a)">Casado(a)</option>
+                                    <option value="Union Libre">Union Libre</option>
+                                </select>
+                                <label>Estado Civil</label>                                
+                            </div>
+                            <div class="input-field col s12 m3">
+                                <select name="ce_sexo" id="ce_sexo">
+                                    <option value="Masculino" selected>Masculino</option>
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                                <label>Genero</label>                                
+                            </div>
+                            <div class="file-field input-field col s12 m3">
+                                <div class="btn">
+                                    <span>File</span>
+                                    <input type="file" name="ce_foto_empleado" id="ce_foto_empleado" onchange="validar_file(this,2097152,'Archivo demasiado grande. El peso del archivo debe ser menor a 2MB.','ce_foto_empleado')">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" placeholder="Foto" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- DATOS EMPLEADO -->
+                    <div id="datosempleado" class="col s12 m12">
+                        <h6 class="grey-text">Datos del Empleado</h6>
+                        <div class="row pt-12">
+                            <br>
+                            <div class="input-field col s12 m2">
+                                <input placeholder="Cr xx calle xx-yy" id="ce_direccion" name="ce_direccion" type="text" >
+                                <label for="ce_direccion">Dirección</label>                                
+                            </div>
+                            <div class="input-field col m2 s12">
+                                <select name="ce_deptartamento" id="ce_deptartamento" onchange="cargarSelect(this.value,'municipio','id_municipio','nombre','cargar-municipio');">
+                                    <option  selected disabled>- Departamentos -</option>  
+                                    {% if departamentos %}                        
+                                        {% for departamento in departamentos %}
+                                            <option value="{{departamento.id_departamento}}">{{departamento.nombre}}</option>
+                                        {% endfor %}   
+                                    {% endif %}                       
+                                </select>                            
+                                <label>Deparatamento</label>
+                            </div>
+                            <div class="input-field col m3 s12">                                
+                                <select name="ce_municipio_id" id="ce_municipio_id" class="cargar-municipio">
+                                    <option>- Municipios -</option>                              
+                                </select>
+                                <label>Municipios</label>
+                            </div>                      
+                            <div class="input-field col s12 m2">
+                                <input placeholder="" id="ce_telefono" name="ce_telefono" type="text" >                                
+                                <label for="ce_telefono">Teléfono</label>
+                            </div>
+                            <div class="input-field col s12 m3">
+                                <input  id="ce_email" name="ce_email" type="text"  placeholder="">  
+                                <label for="ce_email">Email</label>                              
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="input-field col s12 m2">
+                                <select name="ce_libreta_militar" id="ce_libreta_militar" onchange="mostrarCampoLibreta(this.value)">
+                                    <option value="No aplica" selected>No aplica</option>
+                                    <option value="No">No</option>
+                                    <option value="Si">Si</option>
+                                </select>
+                                <label>¿Libreta Militar?</label>                                
+                            </div>
+                            <div class="input-field col s12 m2 clase_libreta" hidden>
+                                <select name="ce_clase_libreta" id="ce_clase_libreta">
+                                    <option value="1RA">1RA</option>
+                                    <option value="2DA">2DA</option>
+                                </select>    
+                                <label>Clase Libreta</label>           
+                            </div>
+                            <div class="input-field col s12 m2">
+                                <select name="ce_licencia_conduccion" id="ce_licencia_conduccion"  onchange="mostrarCampoTipoLicencia(this.value)">                                
+                                    <option value="No">No</option>
+                                    <option value="Si">Si</option>
+                                </select>
+                                <label>¿Licencia Conducción?</label>                                
+                            </div>
+                            <div class="input-field col s12 m2 tipo_licencia"  hidden>  
+                                <select class="browser-default" name="ce_tipo_licencia" id="ce_tipo_licencia">
+                                    <option value="A1">A1</option>
+                                    <option value="A2">A2</option>
+                                    <option value="B1">B1</option>
+                                    <option value="B2">B2</option>
+                                    <option value="B3">B3</option>
+                                    <option value="C1">C1</option>
+                                    <option value="C2">C2</option>
+                                    <option value="C3">C3</option>
+                                </select>                          
+                            </div>
+                            <div class="input-field col m4 s12">                        
+                                <select name="ce_profesion" id="ce_profesion"  class="">
+                                    <option selected disabled>- Seleccione una profesión -</option>  
+                                    {% if profesiones %}                        
+                                        {% for profesion in profesiones %}
+                                            <option value="{{profesion.id_profesion }}">{{profesion.descripcion}}</option>
+                                        {% endfor %}   
+                                    {% endif %}                       
+                                </select>
+                                <label for="ce_fecha_nacimiento">Profesion</label>                       
+                            </div>
+                            <div class="input-field col s12 m2">
+                                <input  id="ce_tarjeta_profesional" name="ce_tarjeta_profesional" type="text"  placeholder="">  
+                                <label for="ce_tarjeta_profesional"># Tarjeta Profesional</label>                              
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <!-- GRUPO FAMILIAR -->
+                    <div id="gtupofamiliar" class="col s12 m12">
+                        <h6 class="grey-text" >Grupo Familiar</h6>
+                        <table class="responsive-table">
+                            <thead>
+                                <tr>
+                                    <th style="width : 10%">
+                                        <a class="btn-floating waves-effect waves-light btn-small green" onclick="agregarItemGrupoFamiliar()"><i class="material-icons left">add</i></a>
+                                    </th>
+                                    <th style="width : 25%">Nombre</th>
+                                    <th style="width : 25%">parentesco</th>
+                                    <th style="width : 20%">Fecha<br>Nacimiento</th>
+                                    <th style="width : 20%">Telefono</th>
+                                </tr>
+                            </thead>
+                            <tbody class="lista_grupo_familiar">
+                            </tbody>
+                        </table>
+                        <input id="contador_item" id="contador_item" type="hidden" value="0" />
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer" style="background-color:#CCF3E7; text-align:center;">        
+            <button style="font-size:15px; border-radius:5px;" class="modal-close btn waves-effect waves-light green  orange" type="reset" onclick="$('.lista_grupo_familiar').empty();$('.tabs').tabs('select', 'infopersonal');">CANCELAR</button>
+            <button  style="font-size:15px; border-radius:5px;" class="btn waves-effect waves-light green btn-paso-1" onclick="crearEmpleado()" type="button" >GUARDAR</button>
+        </div> 
+    </form>
+</div>

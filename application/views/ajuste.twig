@@ -1,0 +1,335 @@
+<style>
+
+p{
+	font-size:18px;
+	padding-left:20px;
+	padding-right:20px;
+}
+
+.row{
+padding:20px;
+}
+</style>
+<div class="row">
+	<div class="col s12 m3" >
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Conceptos de pago</span>
+			</div>
+				<p class="grey-text">Crea y configura los conceptos de Pago y descuento que utilizas para liquidar tu nomina</p>
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="#modal_concepto_pago">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="#tabla_ver_concepto_pago" onclick="getDataConseptoPago()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3 ">
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card" >
+				<span class="card-title center-align pt-2 pb-2">Grupo Contable</span>
+			</div>
+				<p class="grey-text">Asigna las cuentas para contabilizar los conceptos de pago y descuento</p>
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="#modal_crear_contable" >
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="#modal_editar_contable" onclick="getDataContable()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3 ">
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Novedades de empleado</span>
+			</div>
+				<p class="grey-text">Configura Aquí Novedades Como Ausencias, Incapacidades y Licencias</p>
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="#modal_crear_novedad">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="#tabla_ver_novedad" onclick="getDataNovedad()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3 ">
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Factores y porcentajes</span>
+			</div>
+				<p class="grey-text">Configura los porcentajes de Seguridad social y provisión</p>
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<br>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="#modal_factores_porcentaje" >
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3">
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Entidades</span>
+			</div>
+				<p class="grey-text">Crea las entidades de seguridad social, fondos y bancos</p>
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="#modal_crear_entidad">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="#tabla_ver_entidad" onclick="getDataEntidad()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+  	</div>
+	<div class="col s12 m3">
+		{% if data_empresa_sesion.centros_costo == 'si' %}
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Centros de costo</span>
+			</div>
+				<p class="grey-text">Maneja tu nomina por centros de Costo</p>
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="#modal_crear_costo">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="#modal_editar_costo" onclick="getDataCosto()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+		{% else %}
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Centros de costo</span>
+			</div>
+				<p class="grey-text">Su empresa no maje centro de costos</p>
+			</div>
+		{% endif %}	
+  	</div>
+  	<div class="col s12 m3" >
+		<div class="card darken-1 contenedor_tarjeta">			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Cargos</span>				
+			</div>
+				<p class="grey-text">Crea los cargos que desempeñan tus empleados </p>				
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add"  href="#modal_crear_cargo">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="#modal_editar_cargo" onclick="getDataCargo()">
+						<i class="material-icons left ">search</i>
+					</a>
+				</center>
+			</div>	
+		</div>
+	</div>
+  	<div class="col s12 m3">
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Areas</span>
+			</div>
+				<p class="grey-text">Crea las Áreas en donde Trabajan tus empleados</p>
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="#modal_crear_area">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="#modal_editar_area" onclick="getDataArea()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>	
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3" >
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Retencion en la fuente</span>
+			</div>
+				<p class="grey-text">Configura el método de retención que vas a utilizar</p>
+			<div class="col s12 m12 card-action " style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="" onclick="()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3" >
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Formas de pago</span>
+			</div>
+				<p class="grey-text">Crea las formas de pagos a través de los cuales se pueden pagar tus empleados</p>
+			<div class="col s12 m12 card-action " style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="#modal_forma_pago">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="" onclick="()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3" >
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Catalogo de Cuentas</span>
+			</div>
+				<p class="grey-text">Sube tu archivo excel con el catalogo de cuentas</p>
+			<div class="col s12 m12 card-action " style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="#modal_catalogo_cuenta">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="" onclick="()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3" >
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Tu firma digital</span>
+			</div>
+				<p class="grey-text">Sincroniza aquí tu firma Electrónica</p>
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="" onclick="()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3" >
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Contratos de trabajo</span>
+			</div>
+				<p class="grey-text">personaliza el contrato de trabajo de tus empleados</p>
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="" onclick="()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3" >
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Archivos contabilidad</span>
+			</div>
+				<p class="grey-text">configura los archivos que necesitas para exportar tu contabilidad a tu ERP </p>
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="" onclick="()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3" >
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Archivos para banco</span>
+			</div>
+				<p class="grey-text">Esto son Archivos planos por banco</p>
+			<div class="col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="" onclick="()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3" >
+		<div class="card darken-1 contenedor_tarjeta" >			
+			<div class="card-content" id="titulo-card">
+				<span class="card-title center-align pt-2 pb-2">Excel para seguridad social</span>
+			</div>
+				<p class="grey-text">Esto son Archivos planos por cada operador de seguridad social</p>
+			<div class=" col s12 m12 card-action" style="border:none;padding: 0px 0px 0px 0px;">
+				<center>
+					<a class="btn-floating waves-effect waves-light btn green modal-trigger boton_add" href="">
+						<i class="material-icons left ">add</i>
+					</a>
+					<a class="btn-floating waves-effect waves-light btn blue modal-trigger boton_ver" href="" onclick="()">
+						<i class="material-icons left">search</i>
+					</a>
+				</center>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<!-- Modales crear -->
+{% include 'modal_crear_costo.twig' %}
+{% include 'modal_crear_entidad.twig' %}
+{% include 'modal_crear_cargo.twig' %}
+{% include 'modal_crear_area.twig' %}
+{% include 'modal_crear_contable.twig' %}
+{% include 'modal_crear_novedad.twig' %}
+{% include 'modal_factores_porcentaje.twig' %}
+{% include 'modal_concepto_pago.twig'%}
+{% include 'modal_forma_pago.twig'%}
+{% include 'modal_catalogo_cuenta.twig'%}
+
+<!-- Modales ediatar -->
+{% include 'modal_editar_area.twig' %}
+{% include 'modal_editar_cargo.twig' %}
+{% include 'tabla_ver_entidad.twig' %}
+{% include 'modal_editar_costo.twig' %}
+{% include 'modal_editar_contable.twig' %}
+{% include 'modal_editar_entidad.twig' %}
+{% include 'tabla_ver_concepto_pago.twig' %}
+{% include 'modal_editar_concepto_pago.twig' %}
+{% include 'tabla_ver_novedad.twig'%}
+{% include 'modal_editar_novedad.twig' %}

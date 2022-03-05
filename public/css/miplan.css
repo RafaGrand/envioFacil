@@ -1,0 +1,60 @@
+#titulo_plan{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.card-plan{
+    width:50% ; 
+    border-radius:2px;
+    margin-left:25%;
+}
+
+.etiqueta_p{
+    padding-top:50px; 
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+    color: gray;
+}
+
+.texto_relleno{
+    padding-top:50px;
+    font-size: 30px; 
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: rgb(66, 65, 65);
+}
+#btn-historial{
+    border-radius:3px; 
+    margin-top:10px; 
+    font-size:10px;
+    background-color: rgb(199, 247, 255);
+    color:black;
+}
+
+.campo_saldo{
+    margin-top:30px; 
+    padding-top:20px; 
+    margin-left:50px; 
+    margin-right:50px;
+    background-color:rgb(219, 234, 240);
+}
+
+#envios, #saldo{
+    background-color:white; 
+    margin-top:10px;
+    height:25px; 
+    width:70%;
+    border-radius:5px;
+}
+
+#miplan{
+    height:30px;
+    width:100px;
+    font-size:12px;
+    border-radius:8px;
+    float:right;
+    color: white;
+}
+

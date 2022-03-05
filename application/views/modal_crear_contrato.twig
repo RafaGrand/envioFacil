@@ -1,0 +1,308 @@
+<div id="modal_crear_contrato" name="modal_crear_contrato" class="modal modal-esc modal-fixed-footer"  style="width :75%; height: 580px;">
+    <form  method="POST" action="" name="fmrcrearcontrato" id="fmrcrearcontrato">
+        <div class="modal-content">        
+            <div class="valign-wrapper">              
+                <i class="small material-icons">description</i>
+                <h6 class="pl-2">Nuevo Contrato</h6>
+            </div>
+            <div class="modal-body">           
+                <div class="col s12 m12">
+                    <div class="card horizontal" style="background-color: rgba(0, 94, 184, 0.9)">
+                        <div class="card-image">
+                            <img id="img_empleado_contrato" name="img_empleado_contrato" src="">
+                        </div>
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <div class="row white-text">
+                                    <div class="col s12 m3 center-align">
+                                        <p><b>Nombre Complero</b></p><hr>
+                                        <p class="text-nombre_completo"></p>
+                                    </div>
+                                    <div class="col s12 m2 center-align">
+                                        <p><b>Cedula</b></p><hr>
+                                        <p class="text-cedula"><p>
+                                    </div>
+                                    <div class="col s12 m3 center-align">
+                                        <p><b>Profesión</b></p><hr>
+                                        <p class="text-profesion"></p>
+                                    </div>
+                                    <div class="col s12 m2 center-align">
+                                        <p><b>Edad</b></p><hr>
+                                        <p class="text-edad"></p>
+                                    </div>
+                                    <div class="col s12 m2 center-align">
+                                        <p><b>Telefóno</b></p><hr>
+                                        <p class="text-telefono"></p>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>   
+
+                <div class="c-contrato-paso-1">
+                    <div class="col s12 m12">
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <div class="row">
+                                        <div class="input-field col s12 m3">
+                                            <input  id="cc_numero_contrato" name="cc_numero_contrato" type="number" placeholder="Numero Contrato" onchange="validarNumeroContrato();" maxlength="8" min="1" pattern="^[0-9]+" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" >  
+                                            <label for="cc_numero_contrato">Numero Contrato</label>                              
+                                        </div>
+
+                                        <div class="input-field col s12 m3">
+                                            <input id="cc_fecha_ini" name="cc_fecha_ini" type="date" >  
+                                            <label for="cc_fecha_ini">Fecha Inicio</label>                              
+                                        </div>
+
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_tipo_contrato_id" id="cc_tipo_contrato_id">
+                                                <option value="">- Tipos de contrato -</option>
+                                                {% if tipos_contratos %}
+                                                    {% for tipo in tipos_contratos %}
+                                                        <option value="{{tipo.value}}">{{tipo.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>Tipo Contrato</label>                                
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_cargo_id" id="cc_cargo_id">
+                                                <option value="">- Cargos Disponibles -</option>
+                                                {% if cargos %}
+                                                    {% for cargo in cargos %}
+                                                        <option value="{{cargo.value}}">{{cargo.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>Cargo</label>                                
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_area_id" id="cc_area_id">
+                                                <option value="">- Areas Disponibles -</option>
+                                                {% if areas %}
+                                                    {% for area in areas %}
+                                                        <option value="{{area.value}}">{{area.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>Area</label>                                
+                                        </div>                                        
+                                        <div class="input-field col s12 m3">
+                                            <input  id="cc_salario_basico" name="cc_salario_basico" onblur="formatoNumero('cc_salario_basico',0)" type="text" placeholder="Valor Salario" >  
+                                            <label for="cc_salario_basico">Salario Basico</label>                              
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_auxilio_transporte" id="cc_auxilio_transporte">
+                                                <option value="SI">SI</option>
+                                                <option value="NO">NO</option>
+                                            </select>
+                                            <label>Auxilio Transporte</label>                                
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            {% if data_empresa_sesion.centros_costo == 'si' %}
+                                            <select name="cc_centro_costo_id" id="cc_centro_costo_id">
+                                                <option value="">- Centros de costos -</option>
+                                                {% if centros_costos %}
+                                                    {% for centro_costo in centros_costos %}
+                                                        <option value="{{centro_costo.value}}">{{centro_costo.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>Centro de Costos</label>
+                                            {% else %} 
+                                            <select disabled>
+                                                <option></option>
+                                            </select>
+                                            <label>Centro de Costos</label>
+                                            {% endif %}  
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!--<div class="input-field col s12 m3">
+                                            <select name="cc_esatdo_id" id="cc_esatdo_id" onchange="validarEstadoContrato(this.value)">
+                                                <option value="">- Estado -</option>
+                                                {% if estados %}
+                                                    {% for estado in estados %}
+                                                        <option value="{{estado.value}}">{{estado.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>Estado del contrato</label>                                
+                                        </div>-->
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_maneja_turno" id="cc_maneja_turno">
+                                                <option value="NO">NO</option>
+                                                <option value="SI">SI</option>
+                                            </select>
+                                            <label>Maneja Turnos</label>                             
+                                        </div>                                        
+                                        <div class="input-field col s12 m3">
+                                            <input  id="cc_horas_dia" name="cc_horas_dia" type="number" value="8" placeholder="Cantidad de horas" >  
+                                            <label for="horas_dia">Horas Dias</label>                              
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_integral" id="cc_integral">
+                                                <option value="NO">NO</option>
+                                                <option value="SI">SI</option>
+                                            </select>
+                                            <label>Integral</label>                                
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_nivel_riesgo" id="cc_nivel_riesgo">
+                                                <option value="1">Nivel 1</option>
+                                                <option value="2">Nivel 2</option>
+                                                <option value="3">Nivel 3</option>
+                                                <option value="4">Nivel 4</option>
+                                            </select>
+                                            <label>Nivel de Riesgo</label>                                
+                                        </div>                                     
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="c-contrato-paso-2 hide">
+                    <div class="col s12 m12">
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <div class="row">   
+
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_pensionado" id="cc_pensionado">
+                                                <option value="NO">NO</option>
+                                                <option value="SI">SI</option>
+                                            </select>
+                                            <label>¿Es pensionado?</label>                             
+                                        </div>                                       
+
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_cod_caja" id="cc_cod_caja">
+                                                <option value="">- Caja Compensación -</option>
+                                                {% if caja %}
+                                                    {% for elemento in caja %}
+                                                        <option value="{{elemento.value}}">{{elemento.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>Caja de Compensación</label>                                
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_cod_eps" id="cc_cod_eps">
+                                                <option value="">- Seleccione EPS -</option>
+                                                {% if eps %}
+                                                    {% for elemento in eps %}
+                                                        <option value="{{elemento.value}}">{{elemento.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>EPS</label>                                
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_cod_fpen" id="cc_cod_fpen">
+                                                <option value="">- Fondo Pensiones -</option>
+                                                {% if fpen %}
+                                                    {% for elemento in fpen %}
+                                                        <option value="{{elemento.value}}">{{elemento.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>Fondo de Pensiones</label>                                
+                                        </div>                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_cod_fces" id="cc_cod_fces">
+                                                <option value="">- Fondo Cesantias -</option>
+                                                {% if fces %}
+                                                    {% for elemento in fces %}
+                                                        <option value="{{elemento.value}}">{{elemento.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>Fondo de Cesantias</label>                                
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_cod_arl" id="cc_cod_arl">
+                                                <option value="">- Seleccione ARL -</option>
+                                                {% if arl %}
+                                                    {% for elemento in arl %}
+                                                        <option value="{{elemento.value}}">{{elemento.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>ARL</label>                                
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_grupo_contable_id" id="cc_grupo_contable_id">
+                                                <option value="">- Grupos Contables -</option>
+                                                {% if grupos_contables %}
+                                                    {% for elemento in grupos_contables %}
+                                                        <option value="{{elemento.value}}">{{elemento.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>Grupo Contable</label>                                
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_tipo_cuenta" id="cc_tipo_cuenta">
+                                                <option value="">-Seleccione tipo cuenta-</option>
+                                                <option value="NO">Ahorros</option>
+                                                <option value="SI">Corriente</option>
+                                            </select>
+                                            <label>Tipo Cuenta</label>                             
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="input-field col s12 m3">
+                                            <input  id="cc_num_cuenta_banco" name="cc_num_cuenta_banco" type="text" placeholder="Cuenta Bancaria" >  
+                                            <label for="cc_num_cuenta_banco"># Cuenta</label>                              
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_cod_banco" id="cc_cod_banco">
+                                                <option value="">- Seleccione Banco -</option>
+                                                {% if bancos %}
+                                                    {% for elemento in bancos %}
+                                                        <option value="{{elemento.value}}">{{elemento.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>Banco Cuenta</label>                                
+                                        </div>                                                                               
+                                        <div class="input-field col s12 m3">
+                                            <select name="cc_forma_pago_id" id="cc_forma_pago_id">
+                                                <option value="">- Formas de Pagos -</option>
+                                                {% if formas_pagos %}
+                                                    {% for elemento in formas_pagos %}
+                                                        <option value="{{elemento.value}}">{{elemento.display}}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                            <label>Forma de pago</label>                                
+                                        </div>                                         
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">   
+            <input type="hidden" id="paso_actual" name="paso_actual" value="1" />     
+            <button class="modal-close btn-flat" type="reset" onclick="cambioPaso('inicial')">CANCELAR</button>
+            <button class="btn waves-effect waves-light blue hide bt-anterior" onclick="cambioPaso('anterior')" type="button" >Anterior</button>
+            <button class="btn waves-effect waves-light green bt-siguiente" onclick="cambioPaso('siguiente')" type="button" >Siguiente</button>
+            <button class="btn waves-effect waves-light green hide bt-guardar" onclick="crearContrato()" type="button" >GUARDAR</button>
+            <input type="hidden" name="cc_id_empleado" id="cc_id_empleado" value="10016"/>
+        </div> 
+    </form>
+</div>

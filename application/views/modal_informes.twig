@@ -1,0 +1,161 @@
+<div id="modal_informes" name="modal_informes" class="modal modal-esc modal-fixed-footer" style="border-radius:10px; padding-top:0px; padding-bottom:0px; width:750px;">
+	<div class="modal-content" style="padding:0px; margin-top: 35.500; margin-bottom:0px;">
+        <h4 id="fijo1" class="titulo_row center-align" style="padding-top: 17px;"><b>INFORMES DE NOMINA</b></h4>
+    	<form method="POST" action="" name="fmrinformes" id="fmrinformes" onsubmit="generarInforme(); return false;">        
+          	<div class="modal-body">
+				<div class="row" style="padding-top:35px;margin-left:0rem; margin-right:0rem;margin-bottom: 0px">
+                    <div class="col s12 m4">
+                        <p class="left-align text"><b>INFORME:</b></p>
+                    </div> 					
+                    <div id="estilos" class="informe col s12 m8" >
+                        <select name="tipo" id="tipo" type="text"> 
+                            <option value="0" selected>Todos</option>
+                            <option value="relacion_nomina" ><b>Relacion de Nomina</b></option>
+                            <option value="desprendible_pago">Desprendible de Pago</option>
+                            <option value="3">Reporte de Provisiones</option>
+                            <option value="4">Liquidacion de Contrato </option>
+                            <option value="5">Liquidacion de Vacaciones </option>
+                            <option value="6">Relacion de Prima</option>
+                            <option value="7">Relacion de Cesantias e Intereses</option>
+                            <option value="8">Listasdo de Empleados</option>
+                            <option value="9">Certificacion Laboral</option>
+                            <option value="10">Listado de Entidades</option>
+                            <option value="11">Listado Centros de Costo</option>
+                            <option value="12">Listado Conceptos de Pago</option>
+                            <option value="13">Listado Grupo Contable</option>
+                       </select>                                                   
+                    </div>
+                    <div  class="col s4 m3">
+                        <p class="left-align text"><b>AÑO:</b></p>
+                    </div> 
+                    <div id="" class="informe2 input-field col s8 m3">
+						<div  class="input-field">
+                            <select id="año" >
+                                {% if lista_anos %}
+                                    {% for ano in lista_anos %}
+                                        {% if ano_actual == ano.value %}
+                                            <option value="{{ano.value}}" selected>{{ano.display}}</option>
+                                        {% else %}
+                                            <option value="{{ano.value}}">{{ano.display}}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </select></input>
+                        </div>
+					</div>
+                    <div class="col s4 m3">
+                        <p class="left-align text"><b>PERIODO:</b></p>
+                    </div>
+                    <div  class="informe2 input-field col s8 m3">
+                        <div class="input-field ">
+                            <select id="periodo">
+                                {% if lista_periodos %}
+                                    {% for periodo in lista_periodos %}
+                                        {% if periodo_actual == periodo.value %}
+                                            {% set estado_periodo_actual = periodo.estado %}
+                                            {% if periodo.estado_id == 7  %}
+                                                {% set color_text = 'red-text' %}
+                                            {% endif %}
+                                            <option value="{{periodo.value}}" selected>{{periodo.display}}</option>
+                                        {% else %}
+                                            <option value="{{periodo.value}}">{{periodo.display}}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col s12 m4">
+                        <p class="left-align text"><b>EMPLEADO:</b></p>
+                    </div> 
+                    <div id="empl" class="informe4 input-field col s12 m8">
+						<select name="empleado_informe" id="empleado_informe" required onchange="seleccionarEmpleado(this.value)">
+							<option value="" selected>Todos</option>
+							{% if lista_empleado %}
+								{% for emplead in lista_empleado %}
+									<option value="{{emplead.value}}">{{emplead.display}}</option>
+								{% endfor %}
+							{% endif %}
+						</select>
+
+					</div>
+                    <div class="col s12 m5">
+                        <p class="left-align text"><b>CENTRO DE COSTO:</b></p>
+                    </div> 
+                    <div id="cost" class="informe3 input-field col s12 m7" >
+                        <select  name="centro_costo" id="centro_costo" type="" > <!--Aca traigo la info de los centros de costos empresa seleccionada-->
+                           <option value="">Todos</option>
+                            {% if centros_costos %}
+								{% for empleado in centros_costos %}
+									<option value="{{empleado.value}}">{{empleado.display}}</option>
+								{% endfor %}
+							{% endif %}
+                        </select>                      
+                    </div>
+                    <div class="col s12 m5">
+                        <p class="left-align text"><b>ENTIDAD:</b></p>
+                    </div> 
+                    <div class="informe3 input-field col s12 m7"  >
+                        <select name="entidad_informe" id="entidad_informe"> <!--Aca traigo la info entidad empresa seleccionada-->
+                            <option  value="">Todos</option>
+                            {% if entidades %}
+								{% for entidad in entidades %}
+									<option id="enti" value="{{entidad.value}}">{{entidad.display}}</option>
+								{% endfor %}
+							{% endif %}
+                        </select>                              
+                    </div>
+                    <div class="col s12 m5">
+                        <p class="left-align text"><b>AREA:</b></p>
+                    </div> 
+                    <div id="area" name="" class="informe3 input-field col s12 m7" >
+                        <select  name="clase_concepto_pago_id" id="areas_informe" class="" type="" > <!--Aca traigo la info de area empresa seleccionada-->
+                            <option value="">Todos</option>
+                            {% if areas %}
+                                {% for area in areas %}
+                                    <option value="{{area.value}}">{{area.display}}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>                                                     
+                    </div>
+                    <div class="col s12 m5">
+                        <p class="left-align text"><b>CARGO:</b></p>
+                    </div> 
+                    <div id="carg" class="informe3 input-field col s12 m7" >
+                        <select  name="clase_concepto_pago_id" id="cargo_informe" class="" type="" > <!--Aca traigo la info de cargo empresa seleccionada-->
+                            <option value="">Todos</option>
+                            {% if cargos %}
+                                {% for cargo in cargos %}
+                                    <option value="{{cargo.value}}">{{cargo.display}}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>                                                       
+                    </div>
+                    <div class="col s12 m5">
+                        <p class="left-align text"><b>GRUPO CONTABLE:</b></p>
+                    </div> 
+                    <div id="grup" class="informe3 input-field col s12 m7" >
+                        <select  name="clase_concepto_pago_id" id="contable_informe" class="" type="" > <!--Aca traigo la info del grupo contable empresa seleccionada-->
+                            <option value="">Todos</option>
+                            {% if grupos_contables %}
+                                {% for elemento in grupos_contables %}
+                                    <option value="{{elemento.value}}">{{elemento.display}}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>                                                       
+                    </div>
+                </div>
+                
+				</div>
+			</div>
+			<div class="modal-footer" style="width: 712px;" >
+				<button class="modal-close btn-flat" type="reset"  ><b>CANCELAR</b></button>
+				<button class="btn waves-effect waves-light green " type="submit" style="border-radius:10px;" ><b>GENERAR</b></button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+    
+</script>

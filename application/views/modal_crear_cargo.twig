@@ -1,0 +1,22 @@
+<div id="modal_crear_cargo" name="modal_crear_cargo" class="modal modal-esc" style="border-radius:20px; padding-top:0px; padding-bottom:0px; width:520px;">
+	<div class="modal-content" style="padding:0px;">
+		<form method="POST" action="" name="fmrcrearcargo" id="fmrcrearcargo" onsubmit="crearCargo(); return false;">
+			<div class="row titulo_modal" style="border-radius:10px 10px 0px 0px;margin-left:0rem; margin-right:0rem;">
+				<center>
+					<h5>Igresar un nuevo cargo</h5>
+				</center>
+			</div>
+			<p style="font-size:20px; margin:10px;">¡Excelente noticias! Para crear un nuevo cargo solo debes de diligenciar el siguiente formulario.</p>
+			<div style="margin-top:40px;" class="modal-body">
+				<div class="row" style="margin-left:0rem; margin-right:0rem; ">
+					<div class="input-field col m6" style=" margin-top:-10px;">
+						<input id="cargo_crear" name="cargo_crear" type="text" class="validate" required/>
+						<label for="cargo_crear" style="font-size:15px;">Cargo</label>
+					</div>
+					<button class="modal-close btn-flat" type="reset"><b>CANCELAR</b></button>
+					<button class="btn waves-effect waves-light green btn-paso-1" type="submit" style="border-radius:10px;" ><b>GUARDAR</b></button>
+				</div>				
+			</div>
+		</form>
+	</div>
+</div>

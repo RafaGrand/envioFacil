@@ -1,0 +1,156 @@
+<style>
+    body {
+        /*padding-top: 20px;*/
+        /*background-image: url("public/imagenes/plataforma/background.jpg"); dejar login a la izquierda y fondo de un camion o algo a la derecha */
+        background-attachment: fixed; 
+        background-position:center;
+        background-repeat:no-repeat;
+        background-size: cover;
+}
+
+.container{
+    width : 85%;
+}
+.a {
+    line-height: 10%;
+}
+#md-new-user{
+    /*background-image: url("public/imagenes/plataforma/background.jpg");*/
+    overflow-x: hidden;
+}
+
+.h5{
+   
+    font-family: sans-serif;
+    font-size: 200%;
+}    
+.modal-footer{
+    text-align:center;
+}
+
+</style>
+<div class="page-header align-items-start min-vh-100" style="background-image: url('public/imagenes/plataforma/background.jpg');">
+    <span class="mask bg-gradient-dark opacity-6"></span>
+    <div class="container my-auto">
+        <div class="row">
+            <div class="col-lg-4 col-md-8 col-12 mx-auto">
+                <div class="card z-index-0 fadeIn3 fadeInBottom">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                            <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">EnvioFacil</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form  method="POST" action="#" name="fmrlogin" id="fmrlogin" onsubmit="login(); return false;" role="form" class="text-start">
+                            <div class="input-group input-group-outline my-3">
+                                <label class="form-label">Email</label>
+                                <input class="form-control" type="email" name='email' id='email' required>
+                            </div>
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Contraseña</label>
+                                <input id="clave2" name="password" type="password" class="form-control" required>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Iniciar Sesión</button>
+                            </div>
+                            <div class="text-center">
+                                <a href="{{base_url}}Login/recuperarClave" class="btn bg-gradient-primary w-100 my-4 mb-2">¿Olvidaste tu contraseña?</a>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2 modal-trigger" href="#md-new-user">No tienes una cuenta? <b>REGISTRATE</b></button>
+                            </div>
+                        </form>       
+                    </div>
+                </div>
+            </div>   
+        </div>
+    </div>
+</div>
+
+<!--MODAL DE REGISTRO DE NUEVO USAURIO-->
+
+<div id="md-new-user" class="modal modal-esc" style="border-radius:10px; padding-top:0px; padding-bottom:0px; width:850px; height:90%">
+    <div class="modal-content" style="padding:0px;">
+        <center>
+        <h5 class="center-align" style="color:#005EB8;padding-top:5px"><b>Registrate gratis, facil y rapido</b></h5>            
+        </center>
+        <form  method="POST" action="#" name="fmregistrouser" id="fmregistrouser" onsubmit="registrarUsuario(this); return false;">
+            <div class="modal-body">                
+                <div class="row">
+                    <div class="input-field col m6">
+                        <i class="material-icons prefix">contacts</i>
+                        <input id="nombre" name="nombre" type="text" class="validate" required>
+                        <label for="nombre">Nombres</label>
+                    </div>
+                    <div class="input-field col m6">                        
+                        <input id="apellido" name="apellido" type="text" class="validate" required>
+                        <label for="apellido">Apellidos</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col m6">
+                        <i class="material-icons prefix">contact_phone</i>
+                        <input id="celular" name="celular" type="text" class="validate" minlength="10" maxlength="10" required>
+                        <label for="celular">Celular</label>
+                    </div>
+                    <div class="input-field col m6">                        
+                        <input id="telefono_fijo" name="telefono_fijo" type="text" class="validate">
+                        <label for="telefono_fijo">Telefono fijo</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col m12">
+                        <i class="material-icons prefix">contact_mail</i>                                    
+                        <input id="correo" name="correo" type="email" class="validate" required>
+                        <label for="correo">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col m6">
+                        <i class="material-icons prefix">lock</i>
+                        <input id="clave" name="clave" type="password" class="validate" minlength="8" required>
+                        <i id="icono-psw" style="cursor:pointer; font-size:20px; margin-left:-30px; " class="material-icons prefix" onclick="mostrarPassword()">visibility_off</i>
+                        <label for="clave">Contraseña</label>
+                    </div>
+                    <div class="input-field col m6">                        
+                        <input id="clave1" name="clave1" type="password" class="validate" minlength="8" required>
+                        <i id="icono-psw1" style="cursor:pointer; font-size:20px; margin-left:-30px;"class="material-icons prefix " onclick="mostrarPassword1()" >visibility_off</i>
+                        <label for="clave1">Confirmar Contraseña</label>
+                    </div>
+                </div>                
+            </div>
+            <div class='row'>
+            <div class= "col s12 ">
+                    <div class= "col s4 ">
+                        <label for="condition" style="padding-right:10px;">
+                            <input type="checkbox" class="filled-in" checked="checked" id="condition" style="align:left" required/>
+                            <span>
+                                <a class="line" style="font-size:10px; color:nom-gp-1;" href="https://www.genera.pro/copia-de-politica-de-privacidad" target="_blank">Aceptar terminos y condiciones</a>
+                            </span>
+                        </label>    
+                    </div>
+                    <div class= "col s4">
+                        <label for="condition" style="padding-right:10px;">
+                            <input type="checkbox" class="filled-in" checked="checked" id="condition" style="align:left" required/>
+                            <span>
+                                <a class="line" style="font-size:10px; color:nom-gp-1;" href="" target="_blank">Autorizo envío de actualizaciones por e-mail</a>
+                            </span>
+                        </label>    
+                    </div>
+                    <div class= "col s4">
+                    <label for="conditions">
+                        <input type="checkbox" class="filled-in" checked="checked" name="fmpoliticas" id="conditions" required/>
+                        <span>
+                            <a style="font-size:10px; color:nom-gp-1;" href="https://www.genera.pro/politica-de-privacidad" target="_blank">Aceptar politica de privacidad y uso de datos </a>
+                        </span>
+                    </label>
+                    </div>
+                </div>
+                </div>
+            <div style="text-align:center; padding:20px; ">
+                    <button class="btn waves-effect waves-light" type="submit" >REGISTRARSE</button>
+                    <a href="#!" class="modal-close btn waves-effect waves-light">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

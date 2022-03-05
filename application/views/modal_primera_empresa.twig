@@ -1,0 +1,100 @@
+<style>
+#modalCrearEmpresa{
+   background-image: url("public/imagenes/plataforma/Background.png");
+    overflow-x: hidden;
+}
+.h5{
+  text-align:center;
+}
+</style>
+
+<div id="modalCrearEmpresa" name="modalCrearEmpresa" class="modal" style="text-align:center; border-radius:10px; padding-top:0px; padding-bottom:0px; width:850px;">
+    <div class="modal-content "> 
+      <form  method="POST" action="" name="fmrcrearprimeraempresa" id="fmrcrearprimeraempresa" onsubmit="crearPrimeraEmpresa(); return false;">
+        <div class="row">
+          <div class="col">
+            <i class="medium material-icons">settings</i>
+          </div>
+          <div class="col">
+            <center>
+            <h5 style="color:#005EB8;padding-top:5px"><b>Asistente de Configuración</b></h5>
+            </center>
+          </div>
+        </div>
+        <p class="text-intro">Muy bien¡ Ahora que estas registrado como usuario de GENERA lo primero que debes hacer es crear una empresa.</p>
+        <br>
+        <div class="modal-body">
+          
+          <div class="row">        
+            <div class="input-field col m6">
+              <i class="material-icons prefix">tag</i>
+              <input id="documento_empresa" name="documento_empresa" type="text" class="validate" required>
+              <label for="documento_empresa">Nit o Cedula</label>
+            </div>
+            <div class="input-field col m6">
+              <i class="material-icons prefix">business</i>
+              <input id="nombre" name="nombre" type="text" class="validate" required>
+              <label for="nombre">Nombre</label>
+            </div> 
+          </div>
+
+          <div class="row">
+            <div class="input-field col m6">
+              <i class="material-icons prefix"></i>
+              <select name="naturaleza" id="naturaleza" required>
+                <option value="PJ" selected>Persona Juridica</option>
+                <option value="PN">Persona Natural</option>
+              </select>
+              <label>Naturaleza</label>
+            </div>
+            <div class="input-field col m6">
+              <i class="material-icons prefix"></i>
+              <select name="sector_comercial_id" id="sector_comercial_id" required>
+                {% if sector_comercial %}
+                  {% for sectores in sector_comercial %}
+                    <option value="{{sectores.id_sector_comercial}}">{{sectores.sector_comercial}}</option>
+                  {% endfor %}
+                {% endif %}
+              </select>
+              <label>Sector Comercial</label>
+            </div>
+          </div> 
+
+          <div class="row">        
+            <div class="input-field col m6">
+              <i class="material-icons prefix">contact_phone</i>
+              <input id="telefono" name="telefono" type="number" maxlength="10" class="validate" required>
+              <label for="telefono">Telefono</label>
+            </div>
+            <div class="input-field col m6">
+              <i class="material-icons prefix">contact_mail</i>
+              <input id="email" name="email" type="text" class="validate" required>
+              <label for="email">Email</label>
+            </div> 
+          </div>
+
+          <div class="row">        
+            <div class="input-field col m6">
+              <i class="material-icons prefix"></i>
+              <select name="pais" id="pais">
+                <option value="colombia" selected>Colombia</option>
+              </select>
+              <label>Pais</label>
+            </div>
+            <div class="input-field col m6">
+              <i class="material-icons prefix">location_on</i>
+              <input id="direccion" name="direccion" type="text" class="validate" required>
+              <label for="direccion">Direccion</label>
+            </div> 
+          </div>
+
+        </div>
+        <div style="align:center;">
+          <center>
+            <button class="btn waves-effect waves-light green btn-paso-1" style="font-size:15px;border-radius:5px;" type="submit" >CREAR MI EMPRESA</button>
+            <a href="{{base_url}}" class="modal-close btn waves-effect waves-light green  orange" style="font-size:15px; border-radius:5px;">Cancelar</a>
+          </center>
+        </div> 
+      </form>  
+    </div>
+  </div>

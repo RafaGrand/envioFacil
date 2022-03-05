@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{base_url}}public/imagenes/apple-icon.png">
+        <link rel="icon" type="image/png" href="{{base_url}}public/imagenes/favicon.png">
+        <title>
+            EnvioFacil
+        </title>
+        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/lib/nprogress//nprogress.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/empresa.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/generales.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/menu.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/nomina.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/ajuste.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/miplan.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/menu_usuario.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/ajuste.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/informes.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/miplan.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <!--<link type="text/css" rel="stylesheet" href="{{base_url}}public/lib/materialize/css/materialize.min.css"  media="screen,projection"/>-->
+        <link type="text/css" rel="stylesheet" href="{{base_url}}public/lib/materialize/css/materialize.css"  media="screen,projection"/>
+        <!--Let browser know website is optimized for mobile-->
+        <!-- Nucleo Icons -->
+        <link href="{{base_url}}public/css/nucleo-icons.css" rel="stylesheet" />
+        <link href="{{base_url}}public/css/nucleo-svg.css" rel="stylesheet" />
+        <!-- Font Awesome Icons -->
+        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+        <!-- Material Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+        <!-- CSS Files -->
+        <link id="pagestyle" href="{{base_url}}public/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+    </head>
+
+    {% if modulo != 'login.twig' and modulo != 'olvidar_contrasena.twig' %}
+    <body class="g-sidenav-show  bg-gray-200">
+        {% include 'aside.twig' %}
+        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        {% include 'menu.twig' %}
+        <div class="container-modulo">
+            {% include  modulo %}
+        </div>
+        {% include 'footer.twig' %}
+    {% else %}
+    <body>
+    <main>
+        {% include  modulo %}
+    {% endif %}
+
+    {% if modulo != 'login.twig' %}
+        <center>
+            <div class="container-loader-cambio-pestaña">
+                <div class="preloader-wrapper big active loader-cambio-pestaña hide">
+                    <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </center>
+    {% endif %}
+    </main>
+    </body>
+</html>
+
+<script type="text/javascript" src="{{base_url}}public/js/utilities.js"></script>
+<script src="{{base_url}}public/lib/jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/sweetalert.js"></script>
+<script type="text/javascript" src="{{base_url}}public/lib/nprogress/nprogress.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/login.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/menu.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/usuario.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/empresa.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/empleado.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/contrato.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/ajuste.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/ajuste.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/miplan.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/nomina.js"></script>
+<script type="module" src="{{base_url}}public/ionicons/ionicons.esm.js"></script>
+<script nomodule src="{{base_url}}public/ionicons/ionicons.js"></script>
+
+<script src="{{base_url}}public/js/core/popper.min.js"></script>
+<script src="{{base_url}}public/js/core/bootstrap.min.js"></script>
+<script src="{{base_url}}public/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="{{base_url}}public/js/plugins/smooth-scrollbar.min.js"></script>
+<script>
+var win = navigator.platform.indexOf('Win') > -1;
+if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+    damping: '0.5'
+    }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+}
+</script>
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for EnvioFacil: parallax effects, scripts for the example pages etc -->
+<script src="{{base_url}}public/js/material-dashboard.min.js?v=3.0.0"></script>
+
+<script type="text/javascript" src="{{base_url}}public/lib/materialize/js/materialize.min.js"></script>
+
+<script>
+
+    window.addEventListener("keyup", function(event){
+        var codigo = event.keyCode || event.which;
+        if (codigo == 27){
+            $(".modal-esc").modal('close', true);
+        }
+    }, false);
+    
+    $('.menu-{{opcion_menu}}').addClass('active');
+
+    $(document).ready(function(){//INICIALIZA LOS COMPONENTES DE MATERIALIZE 
+
+        $('.sidenav').sidenav();
+        $('.modal').modal({dismissible:false});
+        $('select').formSelect();
+        $('.tooltipped').tooltip();
+        $('.fixed-action-btn').floatingActionButton();
+        $('.tabs').tabs();
+        $('.materialboxed').materialbox();
+        $('.datepicker').datepicker();
+        $('.carousel').carousel();
+        $('.slider').slider({duration:300,indicators: true,height:300});
+        $('.slider-tutoriales').slider({duration:300,indicators: false,height:300});
+        mostrarCrearEmpresaInicial({{cantidad_empresas}});
+        mostrarCambioEmpresa(0,0);
+    });
+
+</script>
+
+
+
+
+

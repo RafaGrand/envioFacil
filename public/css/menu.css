@@ -1,0 +1,24 @@
+#logo-empresa{
+    padding-right:30px;
+    padding-top:20px;
+}
+
+.nav-menu-principal{
+    border: none;
+}
+#nav-menu-principal
+{   
+    background: rgb(2,0,36);
+    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(8,41,142,1) 0%, rgba(0, 95, 184, 0) 0%, rgb(104 153 133 / 34%) 100%);
+    width: 100%;
+    padding:5px;
+}
+
+.menu-nom-empresa{
+    color: rgb(0,94,184);
+}
+
+#btn-menu-sidenav{
+
+    background-color: transparent ;
+}

@@ -1,0 +1,259 @@
+<style>
+    body{
+        overflow-y: auto;
+    }
+
+    .tbody-novedades {
+    display: block;
+    height: auto;
+    max.height: 300px;
+    overflow: auto;
+    }
+    .thead-novedades, .tbody-novedades .tr-novedades {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    }
+    .thead-novedades {
+    width: calc( 100% - 1em )
+    }
+    .table-novedades {
+    width: 100%;
+    }
+
+    .th-novedades, .td-novedades{
+        font-size: 13px;
+    }
+
+    .td-novedades{
+        padding:0px;
+    }
+</style>
+
+<div id="modal_novedades_nomina" class="modal modal-fixed-footer" style="width :70%; height:87%;">
+  <div class="modal-content" style="padding:0px;">
+    <p class="grey-text" style="height:7px; padding-left:30px; font-size:13px">
+      <span class="nom-empleado"></span>
+      <ion-icon name="chevron-forward-outline"></ion-icon> 
+      <span class="cargo-empleado"></span>
+    </p>
+    <div class="row">
+      <div class="col m12">
+        <ul class="tabs">
+          <li class="tab col m6"><a class="active" href="#tab1">Novedades de Pago y descuento</a></li>
+          <li class="tab col m6"><a href="#tab2">Novedades Empelado</a></li>
+        </ul>
+      </div>
+      <div id="tab1" class="col s12">
+
+        <div class="col m4">
+          <form method="POST" action="" name="fmrnovedadPD" id="fmrnovedadPD">
+            <br><br>
+            <div class="row">
+              <div class="input-field col m12">
+                <select name="add_concepto_pd_id" id="add_concepto_pd_id" required onchange="getConfigConceptoNovedad(this.value)">
+                  <option value="">-seleccione-</option>
+                  {% if lista_concepto_pagos %}                        
+                      {% for concepto_pagos in lista_concepto_pagos %}
+                          <option value="{{concepto_pagos.value}}">{{concepto_pagos.display}}</option>
+                      {% endfor %}   
+                  {% endif %}
+                </select>
+                <label>Concepto</label>
+              </div>
+            </div>
+            <!--<div class="row">
+              <div class="input-field col m12">
+                  <input id="add_se_expresa_en" name="add_se_expresa_en" type="text" readonly value="">
+                  <label for="add_se_expresa_en">Se expresa en</label>
+              </div>
+            </div>-->
+            <div class="row">
+              <div class="input-field col m12">
+                  <input id="add_observacion" name="add_observacion" type="text"  value="">
+                  <label for="add_observacion">Observacion</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col m6">
+                  <input id="add_cantidad" name="add_cantidad" type="number" class="validate" value="1" required onchange="calcularValorTotalPD()">
+                  <label for="add_cantidad">Cantidad</label>
+              </div>
+              <div class="input-field col m6">
+                  <input id="add_valor_unitario" name="add_valor_unitario" type="number" class="validate" required onchange="calcularValorTotalPD()">
+                  <label for="add_valor_unitario">Valor Unitario</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col m6">
+                  <input id="add_valor_total" name="add_valor_total" type="text" required readonly value="">
+                  <label for="add_valor_total">Valor Total</label>
+              </div>
+            </div>
+            <input id="add_id_movimeinto" name="add_id_movimeinto" type="hidden" value="0">
+            <input id="add_id_registro_empleado_nomina" name="add_id_registro_empleado_nomina" type="hidden" value="0">
+            <button class="btn-anadir-novedad btn waves-effect waves-light green btn-paso-1 green" type="button"  onclick="crearNovedadPD();">AÑADIR NOVEDAD</button>
+            <button class="btn-editar-novedad btn waves-effect waves-light green btn-paso-1 orange hide" type="button"  onclick="editarNovedadPD();">EDITAR NOVEDAD</button>
+            <a href="#!" class="btn-no-editar waves-effect waves-green btn-flat hide"  onclick="noEditarPD()" >NO EDITAR</a>
+          </form>
+        </div>
+        <div class="col m8">
+          <br>
+          <table class="highlight centered z-depth-2 table-novedades">
+            <caption><h6 class="grey-text">Novedades de pago y descuentas cargadas para el empleado</h6><br></caption>
+            <thead class="thead-novedades">
+              <tr class="tr-novedades">
+                  <th class="th-novedades" style="width:200px;">Concepto</th>
+                  <th class="th-novedades">cantidad</th>
+                  <th class="th-novedades">Valor unitario</th>
+                  <th class="th-novedades">Valor total</th>
+                  <th class="th-novedades" style="width:70px;">Editar</th>
+                  <th class="th-novedades" style="width:70px;">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody class="tbody-novedades tbody-novedades-pd">
+              <!--<tr class="tr-novedades">
+                <td class="td-novedades"><p>Concepto prueba</p></td>
+                <td class="td-novedades"><p>1</p></td>
+                <td class="td-novedades"><p>$27.000</p></td>
+                <td class="td-novedades"><p>$27.000</p></td>
+                <td class="td-novedades" style="width:70px;">
+                  <a class="btn-floating  waves-effect waves-light btn-small orange" onclick="abrirNovedadEmpleado()">
+                    <i class="material-icons ">create</i>
+                  </a>
+                </td>
+                <td class="td-novedades" style="width:70px;">
+                  <a class="btn-floating  waves-effect waves-light btn-small red" onclick="abrirLiquidarContrato()">
+                    <i class="material-icons">remove</i>
+                  </a>
+                </td>
+              </tr>-->   
+            </tbody>
+            <tfoot class="tfoot-novedades-pd hide">
+              <tr>
+                <td class="center-align" Colspan="4">
+                  <center>
+                    <img class="loader-modulo-modal" style="width :90%" src="https://softwaregenera.com/genera/public/imagenes/loader_modulo.gif">
+                  <center>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>      
+      </div>
+      <div id="tab2" class="col s12">
+        <div class="col m4">
+          <form method="POST" action="" name="fmrnovedadEMP" id="fmrnovedadEMP">
+            <br><br>
+            <div class="row">
+              <div class="input-field col m12 ">
+                <select name="novedad_empleado_id" id="novedad_empleado_id" required onchange="mostrarCamposAuxiliares(this.value)">
+                  <option value="">-seleccione-</option>
+                  {% if lista_novedad_empleado %}                        
+                      {% for novedades in lista_novedad_empleado %}
+                          <option value="{{novedades.value}}">{{novedades.display}}</option>
+                      {% endfor %}   
+                  {% endif %}
+                </select>
+                <label>Novedad que se aplicara</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col m6 ">
+                <input id="fecha_ini_novedad_emp" name="fecha_ini_novedad_emp" type="date" value=""  onchange="calcularDias()" style="font-size:14px;">  
+                <label for="fecha_ini_novedad_emp">Fecha Inicio</label>
+              </div>
+              <div class="input-field col m6 ">
+                <input id="fecha_fin_novedad_emp" name="fecha_fin_novedad_emp" type="date" value="" onchange="calcularDias()" style="font-size:14px;">  
+                <label for="fecha_fin_novedad_emp">Fecha Fin</label>
+              </div>
+            </div>
+            <div class="row campos-aux-emp hide">
+              <div class="input-field col m8 ">
+                <input id="num_incapacidad_licencia_emp" name="num_incapacidad_licencia_emp" type="text" maxlength="15">  
+                <label for="num_incapacidad_licencia_emp"># Incapacidad / Licencia</label>
+              </div>
+              <div class="input-field col m4 ">
+                <input id="codigo_novedad_emp" name="codigo_novedad_emp" type="text" maxlength="5">  
+                <label for="codigo_novedad_emp">Codigo</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col m6">
+                  <input id="cantidad_dias_novedad_emp" name="cantidad_dias_novedad_emp" type="text" disabled value="0">
+                  <label for="cantidad_dias_novedad_emp">Total Dias</label>
+              </div>
+              <div class="input-field col m6 campos-aux-emp hide">
+                  <input id="dias_cobrar_entidad_emp" name="dias_cobrar_entidad_emp" type="text" value="0">
+                  <label for="dias_cobrar_entidad_emp">Dias Cobro Entidad</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col m12">
+                  <input id="observacion_novedad_emp" name="observacion_novedad_emp" type="text"  value="">
+                  <label for="observacion_novedad_emp">Observacion</label>
+              </div>
+            </div>
+            <input id="fecha_ini_periodo_nomina" name="fecha_ini_periodo_nomina" value="{{fecha_ini_periodo_nomina}}" type="hidden">
+            <input id="fecha_fin_periodo_nomina" name="fecha_fin_periodo_nomina" value="{{fecha_fin_periodo_nomina}}" type="hidden">            
+            <input id="id_registro_novedad_empleado" name="id_registro_novedad_empleado" type="hidden" value="0">
+            <input id="id_empleado_emp" name="id_empleado_emp" type="hidden" value="0">
+            <input id="id_registro_empleado_nomina_emp" name="id_registro_empleado_nomina_emp" type="hidden" value="0">
+            <button class="btn-anadir-novedad-emp btn waves-effect waves-light green btn-paso-1 green" type="button"  onclick="crearNovedadEMP();">AÑADIR NOVEDAD</button>
+            <button class="btn-editar-novedad-emp btn waves-effect waves-light green btn-paso-1 orange hide" type="button"  onclick="editarNovedadEMP();">EDITAR NOVEDAD</button>
+            <a href="#!" class="btn-no-editar-emp waves-effect waves-green btn-flat hide"  onclick="noEditarEMP()" >NO EDITAR</a>
+          </form>
+        </div>
+        <div class="col m8">
+          <br>
+          <table class="highlight centered z-depth-2 table-novedades">
+            <caption><h6 class="grey-text">Novedades del empleado cargadas</h6><br></caption>
+            <thead class="thead-novedades">
+              <tr class="tr-novedades">
+                  <th class="th-novedades" style="width:150px;">Novedad</th>
+                  <th class="th-novedades">Fecha Inicial</th>
+                  <th class="th-novedades">Fecha Final</th>
+                  <th class="th-novedades">Total Dias</th>
+                  <th class="th-novedades" style="width:70px;">Editar</th>
+                  <th class="th-novedades" style="width:70px;">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody class="tbody-novedades tbody-novedades-emp">
+              <!--<tr class="tr-novedades">
+                <td class="td-novedades" style="width:150px;"><p>Novedad prueba</p></td>
+                <td class="td-novedades"><p>2022-02-01</p></td>
+                <td class="td-novedades"><p>2022-02-01</p></td>
+                <td class="td-novedades"><p>1</p></td>
+                <td class="td-novedades" style="width:70px;">
+                  <a class="btn-floating  waves-effect waves-light btn-small orange" onclick="abrirNovedadEmpleado()">
+                    <i class="material-icons ">create</i>
+                  </a>
+                </td>
+                <td class="td-novedades" style="width:70px;">
+                  <a class="btn-floating  waves-effect waves-light btn-small red" onclick="abrirLiquidarContrato()">
+                    <i class="material-icons">remove</i>
+                  </a>
+                </td>
+              </tr>-->
+            </tbody>
+            <tfoot class="tfoot-novedades-emp hide">
+              <tr>
+                <td class="center-align" Colspan="4">
+                  <center>
+                    <img class="loader-modulo-modal" style="width :90%" src="https://softwaregenera.com/genera/public/imagenes/loader_modulo.gif">
+                  <center>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="{{url_base}}nomina" class="modal-close waves-effect waves-green btn-flat">volver la modulo</a>
+  </div>
+</div>
+
+
+

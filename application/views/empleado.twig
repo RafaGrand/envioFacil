@@ -1,0 +1,105 @@
+<section style="padding: 10px;">
+    <br>
+    <div class="row">
+        <div class="col s10 m4">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">search</i>
+                    <input type="text" id="input_filtro_empleado" name="input_filtro_empleado" class="autocomplete" onkeyup="filtrarEmpleado()" placeholder="Nombre del empleado" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <div class="input-field col s12 m3">
+            <select name="select_filtro_empleado" id="select_filtro_empleado" onchange="filtrarEmpleado()">
+                <option value="0">- Todos -</option>
+                {% if estados %}
+                    {% for estado in estados %}
+                        <option value="{{estado.value}}">{{estado.display}}</option>
+                    {% endfor %}
+                {% endif %}
+                <option value="null">Sin contrato</option>
+            </select>
+            <label>Estado del contrato</label>                                
+        </div>
+        <div class="col s12 m2 offset-m3">
+            <a class="waves-effect waves-light btn green modal-trigger" href="#modal_crear_empleado"><i class="material-icons left">person_add</i>Crear Empleado</a>
+            <!--<a class="waves-effect waves-light btn green modal-trigger" href="#modal_crear_contrato" onclick="formularioCrearContrato(10016)"><i class="material-icons left"></i>Contrato</a>-->
+        </div>
+    </div>
+
+    <div class="row list-empleado">
+        {% if lista_empleado %}
+            {% for empleado in lista_empleado %}
+                <div class="col s12 m4">
+                    <ul class="collection hoverable" id="ul-card-empleado">
+                        <li class="collection-item avatar grey-text" onclick="abrirGestionEmpleado({{empleado.id_empleado}})">
+                            <img src="{{base_url}}public/imagenes/empleado/foto/{{empleado.foto}}" alt="" class="circle">
+                            <span style="padding-left: 30px;" class="title" style>
+                                Codigo
+                                {{empleado.id_empleado}}
+                            </span><br><br>
+                            <p style="padding-left: 30px;">
+                                <i class="tiny material-icons">person</i>
+                                {{empleado.nombre_empleado}}<br>
+                                <i class="tiny material-icons">confirmation_number</i>
+                                {{empleado.numero_documento}}<br>
+                                <i class="tiny material-icons">event_seat</i>
+                                {{empleado.cargo}}
+                            </p>
+                            
+                            {% if empleado.id_estado_contrato == 1 %}                                
+                                    <div class="secondary-content green-text">
+                                        <i class="material-icons small tooltipped" data-tooltip="Activo">done</i>
+                                    </div>
+                            {% elseif empleado.id_estado_contrato == 3 %} 
+                                    <div class="secondary-content blue-text">
+                                        <i class="material-icons small tooltipped" data-tooltip="Contrato Suspendido">pause</i>
+                                    </div>
+                            {% elseif empleado.id_estado_contrato == 4 %} 
+                                    <div class="secondary-content red-text">
+                                        <i class="material-icons small tooltipped" data-tooltip="Contrato Liquidado">not_interested</i>
+                                    </div>
+                            {% elseif empleado.id_estado_contrato == 0 %}  
+                                    <div class="secondary-content orange-text">
+                                        <i class="material-icons small tooltipped" data-tooltip="Sin contrato">warning</i>
+                                    </div>
+                            {% endif %}       
+                        </li>
+                    </ul>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="center-align">
+                <h5 class="grey-text">No hay empleados creados para la empresa seleccionada</h5>
+            </div>
+        {% endif %}
+        
+    </div>
+    <div class="center-align">
+        
+        <h5 class="grey-text msg-resultado hide">No hay resultado de busqueda<br><br><i class="material-icons small">sentiment_very_dissatisfied</i></h5>
+    </div>
+    <center>
+        <div class="preloader-wrapper big active loader-filter hide">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </center>
+</section>
+
+
+{% include 'modal_crear_empleado.twig' %}
+{% include 'modal_crear_contrato.twig' %}
+{% include 'modal_editar_contrato.twig' %}
+{% include 'modal_gestion_empleado.twig' %}
+
+
