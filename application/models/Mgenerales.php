@@ -36,19 +36,19 @@ class mgenerales extends CI_Model{
 		return false;
     }
 
-    function getListaProfesion(){
+    // function getListaProfesion(){
 
-        $this->db->select('id_profesion   ,descripcion');
-        $this->db->where("estado_id",1);
-        $this->db->order_by('descripcion', 'ASC');
-        $query = $this->db->get('profesion');
+    //     $this->db->select('id_profesion   ,descripcion');
+    //     $this->db->where("estado_id",1);
+    //     $this->db->order_by('descripcion', 'ASC');
+    //     $query = $this->db->get('profesion');
 
-        if ($query->num_rows()>0) {
-			return $query->result();
-		}
+    //     if ($query->num_rows()>0) {
+	// 		return $query->result();
+	// 	}
 		
-		return false;
-    }
+	// 	return false;
+    // }
 
     function getEstado(){
 
@@ -148,36 +148,36 @@ class mgenerales extends CI_Model{
 
     }
 
-    function getValorSalariominimo($ano){
+    // function getValorSalariominimo($ano){
 
-        $this->db->select("valor_numerico_configuracion as valor_salario_minimo");
-        $this->db->where("nombre_configuracion","salario_minimo");
-        $this->db->where("valor_configuracion",$ano);
-        $query = $this->db->get('configuracion_general');        
-        return $query->row();
+    //     $this->db->select("valor_numerico_configuracion as valor_salario_minimo");
+    //     $this->db->where("nombre_configuracion","salario_minimo");
+    //     $this->db->where("valor_configuracion",$ano);
+    //     $query = $this->db->get('configuracion_general');        
+    //     return $query->row();
 
-    }
+    // }
 
-    function  getValorAuxilioTransporte($ano){
+    // function  getValorAuxilioTransporte($ano){
 
-        $this->db->select("valor_numerico_configuracion as valor_auxilio_transporte");
-        $this->db->where("nombre_configuracion","auxilio_transporte");
-        $this->db->where("valor_configuracion",$ano);
-        $query = $this->db->get('configuracion_general');        
-        return $query->row();
+    //     $this->db->select("valor_numerico_configuracion as valor_auxilio_transporte");
+    //     $this->db->where("nombre_configuracion","auxilio_transporte");
+    //     $this->db->where("valor_configuracion",$ano);
+    //     $query = $this->db->get('configuracion_general');        
+    //     return $query->row();
 
-    }
+    // }
 
-    function getFactoresEmpresa(){
+    // function getFactoresEmpresa(){
 
-        $this->db->select("id_factores_porcentajes_empresa, empresa_id, descuento_salud, descuento_pension, fondo_solidaridad, arl_nivel_1, arl_nivel_2, arl_nivel_3, arl_nivel_4, caja_compensacion, icbf, sena, cesantias, intereses_cesantias, vacaciones, prima, dotacion,salud_empresa,pension_empresa");
-        $this->db->where("empresa_id",$this->session->userdata('id_empresa'));
-        $this->db->order_by('id_factores_porcentajes_empresa', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get('factores_porcentajes_empresa');
-        if($query->num_rows() == 0 ){
-            return false;
-        }
-        return  $query->row();
-    }
+    //     $this->db->select("id_factores_porcentajes_empresa, empresa_id, descuento_salud, descuento_pension, fondo_solidaridad, arl_nivel_1, arl_nivel_2, arl_nivel_3, arl_nivel_4, caja_compensacion, icbf, sena, cesantias, intereses_cesantias, vacaciones, prima, dotacion,salud_empresa,pension_empresa");
+    //     $this->db->where("empresa_id",$this->session->userdata('id_empresa'));
+    //     $this->db->order_by('id_factores_porcentajes_empresa', 'DESC');
+    //     $this->db->limit(1);
+    //     $query = $this->db->get('factores_porcentajes_empresa');
+    //     if($query->num_rows() == 0 ){
+    //         return false;
+    //     }
+    //     return  $query->row();
+    // }
 }

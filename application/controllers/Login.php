@@ -27,7 +27,7 @@ class Login extends CI_Controller {
 	public function index(){
 		
 		$this->session->sess_destroy();
-		$this->load->view('base',["base_url"=>base_url(),"modulo"=>'login.twig','cantidad_empresas'=>0,'id_empresa'=>0,"hola_mundo"=>"hola rafa degenerado compre teclado"]);
+		$this->load->view('base',["base_url"=>base_url(),"modulo"=>'login.twig','cantidad_empresas'=>0,'id_empresa'=>0]);
 	}
 
 	public function registrarUsuario(){

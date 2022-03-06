@@ -1,10 +1,7 @@
 function cerrarSesion(){
 
     Swal.fire({
-		//icon: 'question',
-		imageUrl: get_base_url()+'public/imagenes/alertas/pregunta.gif',
-		imageWidth: 150,
-		imageHeight: 150,
+		icon: 'question',
 		imageAlt: 'loading icon',
 		title: 'Esta a punto de salir del sistema',
 		html: '¿Desea continuar?',
