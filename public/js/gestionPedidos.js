@@ -4,4 +4,5 @@ const pedidosInstance = new Pedidos()
 
 $("#btn-nuevo-pedido").click(function(){
     pedidosInstance.abreModalPedidos()
+    console.log('test')
 });
