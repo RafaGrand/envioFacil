@@ -26,13 +26,15 @@ function registrarUsuario(form){
 
 			if(!dataResponse.status){
 				alerta(dataResponse.message);
+				NProgress.done();
 				return;
 			}
 
-			toast(dataResponse.message,'success');
-
+			NProgress.done();
+			alerta(dataResponse.message,'success');
 			$('#fmregistrouser')[0].reset();
-			$('.modal').modal().hide();
+			//$('.modal').modal().hide();
+			$('#md-new-user').modal('close', true);
 		} ,
 		error: function(){
             NProgress.done();

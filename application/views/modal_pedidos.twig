@@ -1,0 +1,104 @@
+<div id="modal_pedidos" class="modal modal-fixed-footer"  style="border-radius:10px; width:95%; height:100%;">
+    <form  method="post" action="" name="fmrnuevopedido" id="fmrnuevopedido" onsubmit="guardarPedido(this); return false;">
+        <div class="modal-content">
+            <h4 class="center-align">REGISTRAR PEDIDOS</h4>
+            <div class="form-nuevo-pedido">
+                <div class="row">
+                    <div class="col m9">
+                        <h6>Datos del envio:</h6>
+                        <br>
+                        <div class="row">
+                            <div class="input-field col s3">
+                                <button class="waves-effect waves-light btn info modal-trigger" href="#modal_cobertura" type="button">ver coberturas</button>
+                            </div>
+                            <div class="input-field col s3">
+                                    <select name="transportadora" required>
+                                    <option disabled selected>- Seleccione -</option>
+                                    <option value="1">Corrdinadora</option>
+                                    <option value="2">Servie Entrega</option>
+                                </select>
+                                <label>Transportadora</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder="Respuesto Carro" id="first_name" type="text" class="validate" maxlength="20" required>
+                                <label for="first_name">Nombre del Producto</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col m3">
+                        <h6>Medidas del paquete a enviar, recuerde las mededias deben de ser reales:</h6>
+                        <br>
+                        <div class="row">
+                            <div class="input-field col s3">
+                                <input placeholder="100000" id="valor" type="number" class="validate" required>
+                                <label for="valor">Valor Prodcuto</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder="20000" id="valor_envio" type="number" class="validate" required>
+                                <label for="valor_envio">Valor Envio</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder="100000" id="alto" type="number" class="validate" required>
+                                <label for="alto">Alto</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder="20000" id="ancho" type="number" class="validate" required>
+                                <label for="ancho">Ancho</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder="20000" id="largo" type="number" class="validate" required>
+                                <label for="largo">Largo</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder="20000" id="peso" type="number" class="validate" required>
+                                <label for="peso">Peso kg</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h6>Datos del destinatario:</h6>
+                <br>
+                <div class="row">
+                    <div class="input-field col s3">
+                            <select name="tipo_documento">
+                            <option value="CC">CEDULA</option>
+                            <option value="NIT">NIT</option>
+                        </select>
+                        <label>Tipo Documento</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input placeholder="00000000" id="numero_documento" type="text" class="validate" maxlength="10" required>
+                        <label for="numero_documento">Numero Documento</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input placeholder="Pepito Perez" id="nombre_cliente" type="text" class="validate" maxlength="80" required>
+                        <label for="nombre_cliente">Nombre del Cliente</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input placeholder="310 000 0000" id="celular_cliente" type="number" class="validate" required>
+                        <label for="celular_cliente"># Celular del Cliente</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <input placeholder="Barrio/calle/localidad/ciudad" id="direccion_envio" type="text" class="validate" maxlength="10" required>
+                        <label for="direccion_envio">Direccion del envio</label>
+                    </div>
+                    <div class="row" style="width:200px;">
+                        <div class="input-field col s3">
+                                <select name="generar_guia">
+                                <option value="SI">SI</option>
+                                <option value="NO">NO</option>
+                            </select>
+                            <label>¿Generar Guia?</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="waves-effect waves-light btn green" type="submit">GUARDAR PEDIDO</button>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>
+        </div>
+    </form>
+</div>

@@ -17,6 +17,10 @@ class Pedidos extends CI_Controller {
 		    $this->load->view('base',[
                 "base_url"              =>base_url(),
                 "modulo"                =>'pedidos.twig',
+                "opcion_menu"           => 'pedidos',
+                "data_sesion"           => $this->mgenerales->getDataSesion(),
+                "perfil_id"				=> $this->session->userdata('perfil_id'),
+				"dataTablaUsuarios"		=> $this->mgenerales->getdataTablaUsuarios(),
             ]);
 
         }else{

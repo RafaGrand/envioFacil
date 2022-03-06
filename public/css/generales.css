@@ -69,3 +69,15 @@
     transform: scale(1.4);
     opacity: 1.0;
   }
+
+  #menu-principal{
+      color: #4b74fd;
+      font-weight: bold;
+  }
+
+  .form-nuevo-pedido{
+      padding-left: 50px;
+      padding-right: 50px;
+    
+      
+  }

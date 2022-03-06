@@ -1,0 +1,52 @@
+<div id="modal_usuario" class="modal modal-fixed-footer modal-general" style="border-radius:10px; width:90%; height:90%;">
+    <div class="modal-content">
+        <h4>Usuarios actualmente registrados:</h4>
+        <table class="center highlight">
+            <thead>
+                <tr>
+                    <th>Fecha Registro</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Celular</th>
+                    <th>Estado</th>
+                    <th>Cambiar Estado</th>
+                    <th>Restablecer Contraseña</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for data in dataTablaUsuarios %}
+                <tr>
+                    <td>{{data.fecha_registro}}</td>
+                    <td>{{data.nombre_completo}}</td>
+                    <td>{{data.email}}</td>
+                    <td>{{data.celular}}</td>
+                    {% if data.id_estado == "1"  %}
+                        <td class="text-estad-{{data.id_usuario}}o green-text"><b>{{data.estado}}</b></td>
+                    {% elseif data.id_estado == "6" %}
+                        <td class="text-estado-{{data.id_usuario}} blue-text"><b>{{data.estado}}</b></td>
+                    {% else %}
+                        <td class="text-estado-{{data.id_usuario}} red-text"><b>{{data.estado}}</b></td>
+                    {% endif %}
+                    <td>
+                        <select onchange="CambiarEstadoUsuario({{data.id_usuario}},this.value)">
+                            <option value="" disabled selected>- Seleccione un Estado -</option>
+                            <option value="1">Activo</option>
+                            <option value="2">Bloqueado</option>
+                            <option value="6">En proceso</option>
+                        </select>
+                    </td>
+                    <td class="center-align">
+                        <a class="btn-floating  waves-effect waves-light btn-small blue tooltipped"  data-tooltip="Generar Cambio Contraseña" data-position="bottom" onclick="GenerarClave({{data.id_usuario}})">
+                            <i class="material-icons">vpn_key</i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CERRAR</a>
+    </div>
+</div>
+          

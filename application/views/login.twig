@@ -19,8 +19,11 @@
     overflow-x: hidden;
 }
 
+.modal-content{
+    overflow-x: hidden;
+}
+
 .h5{
-   
     font-family: sans-serif;
     font-size: 200%;
 }    
@@ -68,89 +71,51 @@
 </div>
 
 <!--MODAL DE REGISTRO DE NUEVO USAURIO-->
-
-<div id="md-new-user" class="modal modal-esc" style="border-radius:10px; padding-top:0px; padding-bottom:0px; width:850px; height:90%">
-    <div class="modal-content" style="padding:0px;">
-        <center>
-        <h5 class="center-align" style="color:#005EB8;padding-top:5px"><b>Registrate gratis, facil y rapido</b></h5>            
-        </center>
-        <form  method="POST" action="#" name="fmregistrouser" id="fmregistrouser" onsubmit="registrarUsuario(this); return false;">
-            <div class="modal-body">                
-                <div class="row">
-                    <div class="input-field col m6">
-                        <i class="material-icons prefix">contacts</i>
-                        <input id="nombre" name="nombre" type="text" class="validate" required>
-                        <label for="nombre">Nombres</label>
-                    </div>
-                    <div class="input-field col m6">                        
-                        <input id="apellido" name="apellido" type="text" class="validate" required>
-                        <label for="apellido">Apellidos</label>
-                    </div>
+<div id="md-new-user" class="modal modal-fixed-footer modal-general" style="border-radius:10px; width:850px; height:420px;">
+    <form  method="POST" action="#" name="fmregistrouser" id="fmregistrouser" onsubmit="registrarUsuario(this); return false;">
+        <div class="modal-content">
+            <h5 class="center-align" style="color:#005EB8;padding-top:5px"><b>Registrate gratis, facil y rapido</b></h5>
+            <div class="row">
+                <div class="input-field col m6">
+                    <i class="material-icons prefix">contacts</i>
+                    <input id="nombre" name="nombre" type="text" class="validate" required>
+                    <label for="nombre">Nombres</label>
                 </div>
-                <div class="row">
-                    <div class="input-field col m6">
-                        <i class="material-icons prefix">contact_phone</i>
-                        <input id="celular" name="celular" type="text" class="validate" minlength="10" maxlength="10" required>
-                        <label for="celular">Celular</label>
-                    </div>
-                    <div class="input-field col m6">                        
-                        <input id="telefono_fijo" name="telefono_fijo" type="text" class="validate">
-                        <label for="telefono_fijo">Telefono fijo</label>
-                    </div>
+                <div class="input-field col m6">                        
+                    <input id="apellido" name="apellido" type="text" class="validate" required>
+                    <label for="apellido">Apellidos</label>
                 </div>
-                <div class="row">
-                    <div class="input-field col m12">
-                        <i class="material-icons prefix">contact_mail</i>                                    
-                        <input id="correo" name="correo" type="email" class="validate" required>
-                        <label for="correo">Email</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col m6">
-                        <i class="material-icons prefix">lock</i>
-                        <input id="clave" name="clave" type="password" class="validate" minlength="8" required>
-                        <i id="icono-psw" style="cursor:pointer; font-size:20px; margin-left:-30px; " class="material-icons prefix" onclick="mostrarPassword()">visibility_off</i>
-                        <label for="clave">Contraseña</label>
-                    </div>
-                    <div class="input-field col m6">                        
-                        <input id="clave1" name="clave1" type="password" class="validate" minlength="8" required>
-                        <i id="icono-psw1" style="cursor:pointer; font-size:20px; margin-left:-30px;"class="material-icons prefix " onclick="mostrarPassword1()" >visibility_off</i>
-                        <label for="clave1">Confirmar Contraseña</label>
-                    </div>
-                </div>                
             </div>
-            <div class='row'>
-            <div class= "col s12 ">
-                    {# <div class= "col s4 ">
-                        <label for="condition" style="padding-right:10px;">
-                            <input type="checkbox" class="filled-in" checked="checked" id="condition" style="align:left" required/>
-                            <span>
-                                <a class="line" style="font-size:10px; color:nom-gp-1;" href="https://www.genera.pro/copia-de-politica-de-privacidad" target="_blank">Aceptar terminos y condiciones</a>
-                            </span>
-                        </label>    
-                    </div>
-                    <div class= "col s4">
-                        <label for="condition" style="padding-right:10px;">
-                            <input type="checkbox" class="filled-in" checked="checked" id="condition" style="align:left" required/>
-                            <span>
-                                <a class="line" style="font-size:10px; color:nom-gp-1;" href="" target="_blank">Autorizo envío de actualizaciones por e-mail</a>
-                            </span>
-                        </label>    
-                    </div>
-                    <div class= "col s4">
-                    <label for="conditions">
-                        <input type="checkbox" class="filled-in" checked="checked" name="fmpoliticas" id="conditions" required/>
-                        <span>
-                            <a style="font-size:10px; color:nom-gp-1;" href="https://www.genera.pro/politica-de-privacidad" target="_blank">Aceptar politica de privacidad y uso de datos </a>
-                        </span>
-                    </label>
-                    </div> #}
+            <div class="row">
+                <div class="input-field col m6">
+                    <i class="material-icons prefix">contact_phone</i>
+                    <input id="celular" name="celular" type="text" class="validate" minlength="10" maxlength="10" required>
+                    <label for="celular">Celular</label>
                 </div>
+                <div class="input-field col m6">
+                    <i class="material-icons prefix">contact_mail</i>                                    
+                    <input id="correo" name="correo" type="email" class="validate" required>
+                    <label for="correo">Email</label>
                 </div>
-            <div style="text-align:center; padding:20px; ">
-                    <button class="btn waves-effect waves-light" type="submit" >REGISTRARSE</button>
-                    <a href="#!" class="modal-close btn waves-effect waves-light">Cancelar</a>
             </div>
-        </form>
-    </div>
+            <div class="row">
+                <div class="input-field col m6">
+                    <i class="material-icons prefix">lock</i>
+                    <input id="clave" name="clave" type="password" class="validate" minlength="8" required>
+                    <i id="icono-psw" style="cursor:pointer; font-size:20px; margin-left:-30px; " class="material-icons prefix" onclick="mostrarPassword()">visibility_off</i>
+                    <label for="clave">Contraseña</label>
+                </div>
+                <div class="input-field col m6">                        
+                    <input id="clave1" name="clave1" type="password" class="validate" minlength="8" required>
+                    <i id="icono-psw1" style="cursor:pointer; font-size:20px; margin-left:-30px;"class="material-icons prefix " onclick="mostrarPassword1()" >visibility_off</i>
+                    <label for="clave1">Confirmar Contraseña</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="waves-effect waves-light btn green" type="submit">REGISTRARSE</button>
+            <a href="#!" class="modal-close btn grey">Cancelar</a>
+        </div>
+    </form>
 </div>
+

@@ -34,7 +34,7 @@ class Login extends CI_Controller {
 
 		$parametros = $this->input->post();
 
-		if(isset($parametros['clave'],$parametros['nombre'],$parametros['apellido'],$parametros['celular'],$parametros['telefono_fijo'],$parametros['correo'])){
+		if(isset($parametros['clave'],$parametros['nombre'],$parametros['apellido'],$parametros['celular'],$parametros['correo'])){
 			if($parametros['clave'] != $parametros['clave1']){
 				echo json_encode([
 					"status"  	 => false,
@@ -75,8 +75,9 @@ class Login extends CI_Controller {
 				'nombre' 		=> $parametros['nombre'],
 				'apellido' 		=> $parametros['apellido'],
 				'celular' 		=> $parametros['celular'],
-				'telefono_fijo' => $parametros['telefono_fijo'],
 				'email' 		=> $parametros['correo'],
+				'estado_id'     => self::ESTADO_EN_PROCESO,
+				'perfil_id'     => self::PERFIL_USUARIO,
 				'cuenta_id ' 	=> $cuenta_id
 			];
 
@@ -122,6 +123,7 @@ class Login extends CI_Controller {
 					$data = [
 						"id_usuario" => $response->id_usuario,
 						"id_cuenta"  => $response->cuenta_id,
+						"perfil_id"  => $response->perfil_id,
 						"nombre"     => ucwords($response->nombre),
 						"apellidos"  => ucwords($response->apellido),
 						"login"      => true

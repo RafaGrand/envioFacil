@@ -45,4 +45,26 @@ class musuario extends CI_Model{
         $query = $this->db->get();
         return $query->num_rows();
     }
+
+	function CambiarEstadoUsuario($id_usuario,$id_estado){
+
+		$response = new stdClass();
+		$response->status  = false;
+		$response->message = 'Se presento un error al actulizar los datos';
+		
+		$this->db->where('id_usuario', $id_usuario);
+		$this->db->update('usuario',['estado_id' =>$id_estado]);
+		
+		if ($this->db->affected_rows() > 0) {
+			$response->status  = true;
+			$response->message = 'Estado actualizado de forma exitosa.';
+			return $response;
+		}elseif($this->db->affected_rows() == 0){
+			$response->status  = true;
+			$response->message = 'No se detecto ningún cambio.';
+			return $response;
+		}
+
+		return $response;
+	}
 }

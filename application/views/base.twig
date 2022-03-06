@@ -10,16 +10,11 @@
             EnvioFacil
         </title>
         <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/lib/nprogress//nprogress.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/empresa.css">
         <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/generales.css">
         <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/menu.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/nomina.css">
         <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/ajuste.css">
         <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/miplan.css">
         <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/menu_usuario.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/ajuste.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/informes.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="{{base_url}}public/css/miplan.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
         <!--<link type="text/css" rel="stylesheet" href="{{base_url}}public/lib/materialize/css/materialize.min.css"  media="screen,projection"/>-->
@@ -38,7 +33,6 @@
 
     {% if modulo != 'login.twig' and modulo != 'olvidar_contrasena.twig' %}
     <body class="g-sidenav-show  bg-gray-200">
-        {% include 'aside.twig' %}
         <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         {% include 'menu.twig' %}
         <div class="container-modulo">

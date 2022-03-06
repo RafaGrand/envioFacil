@@ -36,20 +36,6 @@ class mgenerales extends CI_Model{
 		return false;
     }
 
-    // function getListaProfesion(){
-
-    //     $this->db->select('id_profesion   ,descripcion');
-    //     $this->db->where("estado_id",1);
-    //     $this->db->order_by('descripcion', 'ASC');
-    //     $query = $this->db->get('profesion');
-
-    //     if ($query->num_rows()>0) {
-	// 		return $query->result();
-	// 	}
-		
-	// 	return false;
-    // }
-
     function getEstado(){
 
         $this->db->select('id_estado,estado');
@@ -103,18 +89,14 @@ class mgenerales extends CI_Model{
 
     function getDataSesion(){
 
-        $this->db->select('e.nombre as nombre_empresa,u.email,u.avatar');
+        $this->db->select('u.email,u.avatar');
 		$this->db->from('usuario u');
 		$this->db->join('cuenta c', 'c.id_cuenta  = u.cuenta_id');
-		$this->db->join('empresa e', 'e.cuenta_id  = c.id_cuenta','left');
         $this->db->where("u.id_usuario",$this->session->userdata('id_usuario'));
-        $this->db->where("e.id_empresa",$this->session->userdata('id_empresa'));
         $query = $this->db->get();
         $dataUser = $query->row();
     
         $data = [
-            'id_empresa'        => $this->session->userdata('id_empresa'),
-            'nombre_empresa'    => $dataUser->nombre_empresa ?? 'No seleccionada',
             'id_usuario'        => $this->session->userdata('id_usuario'),
             'id_cuenta'         => $this->session->userdata('id_cuenta'),
             'nombre_user'       => $this->session->userdata('nombre').' '. $this->session->userdata('apellidos'),
@@ -148,36 +130,19 @@ class mgenerales extends CI_Model{
 
     }
 
-    // function getValorSalariominimo($ano){
+    function getdataTablaUsuarios(){
+        
+        $this->db->select("DATE(u.fecha_registro) as fecha_registro , UPPER(CONCAT(u.nombre,' ',u.apellido)) as nombre_completo,u.email,u.celular,e.estado,u.id_usuario,e.id_estado");
+		$this->db->from('usuario u');
+		$this->db->join('cuenta c', 'c.id_cuenta  = u.cuenta_id');
+        $this->db->join('estado e', 'e.id_estado  = u.estado_id');
+        $this->db->where("u.id_usuario <> ",$this->session->userdata('id_usuario'));
+        $query = $this->db->get();
 
-    //     $this->db->select("valor_numerico_configuracion as valor_salario_minimo");
-    //     $this->db->where("nombre_configuracion","salario_minimo");
-    //     $this->db->where("valor_configuracion",$ano);
-    //     $query = $this->db->get('configuracion_general');        
-    //     return $query->row();
+        if ($query->num_rows()>0) {
+			return $query->result();
+		}
 
-    // }
-
-    // function  getValorAuxilioTransporte($ano){
-
-    //     $this->db->select("valor_numerico_configuracion as valor_auxilio_transporte");
-    //     $this->db->where("nombre_configuracion","auxilio_transporte");
-    //     $this->db->where("valor_configuracion",$ano);
-    //     $query = $this->db->get('configuracion_general');        
-    //     return $query->row();
-
-    // }
-
-    // function getFactoresEmpresa(){
-
-    //     $this->db->select("id_factores_porcentajes_empresa, empresa_id, descuento_salud, descuento_pension, fondo_solidaridad, arl_nivel_1, arl_nivel_2, arl_nivel_3, arl_nivel_4, caja_compensacion, icbf, sena, cesantias, intereses_cesantias, vacaciones, prima, dotacion,salud_empresa,pension_empresa");
-    //     $this->db->where("empresa_id",$this->session->userdata('id_empresa'));
-    //     $this->db->order_by('id_factores_porcentajes_empresa', 'DESC');
-    //     $this->db->limit(1);
-    //     $query = $this->db->get('factores_porcentajes_empresa');
-    //     if($query->num_rows() == 0 ){
-    //         return false;
-    //     }
-    //     return  $query->row();
-    // }
+		return false;
+    }
 }

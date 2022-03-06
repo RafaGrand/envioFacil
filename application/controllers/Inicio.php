@@ -17,8 +17,11 @@ class Inicio extends CI_Controller {
 		    $this->load->view('base',[
                 "base_url"              =>base_url(),
                 "modulo"                =>'inicio.twig',
-				/*"data_sesion"           => $this->mgenerales->getDataSesion(),
-                "sector_comercial"      => $this->mempresa->getSectorComercial(),
+				"opcion_menu"           => 'inicio',
+				"data_sesion"           => $this->mgenerales->getDataSesion(),
+				"perfil_id"				=> $this->session->userdata('perfil_id'),
+				"dataTablaUsuarios"		=> $this->mgenerales->getdataTablaUsuarios(),
+                /*"sector_comercial"      => $this->mempresa->getSectorComercial(),
                 "cantidad_empresas"     => $this->musuario->UserCountEmpresa($this->session->userdata('id_usuario')),
 				"lista_empresa"         => $this->mempresa->getListaEmpresa($this->session->userdata('id_usuario')),
 				"id_empresa"            => $this->session->userdata('id_empresa'),

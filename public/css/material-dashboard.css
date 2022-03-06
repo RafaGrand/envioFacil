@@ -2440,29 +2440,8 @@ textarea.form-control-lg {
   .input-group .form-select.is-invalid:focus {
     z-index: 3; }
 
-.btn {
-  display: inline-block;
-  font-weight: 700;
-  line-height: 1.667;
-  color: #7b809a;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-color: transparent;
-  border: 1px solid transparent;
-  padding: 0.625rem 1.5rem;
-  font-size: 0.75rem;
-  border-radius: 0.5rem;
-  transition: all 0.15s ease-in; }
-  @media (prefers-reduced-motion: reduce) {
-    .btn {
-      transition: none; } }
   .btn:hover {
-    color: #7b809a; }
+    color: white; }
   .btn-check:focus + .btn, .btn:focus {
     outline: 0;
     box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.09), 0 2px 3px -1px rgba(0, 0, 0, 0.07); }

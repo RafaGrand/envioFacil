@@ -25,40 +25,28 @@ function alerta(message,icon ='error'){
 
     if(icon == 'error'){
         Swal.fire({
-            imageUrl: get_base_url()+'public/imagenes/alertas/error.gif',
-            imageWidth: 150,
-            imageHeight: 150,
-            imageAlt: 'loading icon',
+            icon: 'error',
             html: '<p style="font-size:18px">'+message+'</p>',
             confirmButtonColor: '#3085d6',
             confirmButtonText: '<span style="font-size:16px">Aceptar</span>',
         });
     }else if(icon == 'warning'){
         Swal.fire({
-            imageUrl: get_base_url()+'public/imagenes/alertas/warning.gif',
-            imageWidth: 150,
-            imageHeight: 150,
-            imageAlt: 'loading icon',
+            icon: 'warning',
             html: '<p style="font-size:18px">'+message+'</p>',
             confirmButtonColor: '#3085d6',
             confirmButtonText: '<span style="font-size:16px">Aceptar</span>',
         });
     }else if(icon == 'success'){
         Swal.fire({
-            imageUrl: get_base_url()+'public/imagenes/alertas/check.gif',
-            imageWidth: 150,
-            imageHeight: 150,
-            imageAlt: 'loading icon',
+            icon: 'success',
             html: '<p style="font-size:18px">'+message+'</p>',
             confirmButtonColor: '#3085d6',
             confirmButtonText: '<span style="font-size:16px">Aceptar</span>',
         });
     }else if(icon == 'info'){
         Swal.fire({
-            imageUrl: get_base_url()+'public/imagenes/alertas/pregunta.gif',
-            imageWidth: 150,
-            imageHeight: 150,
-            imageAlt: 'loading icon',
+            icon: 'info',
             html: '<p style="font-size:18px">'+message+'</p>',
             confirmButtonColor: '#3085d6',
             confirmButtonText: '<span style="font-size:16px">Aceptar</span>',

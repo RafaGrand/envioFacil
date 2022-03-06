@@ -17,11 +17,11 @@
     <div class="row nav-content">
       <div class="col s6 m11">
         <ul class="tabs tabs-transparent" style="margin-bottom:10px;">
-          <li class="tab"><a class="menu-inicio" style="font-size:18px;"   onclick="cargarModulo()">Inicio</a></li>
+          <li class="tab"><a id="menu-principal" class="menu-inicio" style="font-size:18px;"   onclick="cargarModulo()">Inicio</a></li>
           {# <li class="tab"><a class="menu-vender" style="font-size:18px;"   onclick="cargarModulo('vender')">Vender</a></li> #}
-          <li class="tab"><a class="menu-pedidos" style="font-size:18px;"   onclick="cargarModulo('pedidos')">Pedidos</a></li>
+          <li class="tab"><a id="menu-principal" class="menu-pedidos" style="font-size:18px;"   onclick="cargarModulo('pedidos')">Pedidos</a></li>
           {# <li class="tab"><a class="menu-cierres" style="font-size:18px;" onclick="cargarModulo('cierres')">Cierres</a></li> #}
-          <li class="tab"><a class="menu-novedades" style="font-size:18px;"  onclick="cargarModulo('novedades')">Novedades</a></li>
+          <li class="tab"><a id="menu-principal" class="menu-novedades" style="font-size:18px;"  onclick="cargarModulo('novedades')">Novedades</a></li>
         </ul>
       </div>
     </div>
@@ -34,7 +34,8 @@
   </button>
 </div>
 
-{% include 'modal_primera_empresa.twig' %}
-{% include 'modal_cambiar_empresa.twig' %}
+{% include 'aside.twig' %}
+{% include 'modal_perfil.twig' %}
+{% include 'modal_usuario.twig' %}
 
   
