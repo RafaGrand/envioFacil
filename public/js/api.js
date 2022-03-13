@@ -27,23 +27,24 @@ export class API {
                         return;
                     }
 
-                    Swal.fire({
-                        icon: 'success',
-                        html: dataResponse.message,
-                        backdrop: 'swal2-backdrop-show',
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                        position: 'center',
-                        showConfirmButton: true,
-                        showCancelButton: false,
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: '<span style="font-size:16px"><strong>Aceptar</strong></span>',
-                        width: 400
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = get_base_url()+'pedidos';
-                        }
-                    });
+                    return dataResponse.message
+                    // Swal.fire({
+                    //     icon: 'success',
+                    //     html: dataResponse.message,
+                    //     backdrop: 'swal2-backdrop-show',
+                    //     allowOutsideClick: false,
+                    //     allowEscapeKey: false,
+                    //     position: 'center',
+                    //     showConfirmButton: true,
+                    //     showCancelButton: false,
+                    //     confirmButtonColor: '#3085d6',
+                    //     confirmButtonText: '<span style="font-size:16px"><strong>Aceptar</strong></span>',
+                    //     width: 400
+                    // }).then((result) => {
+                    //     if (result.isConfirmed) {
+                    //         window.location.href = get_base_url()+'pedidos';
+                    //     }
+                    // });
                 } ,
                 error: function(){
                     NProgress.done();

@@ -30,18 +30,22 @@ class Pedidos extends CI_Controller {
         }
 	}
 
-    public function verCoberturas() {
+    function verCoberturas() {
         $parametros = $this->input->post();
 
         if(isset($parametros['usuario'],$parametros['clave'])) {
 
             $request = " 
-            <soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ser=\"https://sandbox.coordinadora.com/agw/ws/guias/1.6/server.php\">
+            <soapenv:Envelope 
+                xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" 
+                xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" 
+                xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" 
+                xmlns:ser=\"https://sandbox.coordinadora.com/agw/ws/guias/1.6/server.php\"
+            >
                 <soapenv:Header/>
                 <soapenv:Body>
                     <ser:Guias_ciudades soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">
                         <p xsi:type=\"ser:Agw_ciudadesIn\">
-                            <!--You may enter the following 2 items in any order-->
                             <usuario xsi:type=\"xsd:string\">".$parametros['usuario']."</usuario>
                             <clave xsi:type=\"xsd:string\">".$parametros['clave']."</clave>
                         </p>
@@ -81,5 +85,22 @@ class Pedidos extends CI_Controller {
                 'message'    => $response
             ]);
         }
+    }
+
+    function lista_municipio(){
+        $parametros = $this->input->post();
+        if(isset($parametros['id_departamento'])) {
+            
+            $municipios = $this->mpedidos->getMunicipios($parametros['id_departamento']);
+        }
+
+        echo json_encode($municipios);
+    }
+
+    function lista_departamento(){
+        $parametros = $this->input->post();
+        $departamentos = $this->mpedidos->getDepartamentos();
+
+        echo json_encode($departamentos);
     }
 }

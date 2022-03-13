@@ -4,6 +4,20 @@
             <h4 class="center-align">REGISTRAR PEDIDOS</h4>
             <div class="form-nuevo-pedido">
                 <div class="row">
+                    <div class="col m12">
+                        <div class="row">
+                            <div class="input-field col m6">
+                                <select class="form-control" id="departamento_id" name="departamento_id" required></select>
+                                <label for="departamento_id">Departamento</label>
+                            </div>
+                            <div class="input-field col m6">
+                                <select class="form-control" id="municipio_id" name="municipio_id" required></select>
+                                <label for="municipio_id">Municipio</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col m9">
                         <h6>Datos del envio:</h6>
                         <br>
@@ -14,8 +28,8 @@
                             <div class="input-field col s3">
                                     <select name="transportadora" required>
                                     <option disabled selected>- Seleccione -</option>
-                                    <option value="1">Corrdinadora</option>
-                                    <option value="2">Servie Entrega</option>
+                                    <option value="1">Coordinadora</option>
+                                    <option value="2">Servientrega</option>
                                 </select>
                                 <label>Transportadora</label>
                             </div>
