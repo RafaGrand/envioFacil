@@ -28,10 +28,13 @@ export class Pedidos {
         console.log('Generar recibo')
     }
 
-    async consultaCobertura() {
-        let obj = {municipio: 73001}
-
-        await this.api.buscaCobertura(obj)
+    async consultaCobertura(obj) {
+        try {
+            await this.api.buscaCobertura(obj)
+        }
+        catch (error) {
+            console.error(`Error: ${error.message}`)
+        }
     }
     
 }

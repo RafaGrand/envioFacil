@@ -10,4 +10,16 @@ class mpedidos extends CI_Model{
 		$this->load->database();
 	}
 
+	function getPedido(){
+
+        $this->db->select('id_pedido');
+        $query = $this->db->get('pedidos');
+
+        if ($query->num_rows()>0) {
+			return $query->result();
+		}
+		
+		return false;
+    }
+
 }
