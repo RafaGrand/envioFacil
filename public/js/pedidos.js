@@ -5,7 +5,7 @@ export class Pedidos {
     }
 
     abreModalPedidos() {
-        console.log('Modal pedidos')
+        // console.log('Modal pedidos')
     }
     
     rastrearPedidos() {
@@ -28,20 +28,31 @@ export class Pedidos {
         console.log('Generar recibo')
     }
 
-    async consultaCobertura(obj) {
-        try {
-            await this.api.buscaCobertura(obj)
-        }
-        catch (error) {
-            console.error(`Error: ${error.message}`)
-        }
+    consultaCobertura(obj) {
+        NProgress.start()
+        $.ajax({
+            url:  get_base_url()+'/pedidos/verCoberturas',
+            type: 'POST',
+            data: obj,
+            success: function(response) {
+                NProgress.done();
+                let dataResponse = jQuery.parseJSON(response);
+                // console.log(dataResponse.message)
+                sessionStorage.setItem('cobertura', JSON.stringify(dataResponse.message));
+            } ,
+            error: function(){
+                NProgress.done();
+                alerta('Se presento un error al intentar crear el elemento');
+                return;
+            }
+        });
     }
 
     traerMunicipio(departamento_id){
 
-        $("#municipio_id").empty();
+        // $("#municipio_id").empty();
 
-        let obj = {departamento_id: departamento_id}
+        let obj = {codigo: departamento_id}
         let html = ''
         let selected = ''
 
@@ -85,7 +96,7 @@ export class Pedidos {
     }
 
     traerDepartamento() {
-        $("#departamento_id").empty();
+        // $("#departamento_id").empty();
         let html = ''
         let selected = ''
 
@@ -111,13 +122,13 @@ export class Pedidos {
                 //     return;
                 // }
 
-                console.log(dataDepartamento)
+                // console.log(dataDepartamento)
 
                 for(let i=0;i<dataDepartamento.length;i++){
-                    if(dataDepartamento[i].id_departamento == departamento_id){
+                    if(dataDepartamento[i].codigo == departamento_id){
                         selected = 'selected';
                     }
-                    html += '<option '+selected+' value="'+dataDepartamento[i].id_departamento+'">'+dataDepartamento[i].nombre+'</option>';
+                    html += '<option '+selected+' value="'+dataDepartamento[i].codigo+'">'+dataDepartamento[i].nombre+'</option>';
                     selected = '';
                 }
                 $("#departamento_id").append(html);

@@ -55,7 +55,61 @@
                                 <td class="align-middle text-center text-xs">2136307845</td>
                                 <td class="align-middle text-center text-xs" align="center"> <b><font color="#3DF714">Enviado</font></b></td>
                                 <td class="align-middle text-center text-xs"><b>Creado por: </b>Test User<br><br><b>Editado por: </b>Test User</td>
-                                <td class="align-middle text-center text-xs" align="center"><strong> <a href="VALIDARPEDIDOS.php/?idpedido=134186&amp;noguia=2136307845&amp;tipodoc=CC&amp;nodoc=1081758651&amp;nombre=CINDY MEDINA POLO&amp;ciudad=SOLEDAD-ATLANTICO&amp;action=rastreo" target="_blank">RASTREO</a><br><br> <a href="VALIDARPEDIDOS.php/?idpedido=134186&amp;action=1&amp;consignacion=NO">EDITAR</a><br><br>  <a href="VALIDARPEDIDOS.php/?idpedido=134186&amp;noguia=2136307845&amp;action=registarnovedad">NOVEDAD</a><br><br> <a href="VALIDARPEDIDOS.php/?idpedido=134186&amp;noguia=2136307845&amp;action=rotulo" target="_blank">ROTULO</a><br><br> <a href="VALIDARPEDIDOS.php/?idpedido=134186&amp;noguia=2136307845&amp;action=recibodeventa" target="_blank">RECIBO DE VENTA</a><br><br></strong></td>
+                                <td class="align-middle text-center text-xs" align="center">
+                                    <strong> 
+                                        <a 
+                                            href="#modal_rastreo" 
+                                            target="_blank" 
+                                            class="modal-trigger tooltipped"
+                                            data-position="left"
+                                            data-tooltip="Rastrear pedido"
+                                        >
+                                            <i class="material-icons">search</i>
+                                        </a>
+                                        <br>
+                                        <br> 
+                                        <a 
+                                            href="#modal_editar" 
+                                            class="modal-trigger tooltipped"
+                                            data-position="left"
+                                            data-tooltip="Editar pedido"
+                                        >
+                                            <i class="material-icons">create</i>
+                                        </a>
+                                        <br>
+                                        <br>  
+                                        <a 
+                                            href="#modal_novedad" 
+                                            class="modal-trigger tooltipped"
+                                            data-position="left"
+                                            data-tooltip="Registrar novedad"
+                                        >
+                                            <i class="material-icons">add_alert</i>
+                                        </a>
+                                        <br>
+                                        <br> 
+                                        <a 
+                                            href="#modal_rotulo" 
+                                            class="modal-trigger tooltipped"
+                                            data-position="left"
+                                            data-tooltip="Generar rótulo"
+                                        >
+                                            <i class="material-icons">assignment</i>
+                                        </a>
+                                        <br>
+                                        <br> 
+                                        <a 
+                                            href="#modal_recibo_venta" 
+                                            class="modal-trigger tooltipped"
+                                            data-position="left"
+                                            data-tooltip="Generar recibo de venta"
+                                        >
+                                            <i class="material-icons">class</i>
+                                        </a>
+                                        <br>
+                                        <br>
+                                    </strong>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -67,3 +121,8 @@
 
 {% include 'modal_pedidos.twig' %}
 {% include 'modal_cobertura.twig' %}
+{% include 'modal_rastreo.twig' %}
+{% include 'modal_editar.twig' %}
+{% include 'modal_novedad.twig' %}
+{% include 'modal_rotulo.twig' %}
+{% include 'modal_recibo_venta.twig' %}

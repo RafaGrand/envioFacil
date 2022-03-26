@@ -35,65 +35,35 @@ class Pedidos extends CI_Controller {
 
         if(isset($parametros['usuario'],$parametros['clave'])) {
 
-            $request = " 
-            <soapenv:Envelope 
-                xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" 
-                xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" 
-                xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" 
-                xmlns:ser=\"https://sandbox.coordinadora.com/agw/ws/guias/1.6/server.php\"
-            >
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ser:Guias_ciudades soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">
-                        <p xsi:type=\"ser:Agw_ciudadesIn\">
-                            <usuario xsi:type=\"xsd:string\">".$parametros['usuario']."</usuario>
-                            <clave xsi:type=\"xsd:string\">".$parametros['clave']."</clave>
-                        </p>
-                    </ser:Guias_ciudades>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            ";
-
-            // print("Request: <br>");
-            // print("<pre>".htmlentities($request)."</pre>");
-
-
             $action = "Guias_ciudades";
-            $headers = [
-                'Method: POST',
-                'Connection: Keep-Alive',
-                'User-Agent: PHP-SOAP-CURL',
-                'Content-Type: text/xml; charset=utf-8',
-                'SOAPAction: '.$action,
-            ];
 
-            $ch = curl_init($this->location);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-            curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+            $client = new SoapClient($this->location.'?wsdl', array(
+                'classmap'=>array('Agw_ciudadesIn'=>'Agw_ciudadesIn'),
+                'debug'=>true,
+                'trace'=>true
+            ));
+            try {
+                $info = new Agw_ciudadesIn();
+                $resp = $client->$action($info);
+            
+            
+            } catch(Exception $e) {
+                var_dump($e);
+            }
 
-            $response = curl_exec($ch);
-            $err_status = curl_error($ch);
-
-            // print("Response: <br>");
-            // print("<pre>".$response."</pre>");
-           
+            // echo("<pre>".print_r(json_encode($resp))."</pre>");
             echo json_encode([
                 'status'  	 => true,
-                'message'    => $response
+                'message'    => $resp
             ]);
         }
     }
 
     function lista_municipio(){
         $parametros = $this->input->post();
-        if(isset($parametros['id_departamento'])) {
-            
-            $municipios = $this->mpedidos->getMunicipios($parametros['id_departamento']);
+        if(isset($parametros['codigo'])) {
+            $municipios = $this->mpedidos->getMunicipios($parametros['codigo']);
         }
-
         echo json_encode($municipios);
     }
 
@@ -103,4 +73,9 @@ class Pedidos extends CI_Controller {
 
         echo json_encode($departamentos);
     }
+}
+
+class Agw_ciudadesIn{
+    public $usuario = 'retabares.ws';
+    public $clave = 'c04dbbaa14d2c5600ff7f2ac6de2d5ae161bf1cb5a7df20ee7050db5bae5a945';
 }
