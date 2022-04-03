@@ -49,9 +49,6 @@ export class Pedidos {
     }
 
     traerMunicipio(departamento_id){
-
-        // $("#municipio_id").empty();
-
         let obj = {codigo: departamento_id}
         let html = ''
         let selected = ''
@@ -73,11 +70,6 @@ export class Pedidos {
                     dataMunicipio.message = 'Se presento un error al intentar crear el elemento';
                 }
 
-                // if(!dataMunicipio.status){
-                //     alerta(dataMunicipio.message);
-                //     return;
-                // }
-
                 for(let i=0;i<dataMunicipio.length;i++){
                     if(dataMunicipio[i].id_municipio == municipio_id){
                         selected = 'selected';
@@ -86,6 +78,7 @@ export class Pedidos {
                     selected = '';
                 }
                 $("#municipio_id").append(html);
+                $('select').formSelect();
             } ,
             error: function(){
                 NProgress.done();
@@ -96,7 +89,6 @@ export class Pedidos {
     }
 
     traerDepartamento() {
-        // $("#departamento_id").empty();
         let html = ''
         let selected = ''
 
@@ -117,13 +109,6 @@ export class Pedidos {
                     dataDepartamento.message = 'Se presento un error al intentar crear el elemento';
                 }
 
-                // if(!dataDepartamento.status){
-                //     alerta(dataDepartamento.message);
-                //     return;
-                // }
-
-                // console.log(dataDepartamento)
-
                 for(let i=0;i<dataDepartamento.length;i++){
                     if(dataDepartamento[i].codigo == departamento_id){
                         selected = 'selected';
@@ -132,6 +117,7 @@ export class Pedidos {
                     selected = '';
                 }
                 $("#departamento_id").append(html);
+                $('select').formSelect();
             } ,
             error: function(){
                 NProgress.done();
@@ -139,10 +125,5 @@ export class Pedidos {
                 return;
             }                                       
         });
-
-
     }
-
-    
-    
 }

@@ -7,21 +7,21 @@
                     <div class="col m12">
                         <div class="row">
                             <div class="input-field col m4">
-                                <select class="form-control" id="departamento_id" name="departamento_id" required>
+                                <select id="departamento_id" name="departamento_id" required>
                                     <option disabled selected>- Seleccione -</option>
                                 </select>
                                 <label>Departamento</label>
                             </div>
                             <div class="input-field col m4">
-                                <select class="form-control" id="municipio_id" name="municipio_id" required>
+                                <select id="municipio_id" name="municipio_id" required>
                                 </select>
                                 <label>Municipio</label>
                             </div>
                             <div class="input-field col m4">
                                 <select name="transportadora" required>
                                     <option disabled selected>- Seleccione -</option>
-                                    <option value="1">Coordinadora</option>
-                                    <option value="2">Servientrega</option>
+                                    <option value="1" disabled>Coordinadora</option>
+                                    <option value="2" disabled>Servientrega</option>
                                 </select>
                                 <label>Transportadora</label>
                             </div>
@@ -33,24 +33,19 @@
                         <h6>Datos del envio:</h6>
                         <br>
                         <div class="row">
-                            <div class="input-field col s3">
-                                <button class="waves-effect waves-light btn info modal-trigger" href="#modal_cobertura" type="button">ver coberturas</button>
-                            </div>
-                            <div class="input-field col s3">
-                            </div>
-                            <div class="input-field col s3">
-                                <input placeholder="Respuesto Carro" id="first_name" type="text" class="validate" maxlength="20" required>
+                            <div class="input-field col s6">
+                                <input placeholder="Repuesto Carro" id="first_name" type="text" class="validate" maxlength="20" required>
                                 <label for="first_name">Nombre del Producto</label>
                             </div>
                         </div>
                     </div>
                     <div class="col m3">
-                        <h6>Medidas del paquete a enviar, recuerde las mededias deben de ser reales:</h6>
+                        <h6>Medidas del paquete a enviar, recuerde las medidas deben de ser reales:</h6>
                         <br>
                         <div class="row">
                             <div class="input-field col s3">
                                 <input placeholder="100000" id="valor" type="number" class="validate" required>
-                                <label for="valor">Valor Prodcuto</label>
+                                <label for="valor">Valor Producto</label>
                             </div>
                             <div class="input-field col s3">
                                 <input placeholder="20000" id="valor_envio" type="number" class="validate" required>

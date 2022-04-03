@@ -30,6 +30,17 @@ class Pedidos extends CI_Controller {
         }
 	}
 
+    function soapCall($action, $params) {
+        $client = new SoapClient($this->location.'?wsdl');
+        try {
+            $resp = $client->$action($params);
+            return $resp;
+
+        } catch(Exception $e) {
+            var_dump($e);
+        }
+    }
+
     function verCoberturas() {
         $parametros = $this->input->post();
 
@@ -37,19 +48,22 @@ class Pedidos extends CI_Controller {
 
             $action = "Guias_ciudades";
 
-            $client = new SoapClient($this->location.'?wsdl', array(
-                'classmap'=>array('Agw_ciudadesIn'=>'Agw_ciudadesIn'),
-                'debug'=>true,
-                'trace'=>true
-            ));
-            try {
-                $info = new Agw_ciudadesIn();
-                $resp = $client->$action($info);
-            
-            
-            } catch(Exception $e) {
-                var_dump($e);
-            }
+            $resp = $this->soapCall($action, $parametros);
+
+            echo json_encode([
+                'status'  	 => true,
+                'message'    => $resp
+            ]);
+        }
+    }
+
+    function rastreoSimple() {
+        $parametros = $this->input->post();
+
+        if(isset($parametros['usuario'],$parametros['clave'],$parametros['codigo_remision'])) {
+            $action = "Guias_rastreoSimple";
+
+            $resp = $this->soapCall($action, $parametros);
 
             // echo("<pre>".print_r(json_encode($resp))."</pre>");
             echo json_encode([
@@ -61,6 +75,7 @@ class Pedidos extends CI_Controller {
 
     function lista_municipio(){
         $parametros = $this->input->post();
+
         if(isset($parametros['codigo'])) {
             $municipios = $this->mpedidos->getMunicipios($parametros['codigo']);
         }
@@ -73,9 +88,4 @@ class Pedidos extends CI_Controller {
 
         echo json_encode($departamentos);
     }
-}
-
-class Agw_ciudadesIn{
-    public $usuario = 'retabares.ws';
-    public $clave = 'c04dbbaa14d2c5600ff7f2ac6de2d5ae161bf1cb5a7df20ee7050db5bae5a945';
 }
