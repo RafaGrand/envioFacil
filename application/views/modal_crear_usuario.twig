@@ -1,0 +1,59 @@
+<style>
+    #content-modal{
+        padding : 5px;
+    }
+</style>
+<div id="md-new-user" class="modal modal-fixed-footer modal-general" style="border-radius:10px; width:90%; height:90%;">
+    <form  method="POST" action="#" name="fmregistrouser" id="fmregistrouser" onsubmit="registrarUsuario(this); return false;">
+        <div class="modal-content" id="content-modal">
+            <div class="encabezado-modal center-align">
+                <h4>Crear un nuevo usuario</h4>
+            </div>
+            <div class="row">
+                <div class="input-field col m4">
+                    <i class="material-icons prefix">contacts</i>
+                    <input id="nombre" name="nombre" type="text" class="validate" required>
+                    <label for="nombre">Nombres</label>
+                </div>
+                <div class="input-field col m4">
+                    <i class="material-icons prefix">contacts</i>                    
+                    <input id="apellido" name="apellido" type="text" class="validate" required>
+                    <label for="apellido">Apellidos</label>
+                </div>
+                <div class="input-field col m4">
+                    <i class="material-icons prefix">contact_mail</i>                                    
+                    <input id="correo" name="correo" type="email" class="validate" required>
+                    <label for="correo">Email</label>
+                </div>
+                <div class="input-field col m4">
+                    <i class="material-icons prefix">contact_phone</i>
+                    <input id="celular" name="celular" type="text" class="validate" minlength="10" maxlength="10" required>
+                    <label for="celular">Celular</label>
+                </div>
+                 <div class="input-field col m8">
+                    <i class="material-icons prefix">location_on</i>
+                    <input id="direccion" name="direccion" type="text" class="validate" minlength="10" required>
+                    <label for="direccion">Direccion</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col m3">
+                    <i class="material-icons prefix">lock</i>
+                    <input id="clave" name="clave" type="password" class="validate" minlength="8" required>
+                    <i id="icono-psw" style="cursor:pointer; font-size:20px; margin-left:-30px; " class="material-icons prefix" onclick="mostrarPassword()">visibility_off</i>
+                    <label for="clave">Contraseña</label>
+                </div>
+                <div class="input-field col m3">                        
+                    <input id="clave1" name="clave1" type="password" class="validate" minlength="8" required>
+                    <i id="icono-psw1" style="cursor:pointer; font-size:20px; margin-left:-30px;"class="material-icons prefix " onclick="mostrarPassword1()" >visibility_off</i>
+                    <label for="clave1">Confirmar Contraseña</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="waves-effect waves-light btn green" type="submit">REGISTRARSE</button>
+            <a href="#!" class="modal-close btn grey">Cancelar</a>
+        </div>
+    </form>
+</div>

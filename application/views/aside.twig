@@ -1,45 +1,29 @@
-{# aside #}
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3  ms-3   bg-gradient-dark" id="slide-out">
-<div class="sidenav-header">
-    <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-    <a class="navbar-brand m-0" href="#">
-    <img src="{{base_url}}public/imagenes/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
-    <span class="ms-1 font-weight-bold text-white">EnvioFacil </span>
-    </a>
-</div>
-<hr class="horizontal light mt-0 mb-2">
-<div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
-    <ul id="slide-out" class="navbar-nav">
-        <li class="nav-item mt-3">
-            <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Gestión De Usuarios</h6>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white " href="#">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="material-icons opacity-10">person</i>
+<ul id="slide-out" class="sidenav">
+    <li>
+        <div class="user-view">
+            <div class="background">
+                <img src="{{base_url}}public/imagenes/fondosidenav.jfif" width="400">
             </div>
-            <span class="nav-link-text ms-1">Perfil</span>
-            </a>
+            <a href="#user"><img class="circle" src="{{base_url}}public/imagenes/avatar/default_avatar.png"></a>
+            <a href="#name"><span class="white-text name">{{data_sesion.nombre_user}}</span></a>
+            <a href="#email"><span class="white-text email">{{data_sesion.email_user}}</span></a>
+        </div>
+    </li>
+    <li>
+        <a class="subheader">Configuracion</a>
+    </li>
+    <li>
+        <a href="#!"><i class="material-icons">person</i>Perfil</a>
+    </li>
+    {% if perfil_id == 1 %}
+        <li>
+            <a class="nav-link text-white modal-trigger" href="#modal_usuario"><i class="material-icons">people</i>Usuario</a>
         </li>
-        {% if perfil_id == 1 %}
-            <li class="nav-item">
-                <a class="nav-link text-white modal-trigger" href="#modal_usuario">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="material-icons opacity-10">assignment</i>
-                </div>
-                <span class="nav-link-text ms-1">Usuarios</span>
-                </a>
-            </li>
-        {% endif %}
-        <li class="nav-item">
-            <a class="nav-link text-white " href="#" onclick="cerrarSesion()">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="material-icons opacity-10">login</i>
-            </div>
-            <span class="nav-link-text ms-1">Cerrar Sesión</span>
-            </a>
-        </li>
-    </ul>
-</div>
-</aside>
-{# endaside #}
+    {% endif %}
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li>
+        <a href="#!" onclick="cerrarSesion()"><i class="material-icons opacity-10">login</i>Cerrar Sesións</a>
+    </li>
+</ul>

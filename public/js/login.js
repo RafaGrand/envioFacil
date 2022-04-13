@@ -33,8 +33,7 @@ function registrarUsuario(form){
 			NProgress.done();
 			alerta(dataResponse.message,'success');
 			$('#fmregistrouser')[0].reset();
-			//$('.modal').modal().hide();
-			$('#md-new-user').modal('close', true);
+			//$('#md-new-user').modal('close', true);
 		} ,
 		error: function(){
             NProgress.done();

@@ -1,121 +1,58 @@
 <style>
     body {
-        /*padding-top: 20px;*/
-        /*background-image: url("public/imagenes/plataforma/background.jpg"); dejar login a la izquierda y fondo de un camion o algo a la derecha */
+        padding-top: 40px;
+        background-image:url("../public/imagenes/plataforma/background.jpg");
         background-attachment: fixed; 
         background-position:center;
         background-repeat:no-repeat;
         background-size: cover;
-}
+    }
 
-.container{
-    width : 85%;
-}
-.a {
-    line-height: 10%;
-}
-#md-new-user{
-    /*background-image: url("public/imagenes/plataforma/background.jpg");*/
-    overflow-x: hidden;
-}
-
-.modal-content{
-    overflow-x: hidden;
-}
-
-.h5{
-    font-family: sans-serif;
-    font-size: 200%;
-}    
-.modal-footer{
-    text-align:center;
-}
-
+    .container{
+        width : 75%;
+    }
 </style>
-<div class="page-header align-items-start min-vh-100" style="background-image: url('public/imagenes/plataforma/background.jpg');">
-    <span class="mask bg-gradient-dark opacity-6"></span>
-    <div class="container my-auto">
+
+<div class="container1">    
+    <main>
         <div class="row">
-            <div class="col-lg-4 col-md-8 col-12 mx-auto">
-                <div class="card z-index-0 fadeIn3 fadeInBottom">
-                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                        <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                            <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">EnvioFacil</h4>
+            <div class="col s6 m6 ">
+                <center>
+                    <div class="container">
+                        <div  class="z-depth-3 y-depth-3 x-depth-3 grey grey-text lighten-4 row" style="display: inline-block; background-color:white; padding: 0px 40px 0px 40px; border: 1px; border-radius:5%; margin-top: 100px; solid #EEE; width:395px;">
+                            <div class="section">
+                                <img src="{{base_url}}public/imagenes/logo-ct.png" >
+                            </div>
+                            <div class="section">
+                                <form  method="POST" action="#" name="fmrlogin" id="fmrlogin" onsubmit="login(); return false;" role="form" class="text-start">
+                                    <div class="input-group input-group-outline my-3">
+                                        <label class="form-label">Email</label>
+                                        <input class="form-control" type="email" name='email' id='email' required>
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Contraseña</label>
+                                        <input id="clave2" name="password" type="password" class="form-control" required>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Iniciar Sesión</button>
+                                    </div>
+                                    <br>
+                                    <div class="text-center">
+                                        <a href="{{base_url}}Login/recuperarClave" class="btn bg-gradient-primary w-100 my-4 mb-2">¿Olvidaste tu contraseña?</a>
+                                    </div>
+                                    <!--<div class="text-center">
+                                        <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2 modal-trigger" href="#md-new-user">No tienes una cuenta? <b>REGISTRATE</b></button>
+                                    </div>-->
+                                </form>           
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <form  method="POST" action="#" name="fmrlogin" id="fmrlogin" onsubmit="login(); return false;" role="form" class="text-start">
-                            <div class="input-group input-group-outline my-3">
-                                <label class="form-label">Email</label>
-                                <input class="form-control" type="email" name='email' id='email' required>
-                            </div>
-                            <div class="input-group input-group-outline mb-3">
-                                <label class="form-label">Contraseña</label>
-                                <input id="clave2" name="password" type="password" class="form-control" required>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Iniciar Sesión</button>
-                            </div>
-                            <div class="text-center">
-                                <a href="{{base_url}}Login/recuperarClave" class="btn bg-gradient-primary w-100 my-4 mb-2">¿Olvidaste tu contraseña?</a>
-                            </div>
-                            <div class="text-center">
-                                <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2 modal-trigger" href="#md-new-user">No tienes una cuenta? <b>REGISTRATE</b></button>
-                            </div>
-                        </form>       
-                    </div>
-                </div>
+                </center>
             </div>   
-        </div>
-    </div>
+        </div>    
+    </main>
 </div>
+    
 
-<!--MODAL DE REGISTRO DE NUEVO USAURIO-->
-<div id="md-new-user" class="modal modal-fixed-footer modal-general" style="border-radius:10px; width:850px; height:420px;">
-    <form  method="POST" action="#" name="fmregistrouser" id="fmregistrouser" onsubmit="registrarUsuario(this); return false;">
-        <div class="modal-content">
-            <h5 class="center-align" style="color:#005EB8;padding-top:5px"><b>Registrate gratis, facil y rapido</b></h5>
-            <div class="row">
-                <div class="input-field col m6">
-                    <i class="material-icons prefix">contacts</i>
-                    <input id="nombre" name="nombre" type="text" class="validate" required>
-                    <label for="nombre">Nombres</label>
-                </div>
-                <div class="input-field col m6">                        
-                    <input id="apellido" name="apellido" type="text" class="validate" required>
-                    <label for="apellido">Apellidos</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col m6">
-                    <i class="material-icons prefix">contact_phone</i>
-                    <input id="celular" name="celular" type="text" class="validate" minlength="10" maxlength="10" required>
-                    <label for="celular">Celular</label>
-                </div>
-                <div class="input-field col m6">
-                    <i class="material-icons prefix">contact_mail</i>                                    
-                    <input id="correo" name="correo" type="email" class="validate" required>
-                    <label for="correo">Email</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col m6">
-                    <i class="material-icons prefix">lock</i>
-                    <input id="clave" name="clave" type="password" class="validate" minlength="8" required>
-                    <i id="icono-psw" style="cursor:pointer; font-size:20px; margin-left:-30px; " class="material-icons prefix" onclick="mostrarPassword()">visibility_off</i>
-                    <label for="clave">Contraseña</label>
-                </div>
-                <div class="input-field col m6">                        
-                    <input id="clave1" name="clave1" type="password" class="validate" minlength="8" required>
-                    <i id="icono-psw1" style="cursor:pointer; font-size:20px; margin-left:-30px;"class="material-icons prefix " onclick="mostrarPassword1()" >visibility_off</i>
-                    <label for="clave1">Confirmar Contraseña</label>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="waves-effect waves-light btn green" type="submit">REGISTRARSE</button>
-            <a href="#!" class="modal-close btn grey">Cancelar</a>
-        </div>
-    </form>
-</div>
+{% include 'modal_crear_usuario.twig' %}
 
