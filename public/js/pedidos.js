@@ -69,14 +69,11 @@ export class Pedidos {
                     dataMunicipio.status = false;
                     dataMunicipio.message = 'Se presento un error al intentar crear el elemento';
                 }
-
-                for(let i=0;i<dataMunicipio.length;i++){
-                    if(dataMunicipio[i].id_municipio == municipio_id){
-                        selected = 'selected';
-                    }
-                    html += '<option '+selected+' value="'+dataMunicipio[i].id_municipio+'">'+dataMunicipio[i].nombre+'</option>';
-                    selected = '';
+                $("#municipio_id").empty();
+                for(let i=0;i<dataMunicipio.length;i++){                
+                    html += '<option value="'+dataMunicipio[i].id_municipio+'">'+dataMunicipio[i].nombre+'</option>'; 
                 }
+
                 $("#municipio_id").append(html);
                 $('select').formSelect();
             } ,

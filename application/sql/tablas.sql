@@ -13,7 +13,7 @@ CREATE TABLE perfil (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE departamento (
-	id_departamento int(20) NOT NULL AUTO_INCREMENT,
+	id_departamento int(11) NOT NULL AUTO_INCREMENT,
 	nombre varchar(255) NOT NULL,
 	codigo int(20) NOT NULL,
 	PRIMARY KEY (id_departamento),
@@ -23,9 +23,9 @@ CREATE TABLE departamento (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE municipio (
-	id_municipio int(20) NOT NULL AUTO_INCREMENT,
-	departamento_id int(20) NOT NULL,
-	codigo int(11) NOT NULL,
+	id_municipio int(11) NOT NULL AUTO_INCREMENT,
+	departamento_id int(11) NOT NULL,
+	codigo_trasportadora int(8) unsigned zerofill,
 	nombre varchar(255) NOT NULL,
 	PRIMARY KEY(id_municipio),
     estado_id int not null DEFAULT 1,

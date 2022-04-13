@@ -89,9 +89,11 @@ class mgenerales extends CI_Model{
 
     function getDataSesion(){
 
-        $this->db->select('u.email,u.avatar');
+        $this->db->select('u.email,u.avatar,u.direccion,u.celular,m.codigo_transportadora,m.nombre as municipio, d.id_departamento,d.nombre as departamento');
 		$this->db->from('usuario u');
 		$this->db->join('cuenta c', 'c.id_cuenta  = u.cuenta_id');
+        $this->db->join('municipio m', 'm.id_municipio  = u.municipio_id','left');
+		$this->db->join('departamento d', 'd.codigo  = m.departamento_id','left');
         $this->db->where("u.id_usuario",$this->session->userdata('id_usuario'));
         $query = $this->db->get();
         $dataUser = $query->row();
@@ -100,8 +102,15 @@ class mgenerales extends CI_Model{
             'id_usuario'        => $this->session->userdata('id_usuario'),
             'id_cuenta'         => $this->session->userdata('id_cuenta'),
             'nombre_user'       => $this->session->userdata('nombre').' '. $this->session->userdata('apellidos'),
+            'direccion'         => $dataUser->direccion,
+            'celular'           => $dataUser->celular,
             'email_user'        => $dataUser->email ?? 'Correo no registrado',
             'avatar'            => $dataUser->avatar ?? 'default_avatar.png',
+            'codigo_trasportadora'  =>$dataUser->codigo_transportadora,
+            'municipio'             =>$dataUser->municipio, 
+            'id_departamento'       =>$dataUser->id_departamento,
+            'departamento'          => $dataUser->departamento
+
         ];
 
         return $data;
@@ -145,4 +154,31 @@ class mgenerales extends CI_Model{
 
 		return false;
     }
+
+    function getDepartamentos() {
+		$this->db->select('codigo, nombre');
+		$this->db->from('departamento');
+        $this->db->order_by('nombre');
+		$query = $this->db->get();
+
+		if ($query->num_rows()>0) {
+			return $query->result();
+		}
+		
+		return false;
+	}
+
+    function getMunicipios($id_dpto) {
+		$this->db->select('codigo_transportadora, nombre');
+		$this->db->from('municipio m');
+		$this->db->where("m.departamento_id = ".$id_dpto);
+        $this->db->order_by('nombre');
+		$query = $this->db->get();
+
+		if ($query->num_rows()>0) {
+			return $query->result();
+		}
+		
+		return false;
+	}
 }

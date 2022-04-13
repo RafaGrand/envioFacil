@@ -13,7 +13,7 @@ class Inicio extends CI_Controller {
 	public function index(){
 
         if($this->session->userdata('login')){	
-			
+				
 		    $this->load->view('base',[
                 "base_url"              =>base_url(),
                 "modulo"                =>'inicio.twig',

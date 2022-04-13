@@ -23,6 +23,7 @@ class Pedidos extends CI_Controller {
                 "data_sesion"           => $this->mgenerales->getDataSesion(),
                 "perfil_id"				=> $this->session->userdata('perfil_id'),
 				"dataTablaUsuarios"		=> $this->mgenerales->getdataTablaUsuarios(),
+                "departamentos"         => $this->mgenerales->getDepartamentos(),
             ]);
 
         }else{
@@ -42,19 +43,19 @@ class Pedidos extends CI_Controller {
     }
 
     function verCoberturas() {
-        $parametros = $this->input->post();
 
-        if(isset($parametros['usuario'],$parametros['clave'])) {
+        $parametros = [];
+        $parametros['usuario'] = 'retabares.ws';
+        $parametros['clave']   = 'c04dbbaa14d2c5600ff7f2ac6de2d5ae161bf1cb5a7df20ee7050db5bae5a945';
+        $action                = "Guias_ciudades";
 
-            $action = "Guias_ciudades";
+        $resp = $this->soapCall($action, $parametros);
 
-            $resp = $this->soapCall($action, $parametros);
-
-            echo json_encode([
-                'status'  	 => true,
-                'message'    => $resp
-            ]);
-        }
+        echo json_encode([
+            'status'  	 => true,
+            'data'       => $resp
+        ]);
+        
     }
 
     function rastreoSimple() {
@@ -76,10 +77,26 @@ class Pedidos extends CI_Controller {
     function lista_municipio(){
         $parametros = $this->input->post();
 
-        if(isset($parametros['codigo'])) {
-            $municipios = $this->mpedidos->getMunicipios($parametros['codigo']);
+        if(isset($parametros['departamento_id'])) {
+            $municipios = $this->mgenerales->getMunicipios($parametros['departamento_id']);
         }
-        echo json_encode($municipios);
+
+        if(!$municipios){
+
+            echo json_encode([
+                "status" => false,
+                "message"=> "No hay municipios disponibles"
+            ]);
+
+            return;
+        }
+
+        echo json_encode([
+            "status" => true,
+            "message"=> "",
+            "data"   => $municipios
+        ]);
+
     }
 
     function lista_departamento(){
