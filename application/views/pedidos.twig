@@ -4,46 +4,64 @@
 
     <table>
         <thead>
-            <th> No. </th>
-            <th> Guía </th>
             <th> Fecha </th>
+            <th> Guía </th>
             <th> Articulo </th>
             <th> Nombre </th>
             <th> Teléfono </th>
             <th> Dirección </th>
-            <th> Estado </th>
-            <th> Transportadora </th>
+            <th> Ciudad </th>
             <th> Estado guía</th>
+            <th> Transportadora </th>
             <th></th>
         </thead>
         <tbody>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="align-middle text-center text-xs" align="center">            
-                <a href="#modal_rastreo" target="_blank" class="modal-trigger tooltipped" data-position="left"   data-tooltip="Rastrear pedido"><i class="material-icons">search</i></a>
+            {% if listaPedidos %}
+                {% for pedido in listaPedidos %} 
+                    <tr>                  
+                        <td>{{pedido.fecha_creacion}}</td>
+                        <td>{{pedido.id_remision}}</td>
+                        <td>{{pedido.contenido}}</td>
+                        <td>{{pedido.nombre_destinatario}}</td>
+                        <td>{{pedido.telefono_destinatario}}</td>
+                        <td>{{pedido.direccion_destinatario}}</td>
+                        <td>{{pedido.ciudad}}</td>
+                        {% if pedido.id_estado == "10"  %}
+                            <td class="green-text"><b>{{pedido.estado}}</b></td>
+                        {% elseif pedido.id_estado == "9" %}
+                            <td class="blue-text"><b>{{pedido.estado}}</b></td>
+                        {% else %}
+                            <td class="red-text"><b>{{pedido.estado}}</b></td>
+                        {% endif %}
+                        <td>{{pedido.transportadora}}</td>
 
-                <a href="#modal_editar" class="modal-trigger tooltipped" data-position="left" data-tooltip="Editar pedido"><i class="material-icons">create</i></a>
+                        <td class="align-middle text-center text-xs" align="center">
+                            
+                            {% if pedido.id_estado == "10" %}
+                                <a href="#modal_rastreo" target="_blank" class="modal-trigger tooltipped" data-position="left"   data-tooltip="Rastrear pedido"><i class="material-icons">search</i></a>
 
-                <a href="#modal_novedad" class="modal-trigger tooltipped" data-position="left"
-                data-tooltip="Registrar novedad"><i class="material-icons">add_alert</i></a>
+                                <a href="#modal_novedad" class="modal-trigger tooltipped" data-position="left"
+                                data-tooltip="Registrar novedad"><i class="material-icons">add_alert</i></a>
+                            {% endif %}
 
-                <a href="#modal_rotulo" class="modal-trigger tooltipped"
-                data-position="left" data-tooltip="Generar rótulo"><i class="material-icons">assignment</i>     </a>
+                            {% if pedido.id_estado == "9" %}
+                                <a href="#modal_editar_pedido" class="modal-trigger tooltipped" data-position="left" data-tooltip="Editar pedido"><i class="material-icons">create</i></a>
+                            {% endif %}
 
-                <a href="#modal_recibo_venta" class="modal-trigger tooltipped"
-                data-position="left" data-tooltip="Generar recibo de venta"><i class="material-icons">class</i>
-                </a>
-            </td>
+                            
+
+                            <a href="#modal_rotulo" class="modal-trigger tooltipped"
+                            data-position="left" data-tooltip="Generar rótulo"><i class="material-icons">assignment</i>    </a>
+
+                            <a href="#modal_recibo_venta" class="modal-trigger tooltipped"
+                            data-position="left" data-tooltip="Generar recibo de venta"><i class="material-icons">class</i>
+                            </a>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+            {% endif %}
         </tbody>
-
     </table>
 
 </div>
@@ -51,7 +69,7 @@
 {% include 'modal_pedidos.twig' %}
 {% include 'modal_cobertura.twig' %}
 {% include 'modal_rastreo.twig' %}
-{% include 'modal_editar.twig' %}
+{% include 'modal_editar_pedido.twig' %}
 {% include 'modal_novedad.twig' %}
 {% include 'modal_rotulo.twig' %}
 {% include 'modal_recibo_venta.twig' %}

@@ -67,7 +67,7 @@ class mgenerales extends CI_Model{
                 return  false; 
                 }
             } catch (Exception $e) {
-                $this->db->insert('log_db',['descripcion' => $e,'adicional' => $this->db->error()]);
+                return  false; 
             }
         }
 

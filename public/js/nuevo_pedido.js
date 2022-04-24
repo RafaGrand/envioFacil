@@ -1,6 +1,11 @@
 function cambioPasoNuevoPedido(paso){
     
     if(paso == 2){
+
+        if(!validarCamposRequridosPaso1()){
+            return;
+        }
+
         $(".paso1").addClass('hide');
         $(".paso2").removeClass('hide');
         $(".btn-siguiente").addClass('hide');
@@ -71,7 +76,7 @@ function consultaCobertura(codigo_transportadora) {
     NProgress.start();
 
     const btn = document.querySelector(".btn-siguiente");
-    btn.disabled = false;
+    btn.disabled = true;
 
     $.ajax({
         url:  get_base_url()+'/pedidos/verCoberturas',
@@ -119,5 +124,131 @@ function encontrarCobertura(codigo_transportadora, array_response_transportadora
     }
 
     return false;
+}
+
+
+function validarCamposRequridosPaso1(){
+
+    let nombre_destinatario         = $('#nombre_destinatario').val();
+    let departamento_destinatario   = $('#departamento_destinatario').val();
+    let municipio_destinatario      = $('#municipio_destinatario').val();
+    let direccion_destinatario      = $('#direccion_destinatario').val();
+    let telefono_destinatario       = $('#telefono_destinatario').val();
+
+    if(nombre_destinatario == ""){
+        alerta('Debe de digitar el nombre del destinatario');
+        return false;
+    }else if(departamento_destinatario == ""){
+        alerta('Debe de seleccionar un departamento');
+        return false;
+    }else if(municipio_destinatario == ""){
+        alerta('Debe de seleccionar un municipio');
+        return false;
+    }else if(direccion_destinatario == ""){
+        alerta('Debe de digitar una direccion del destinatario');
+        return false;
+    }else if(telefono_destinatario == ""){
+        alerta('Debe de digitar el telefono del destinatario');
+        return false;
+    }
+    return true;
+}
+
+function validarCamposRequridosPaso2(){
+
+    let contenido       = $('#contenido').val();
+    let valor_declarado = $('#valor_declarado').val();
+    let alto            = $('#alto').val();
+    let ancho           = $('#ancho').val();
+    let largo           = $('#largo').val();
+    let peso            = $('#peso').val();
+    let trasportadora   = $('#trasportadora').val();
+
+    if(contenido == ""){
+        alerta('Debe de digitar el contenido del pedido');
+        return false;
+    }else if(alto == "" || alto <= 0 ){
+        alerta('El <b>alto</b> del empaque es necesario');
+        return false;
+    }else if(ancho == "" || ancho <= 0){
+        alerta('El <b>ancho</b> del empaque es necesario');
+        return false;
+    }else if(largo == "" || largo <= 0){
+        alerta('El <b>largo</b> del empaque es necesario');
+        return false;
+    }else if(peso == "" || peso <= 0){
+        alerta('El <b>peso</b> del empaque es necesario');
+        return false;
+    }else if(trasportadora == "" || trasportadora == "0"){
+        alerta('Debe de seleccionar una transportadora disponible');
+        return false;
+    }else if(valor_declarado == "" || valor_declarado <= 0){
+        alerta('Debe de digitar el valor declarado del pedido');
+        return false;
+    }
+
+    return true;
+}
+
+
+function guardarPedido(){
+
+    if(!validarCamposRequridosPaso2()){
+        return;
+    }
+
+    NProgress.start();
+
+    $.ajax({                                                                             
+		type: 'POST',                                                                              
+		url:  get_base_url()+'/pedidos/guardarPedido',										
+		data: $("#fmrnuevopedido").serialize(),      
+		success: function(response)                                                            
+		{ 
+			try{
+				var dataResponse = jQuery.parseJSON(response);
+			}catch(e){
+				var dataResponse = new Object();
+				dataResponse.status = false;
+				dataResponse.message = 'Se presento un error al intentar crear el usuario';
+			}
+
+			if(!dataResponse.status){
+				alerta(dataResponse.message);
+				NProgress.done();
+				return;
+			}
+
+            let data = dataResponse.data;
+            
+            NProgress.done();
+
+            Swal.fire({
+				icon: 'success',
+				title: 'Pedido Registrado de forma correcta',
+                html: '<br><b>Id de remision: </b>'+data.id_remision+'<br><b>Codigo de remision; </b>'+data.codigo_remision,
+				backdrop: 'swal2-backdrop-show',
+				allowOutsideClick: false,
+				allowEscapeKey: false,
+				position: 'center',
+				showConfirmButton: true,
+				showCancelButton: false,
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '<span style="font-size:16px"><strong>Aceptar</strong></span>',
+				width: 400
+			}).then((result) => {
+				if (result.isConfirmed) {
+					window.location.href = get_base_url() + 'pedidos';
+				}
+			});
+		} ,
+		error: function(){
+            NProgress.done();
+            alerta('Se presento un error al intentar crear el pedido');
+			return;
+        }                                                                                           
+	});
+
+
 }
 
