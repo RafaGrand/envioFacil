@@ -28,7 +28,7 @@
                     <td>{{data.email}}</td>
                     <td>{{data.celular}}</td>
                     {% if data.id_estado == "1"  %}
-                        <td class="text-estad-{{data.id_usuario}}o green-text"><b>{{data.estado}}</b></td>
+                        <td class="text-estad-{{data.id_usuario}} green-text"><b>{{data.estado}}</b></td>
                     {% elseif data.id_estado == "6" %}
                         <td class="text-estado-{{data.id_usuario}} blue-text"><b>{{data.estado}}</b></td>
                     {% else %}

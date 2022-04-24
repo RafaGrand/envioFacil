@@ -1,5 +1,5 @@
 <style>
-    #modal_pedidos{
+    #modal_editar_pedido{
         height : 90%;
         border-radius:10px; 
         width:60%;
@@ -15,11 +15,11 @@
     }
 </style>
 
-<div id="modal_pedidos" class="modal modal-fixed-footer">
-    <form  method="post" action="" name="fmrnuevopedido" id="fmrnuevopedido" onsubmit="guardarPedido(this); return false;">
+<div id="modal_editar_pedido" class="modal modal-fixed-footer">
+    <form  method="post" action="" name="fmreditarpedido" id="fmreditarpedido" onsubmit="guardarEditarPedido(this); return false;">
         <div class="modal-content" id="content-modal">          
             <div class="encabezado-modal center-align">
-                <h4>Ingresar un nuevo pedido</h4>
+                <h4>Edicion de pedidos</h4>
             </div>
 
             <div class="row div-form z-depth-1 paso1 ">
@@ -124,13 +124,13 @@
                             <option value="2" disabled>Servientrega</option>
                         </select>
                     </div>
-                    <!--<div class="input-field col m4">
-                        <select name="generar_guia" id="generar_guia" >
-                            <option value="SI">SI</option>
-                            <option value="NO">NO</option>
+                    <div class="input-field col m5">
+                        <select name="trasportadora" id="trasportadora" class="browser-default" >
+                            <option value="0" selected>- <b>Trasportadoras Disponibles</b> -</option>
+                            <option value="1" disabled>Coordinadora</option>
+                            <option value="2" disabled>Servientrega</option>
                         </select>
-                        <label><b>Generar Guia</b></label>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>
@@ -144,7 +144,7 @@
             <button class="waves-effect waves-light btn blue btn-siguiente" type="button" onclick="cambioPasoNuevoPedido('2')" disabled>
                 <i class="material-icons right">arrow_forward</i>Siguiente
             </button>
-            <button class="waves-effect waves-light btn green hide btn-guardar-pedido" type="button" onclick="guardarPedido()" >GUARDAR PEDIDO</button>
+            <button class="waves-effect waves-light btn green hide btn-guardar-pedido" type="button" onclick="guardarEditarPedido()" >EDITAR PEDIDO</button>
             </div>
         </div>
     </form>

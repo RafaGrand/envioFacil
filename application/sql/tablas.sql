@@ -646,3 +646,48 @@ CREATE TABLE novedad_empleado_defecto (
   estado_id int DEFAULT '1',
   PRIMARY KEY (id_novedad_empleado_defecto)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_danish_ci;
+
+
+
+CREATE table transportadora(
+    id_transportadora int not null AUTO_INCREMENT,
+    nombre varchar(60),
+    usuario_ws varchar(60),
+    clave_ws varchar(100),
+    url_ws varchar(200),
+    estado_id int DEFAULT 1,
+    PRIMARY KEY(id_transportadora),
+    FOREIGN KEY (estado_id)
+        REFERENCES estado (id_estado)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE pedido(
+    id_pedido int not null AUTO_INCREMENT,
+    fecha_creacion datetime DEFAULT current_timestamp,
+    nombre_remitente varchar(60),
+    direccion_remitente varchar(200),
+    telefono_remitente varchar(10),
+    ciudad_remitente varchar(10),
+    nombre_destinatario varchar(60),
+    direccion_destinatario varchar(200),
+    ciudad_destinatario varchar(10),
+    telefono_destinatario varchar(10),
+    valor_declarado float,
+    contenido varchar(100),
+    alto  float,
+    ancho float,
+    largo float,
+    peso float,
+    unidades int,
+    id_remision varchar(20),
+    codigo_remision varchar(20),
+    pdf_guia text,
+    cuenta_id int,
+    estado_id int DEFAULT 9, 
+    PRIMARY KEY (id_pedido),
+    FOREIGN KEY (cuenta_id)
+        REFERENCES cuenta (id_cuenta),
+    FOREIGN KEY (estado_id)
+        REFERENCES estado (id_estado)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
