@@ -7,7 +7,7 @@ class Pedidos extends CI_Controller {
 		parent::__construct();
 		$this->load->model('mpedidos');
 		$this->load->model('mgenerales');
-        $this->location = "https://sandbox.coordinadora.com/agw/ws/guias/1.5/server.php";
+        $this->location = "https://sandbox.coordinadora.com/agw/ws/guias/1.6/server.php";
         // $this->guiasCiudades = new GuiasCiudades(); 
         // $this->load->model('mempresa');
 	}
@@ -119,10 +119,9 @@ class Pedidos extends CI_Controller {
         $data = array(
             "codigo_remision"       => "",
             "id_remitente"          => $dataSesion['id_cuenta'],
-            // "nit_remitente"         => "",
+            "nit_remitente"         => "",
             "fecha"                 => date('Y-m-d'),
             "id_cliente"            => 37587,
-            "id_remitente"            => 0,
             "nombre_remitente"      => $dataSesion['nombre_user'],
             "direccion_remitente"   => $dataSesion['direccion'],    
             "telefono_remitente"    => $dataSesion['celular'],
@@ -159,7 +158,6 @@ class Pedidos extends CI_Controller {
             "recaudos"              =>array(),
             "margen_izquierdo"      =>"",
             "margen_superior"       =>"",
-            "id_rotulo"             =>"12345678",
             "usuario_vmi"           =>"",
             "formato_impresion"     =>"",
             "atributo1_nombre"      =>"",
@@ -181,7 +179,7 @@ class Pedidos extends CI_Controller {
         );
 
         $resp = $this->soapCall($action, $data);
-        var_dump($resp);
+
         if(!$resp){
             echo json_encode([
                 'status'  	 => false,
@@ -208,7 +206,7 @@ class Pedidos extends CI_Controller {
             "unidades"                  => 1,
             "id_remision"               => $resp->id_remision,
             "codigo_remision"           => $resp->codigo_remision,
-            "pdf_guia"                  => $resp->pdf_rotulo,
+            "pdf_guia"                  => $resp->pdf_guia,
             "cuenta_id"                 => $dataSesion['id_cuenta'],
             "transportadora_id "        => 1
         ];    
