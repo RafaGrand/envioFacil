@@ -36,16 +36,25 @@ class ComposerStaticInitf7800544bcc2002c89cc898207a23644
         'P' => 
         array (
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
             'Prophecy\\' => 9,
         ),
         'M' => 
         array (
             'Mpdf\\' => 5,
         ),
+        'H' => 
+        array (
+            'Http\\Message\\' => 13,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
+        ),
+        'C' => 
+        array (
+            'Coordinadora\\' => 13,
         ),
     );
 
@@ -80,6 +89,10 @@ class ComposerStaticInitf7800544bcc2002c89cc898207a23644
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
         'Prophecy\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
@@ -88,6 +101,10 @@ class ComposerStaticInitf7800544bcc2002c89cc898207a23644
         array (
             0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
         ),
+        'Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/message-factory/src',
+        ),
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
@@ -95,6 +112,10 @@ class ComposerStaticInitf7800544bcc2002c89cc898207a23644
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'Coordinadora\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/saulmoralespa/coordinadora-webservice-php/src',
         ),
     );
 

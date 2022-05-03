@@ -20,7 +20,7 @@
                 {% for pedido in listaPedidos %} 
                     <tr>                  
                         <td>{{pedido.fecha_creacion}}</td>
-                        <td>{{pedido.id_remision}}</td>
+                        <td>{{pedido.codigo_remision}}</td>
                         <td>{{pedido.contenido}}</td>
                         <td>{{pedido.nombre_destinatario}}</td>
                         <td>{{pedido.telefono_destinatario}}</td>
@@ -56,6 +56,12 @@
                             <a href="#modal_recibo_venta" class="modal-trigger tooltipped"
                             data-position="left" data-tooltip="Generar recibo de venta"><i class="material-icons">class</i>
                             </a>
+
+                            <label>
+                                <input type="checkbox" />
+                                <span></span>
+                            </label>
+
                         </td>
 
                     </tr>

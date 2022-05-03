@@ -40,7 +40,7 @@ class mpedidos extends CI_Model{
 		$this->db->select('
 			p.id_pedido,
 			p.fecha_creacion,
-			p.id_remision,
+			p.codigo_remision,
 			p.contenido, 
 			p.nombre_destinatario, 
 			p.direccion_destinatario,

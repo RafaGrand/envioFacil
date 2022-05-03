@@ -250,7 +250,7 @@ class Login extends CI_Controller {
 		$this->session->sess_destroy();
 		$this->load->view('base', 
 		[
-			"base_url"=>"https://localhost/genera/",
+			"base_url"=>"https://localhost/plataforma/",
 			"modulo"=>'cambiar_contrasena.twig',
 			'cantidad_empresas'=>0,
 			'id_empresa'=>0,
