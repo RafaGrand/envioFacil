@@ -1,7 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+// require_once APPPATH.'vendor/autoload.php';
+// import webservice class
+// use Coordinadora\WebService;
+use Coordinadora\WebService;
 
 class Pedidos extends CI_Controller {
+
+    public $webservice;
 	
 	public function __construct(){
 		parent::__construct();
@@ -110,122 +116,148 @@ class Pedidos extends CI_Controller {
         echo json_encode($departamentos);
     }
 
+    function getWS() {
+        $apikey = 'c513d8b8-82de-11ec-a8a3-0242ac120002'; // your apikey of Coordinadora
+        $password = 'fQ9uR3kM1xI4wM6h'; // your password of Coordinadora
+        $nit = '1004736927'; //your nit
+
+        //guides
+        $id_client = '37587'; //your id client
+        $user_guide = 'retabares.ws'; //your user
+        $password_guide = 'c04dbbaa14d2c5600ff7f2ac6de2d5ae161bf1cb5a7df20ee7050db5bae5a945'; //your password
+
+
+        try{
+            $coordinadora = new WebService($apikey, $password, $nit, $id_client, $user_guide, $password_guide);
+            $coordinadora->sandbox_mode(true); //true for tests or false for production
+            return $coordinadora;
+        }
+        catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
+    }
+
     function guardarPedido(){
 
         $dataSesion = $this->mgenerales->getDataSesion();
         $parametros = $this->input->post();
-        $action = "Guias_generarGuia";
 
-        $data = array(
-            "codigo_remision"       => "",
-            "id_remitente"          => $dataSesion['id_cuenta'],
-            "nit_remitente"         => "",
-            "fecha"                 => date('Y-m-d'),
-            "id_cliente"            => 37587,
-            "nombre_remitente"      => $dataSesion['nombre_user'],
+        $coordinadora = $this->getWS();
+
+        $cart_prods[] = (object)array(
+            "peso"                  => (float)$parametros['peso'],
+            "ubl"                   => "0", 
+            "alto"                  => (float)$parametros['alto'],
+            "ancho"                 => (float)$parametros['ancho'],
+            "largo"                 => (float)$parametros['largo'],
+            "unidades"              => (float)1,
+            "referencia"            => "12345678",
+            "nombre_empaque"        => "some name"
+        );
+
+
+        $params = array(
+            'codigo_remision' => '',
+            'fecha' => '',
+            'id_remitente' => $dataSesion['id_cuenta'],
+            'nit_remitente' => '',
+            'nombre_remitente' => $dataSesion['nombre_user'],
             "direccion_remitente"   => $dataSesion['direccion'],    
             "telefono_remitente"    => $dataSesion['celular'],
             "ciudad_remitente"      => $dataSesion['codigo_trasportadora'],
-            "nit_destinatario"      => "",
-            "div_destinatario"      => "",
+            'nit_destinatario' => '0',
+            'div_destinatario' => '0',
             "nombre_destinatario"   => $parametros['nombre_destinatario'], 
             "direccion_destinatario"=> $parametros['direccion_destinatario'],   
             "ciudad_destinatario"   => $parametros['municipio_destinatario'],
             "telefono_destinatario" => $parametros['telefono_destinatario'],
             "valor_declarado"       => $parametros['valor_declarado'],
-            "codigo_cuenta"         => "",
-            "codigo_producto"       => 0,
-            "nivel_servicio"        => 1,
-            "linea"                 => "",
-            "contenido"             => $parametros['contenido'],
-            "referencia"            => "",
-            "observaciones"         => "",
-            "estado"                => "IMPRESO", 
-            "detalle"               => array(    
-                "Agw_typeGuiaDetalle"   => array(          
-                "peso"                  => (float)$parametros['peso'],
-                "ubl"                   => "", 
-                "alto"                  => (float)$parametros['alto'],
-                "ancho"                 => (float)$parametros['ancho'],
-                "largo"                 => (float)$parametros['largo'],
-                "unidades"              => (float)1,
-                "referencia"            => "12345678",
-                "nombre_empaque"        => ""
-                )
+            'codigo_cuenta' => "2",
+            'codigo_producto' => "0",
+            'nivel_servicio' => "1",
+            'linea' => '',
+            "contenido" => $parametros['contenido'],
+            'referencia' => 'refeeradd',
+            'observaciones' => '',
+            'estado' => 'IMPRESO',
+            'detalle' => $cart_prods,
+            'cuenta_contable' => '',
+            'centro_costos' => '',
+            'recaudos' => '',
+            'margen_izquierdo' => '',
+            'margen_superior' => '',
+            'id_rotulo' => '0',
+            'usuario_vmi' => '',
+            'formato_impresion' => '',
+            'atributo1_nombre' => '',
+            'atributo1_valor' => '',
+            'notificaciones' => (object)array(
             ),
-            "cuenta_contable"       =>"",
-            "centro_costos"         =>"",
-            "recaudos"              =>array(),
-            "margen_izquierdo"      =>"",
-            "margen_superior"       =>"",
-            "usuario_vmi"           =>"",
-            "formato_impresion"     =>"",
-            "atributo1_nombre"      =>"",
-            "atributo1_valor"       =>"",
-            "notificaciones"        =>array(),
-            "atributos_retorno"     =>array(
-                "nit"           => "",
-                "div"           => "",
-                "nombre"        => "",
-                "direccion"     => "",
-                "codigo_ciudad" => "",
-                "telefono"      => ""
+            'atributos_retorno' => (object)array(
+                'nit' => '',
+                'div' => '',
+                'nombre' => '',
+                'direccion' => '',
+                'codigo_ciudad' => '',
+                'telefono' => ''
             ),
-            "nro_doc_radicados"     =>"",
-            "nro_sobre"             =>"",
-            "codigo_vendedor"       =>"",
-            "usuario"               => "retabares.ws",
-            "clave"                 => "c04dbbaa14d2c5600ff7f2ac6de2d5ae161bf1cb5a7df20ee7050db5bae5a945"
+            'nro_doc_radicados' => '',
+            'nro_sobre' => '',
         );
 
-        $resp = $this->soapCall($action, $data);
+        try{
+            $data = $coordinadora->Guias_generarGuia($params);
 
-        if(!$resp){
-            echo json_encode([
-                'status'  	 => false,
-                'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra trasportadora"
-            ]);
-            return;
+            if(!$data){
+                echo json_encode([
+                    'status'  	 => false,
+                    'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra trasportadora"
+                ]);
+                return;
+            }
+    
+            $data_insert =[
+                "nombre_remitente"          => $dataSesion['nombre_user'],
+                "direccion_remitente"       => $dataSesion['direccion'],    
+                "telefono_remitente"        => $dataSesion['celular'],
+                "ciudad_remitente"          => $dataSesion['codigo_trasportadora'],
+                "nombre_destinatario"       => $parametros['nombre_destinatario'], 
+                "direccion_destinatario"    => $parametros['direccion_destinatario'],   
+                "ciudad_destinatario"       => $parametros['municipio_destinatario'],
+                "telefono_destinatario"     => $parametros['telefono_destinatario'],
+                "valor_declarado"           => $parametros['valor_declarado'],
+                "contenido"                 => $parametros['contenido'],
+                "alto"                      => $parametros['alto'],
+                "ancho"                     => $parametros['ancho'],
+                "largo"                     => $parametros['largo'],
+                "peso"                      => $parametros['peso'], 
+                "unidades"                  => 1,
+                "id_remision"               => $data->id_remision,
+                "codigo_remision"           => $data->codigo_remision,
+                "pdf_guia"                  => $data->pdf_guia,
+                "cuenta_id"                 => $dataSesion['id_cuenta'],
+                "transportadora_id "        => 1
+            ];    
+    
+    
+            $id_pedido = $this->mgenerales->InsertarElemento('pedido',$data_insert);
+    
+            if(!$id_pedido){
+                //Implementar metodo para cancelar la remision generada en caso tal de que no se pueda insetar en al base de datos 
+                echo json_encode([
+                    'status'  	 => false,
+                    'message'    => "No fue posible guardar el pedido en la base de datos, se procede a cancelar el codigo de remision ".$resp->id_remision. ". Por favor intente nuevamente"
+                ]);
+                return;
+            }
+            
         }
-
-        $data_insert =[
-            "nombre_remitente"          => $dataSesion['nombre_user'],
-            "direccion_remitente"       => $dataSesion['direccion'],    
-            "telefono_remitente"        => $dataSesion['celular'],
-            "ciudad_remitente"          => $dataSesion['codigo_trasportadora'],
-            "nombre_destinatario"       => $parametros['nombre_destinatario'], 
-            "direccion_destinatario"    => $parametros['direccion_destinatario'],   
-            "ciudad_destinatario"       => $parametros['municipio_destinatario'],
-            "telefono_destinatario"     => $parametros['telefono_destinatario'],
-            "valor_declarado"           => $parametros['valor_declarado'],
-            "contenido"                 => $parametros['contenido'],
-            "alto"                      => $parametros['alto'],
-            "ancho"                     => $parametros['ancho'],
-            "largo"                     => $parametros['largo'],
-            "peso"                      => $parametros['peso'], 
-            "unidades"                  => 1,
-            "id_remision"               => $resp->id_remision,
-            "codigo_remision"           => $resp->codigo_remision,
-            "pdf_guia"                  => $resp->pdf_guia,
-            "cuenta_id"                 => $dataSesion['id_cuenta'],
-            "transportadora_id "        => 1
-        ];    
-
-
-        $id_pedido = $this->mgenerales->InsertarElemento('pedido',$data_insert);
-
-        if(!$id_pedido){
-            //Implementar metodo para cancelar la remision generada en caso tal de que no se pueda insetar en al base de datos 
-            echo json_encode([
-                'status'  	 => false,
-                'message'    => "No fue posible guardar el pedido en la base de datos, se procede a cancelar el codigo de remision ".$resp->id_remision. ". Por favor intente nuevamente"
-            ]);
-            return;
+        catch (\Exception $exception){
+            echo $exception->getMessage();
         }
-        
         echo json_encode([
             'status'  	 => true,
-            'data'       => $resp
+            'data'       => $data
         ]);
 
     }

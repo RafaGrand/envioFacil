@@ -103,7 +103,7 @@ class WebService
         return array(
             'id_cliente' => $this->id_client,
             'usuario' => $this->user_guide,
-            'clave' => hash('sha256', $this->password_guide)
+            'clave' => $this->password_guide
         );
     }
 
@@ -177,7 +177,7 @@ class WebService
     public function Guias_generarGuia($params)
     {
         $body = (object)array_merge($params, $this->_access_connect_guides());
-
+        var_dump($this->_access_connect_guides());
         return $this->call_soap(__FUNCTION__, $body);
     }
 
