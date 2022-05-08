@@ -684,8 +684,28 @@ CREATE TABLE pedido(
     codigo_remision varchar(20),
     pdf_guia text,
     cuenta_id int,
-    estado_id int DEFAULT 9, 
+    estado_id int DEFAULT 9,
+    despacho_id int DEFAULT 0
     PRIMARY KEY (id_pedido),
+    FOREIGN KEY (cuenta_id)
+        REFERENCES cuenta (id_cuenta),
+    FOREIGN KEY (estado_id)
+        REFERENCES estado (id_estado),
+    FOREIGN KEY (despacho_id)
+        REFERENCES despacho (id_despacho)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE table despacho(
+    id_despacho int not null AUTO_INCREMENT,
+    url_pdf varchar (200),
+    pdf text,
+    codigo_despacho varchar(20),
+    div_cliente varchar(10),
+    fecha_creacion datetime DEFAULT current_timestamp,
+    cuenta_id int,
+    estado_id int DEFAULT 10,
+    PRIMARY KEY(id_despacho),
+    index(codigo_despacho),
     FOREIGN KEY (cuenta_id)
         REFERENCES cuenta (id_cuenta),
     FOREIGN KEY (estado_id)

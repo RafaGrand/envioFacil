@@ -204,13 +204,14 @@ function guardarPedido(){
 		url:  get_base_url()+'/pedidos/guardarPedido',										
 		data: $("#fmrnuevopedido").serialize(),      
 		success: function(response)                                                            
-		{ 
+		{   
+            console.log(response);
 			try{
 				var dataResponse = jQuery.parseJSON(response);
 			}catch(e){
 				var dataResponse = new Object();
 				dataResponse.status = false;
-				dataResponse.message = 'Se presento un error al intentar crear el usuario';
+				dataResponse.message = 'Esposible que el pedido se haya creado pero no se puedo traducir la respues, por favor revise la tabla de pedidos';
 			}
 
 			if(!dataResponse.status){

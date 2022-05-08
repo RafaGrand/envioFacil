@@ -1,6 +1,8 @@
 <div class="container-principal">
 
-    <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2 modal-trigger" href="#modal_pedidos" id="btn-nuevo-pedido"><b>Nuevo Pedido</b></button>
+    <button type="button" class="btn modal-trigger green" href="#modal_pedidos" id="btn-nuevo-pedido"><i class="material-icons left">receipt</i><b>Nuevo Pedido</b></button>
+
+    <button type="button" class="btn modal-trigger blue" href="#modal_despachos" id="btn-generar-despacho"><i class="material-icons left">local_shipping</i><b>Generar Despacho</b></button>
 
     <table>
         <thead>
@@ -13,6 +15,9 @@
             <th> Ciudad </th>
             <th> Estado guía</th>
             <th> Transportadora </th>
+            <th> Flete </th>
+            <th> Comision </th>
+            <th> Total </th>
             <th></th>
         </thead>
         <tbody>
@@ -34,6 +39,9 @@
                             <td class="red-text"><b>{{pedido.estado}}</b></td>
                         {% endif %}
                         <td>{{pedido.transportadora}}</td>
+                        <td>$0</td>
+                        <td>$0</td>
+                        <td>$0</td>
 
                         <td class="align-middle text-center text-xs" align="center">
                             
@@ -50,18 +58,15 @@
 
                             
 
-                            <a href="#modal_rotulo" class="modal-trigger tooltipped"
+                            <a href="{{base_url}}pedidos/descargarrotulo?id_remision={{pedido.id_remision}}" class="tooltipped" target="_blank" 
                             data-position="left" data-tooltip="Generar rótulo"><i class="material-icons">assignment</i>    </a>
 
                             <a href="#modal_recibo_venta" class="modal-trigger tooltipped"
                             data-position="left" data-tooltip="Generar recibo de venta"><i class="material-icons">class</i>
                             </a>
-
                             <label>
-                                <input type="checkbox" />
                                 <span></span>
                             </label>
-
                         </td>
 
                     </tr>
@@ -73,6 +78,7 @@
 </div>
 
 {% include 'modal_pedidos.twig' %}
+{% include 'modal_despachos.twig' %}
 {% include 'modal_cobertura.twig' %}
 {% include 'modal_rastreo.twig' %}
 {% include 'modal_editar_pedido.twig' %}

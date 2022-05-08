@@ -177,7 +177,7 @@ class WebService
     public function Guias_generarGuia($params)
     {
         $body = (object)array_merge($params, $this->_access_connect_guides());
-        var_dump($this->_access_connect_guides());
+        //var_dump($this->_access_connect_guides());
         return $this->call_soap(__FUNCTION__, $body);
     }
 
@@ -277,7 +277,9 @@ class WebService
             $res = isset($data->$name_function_result) ? $data->$name_function_result : $data;
             return $res;
         }catch (\Exception $exception){
-            throw new  \Exception($exception->getMessage());
+            $res =  $exception->getMessage();
+            return $res;
         }
+
     }
 }

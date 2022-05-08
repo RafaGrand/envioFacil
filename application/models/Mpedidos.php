@@ -35,11 +35,12 @@ class mpedidos extends CI_Model{
 		return false;
 	}
 
-	function getListaPedidos(){
+	function getListaPedidos($id_estado = ''){
 
 		$this->db->select('
 			p.id_pedido,
 			p.fecha_creacion,
+			p.id_remision,
 			p.codigo_remision,
 			p.contenido, 
 			p.nombre_destinatario, 
@@ -54,6 +55,11 @@ class mpedidos extends CI_Model{
 		$this->db->join('transportadora t', 't.id_transportadora  = p.transportadora_id');
 		$this->db->join('municipio m', 'm.codigo_transportadora  = p.ciudad_destinatario','left');
 		$this->db->where("p.cuenta_id",$this->session->userdata('id_cuenta'));
+		$this->db->order_by('p.fecha_creacion', 'DESC');
+
+		if(!empty($id_estado)){
+			$this->db->where("p.estado_id",$id_estado);
+		}
 
 		$query = $this->db->get();
 
@@ -64,4 +70,17 @@ class mpedidos extends CI_Model{
 		return false;
 	}
 
+	function actulizarDespachoGuia($ids_guias,$id_despacho,$codigo_despacho){
+
+		for($i = 0; $i < count($ids_guias) ; $i++){
+
+			$this->db->query("
+            UPDATE pedido
+                SET 
+                    codigo_despacho   ='".$codigo_despacho."',
+                    despacho_id 	  =".$id_despacho.",
+					estado_id	      = ".self::DESPACHADO."
+            WHERE codigo_remision = '".$ids_guias[$i]."' AND cuenta_id = ".$this->session->userdata('id_cuenta'));
+		}
+	}
 }

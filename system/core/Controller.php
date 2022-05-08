@@ -58,6 +58,8 @@ class CI_Controller {
 	CONST ESTADO_LIQUIDADO  = 4;
     CONST ESTADO_ELIMINADO  = 5;
     CONST ESTADO_EN_PROCESO = 6;
+    CONST SIN_DESPACHO      = 9;
+    CONST DESPACHADO        = 10;    
 
     CONST CLASE_SALARIO 			= 1;
 	CONST CLASE_AUX_TRANSPORTE 		= 2;
@@ -226,6 +228,26 @@ class CI_Controller {
         }
 
         return $response;
+    }
+
+    function generarPdfBase64($base64){
+
+        $decoded = base64_decode($base64);
+        $file = 'temp/descarga.pdf';
+        file_put_contents($file, $decoded);
+
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        }
+
     }
 
 }

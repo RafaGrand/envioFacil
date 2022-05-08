@@ -30,7 +30,8 @@ class Pedidos extends CI_Controller {
                 "perfil_id"				=> $this->session->userdata('perfil_id'),
 				"dataTablaUsuarios"		=> $this->mgenerales->getdataTablaUsuarios(),
                 "departamentos"         => $this->mgenerales->getDepartamentos(),
-                "listaPedidos"          => $this->mpedidos->getListaPedidos()
+                "listaPedidos"          => $this->mpedidos->getListaPedidos(),
+                "listaPedidosSinDespacho"=> $this->mpedidos->getListaPedidos(self::SIN_DESPACHO)
             ]);
 
         }else{
@@ -206,12 +207,22 @@ class Pedidos extends CI_Controller {
         );
 
         try{
+
             $data = $coordinadora->Guias_generarGuia($params);
 
             if(!$data){
                 echo json_encode([
                     'status'  	 => false,
                     'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra trasportadora"
+                ]);
+                return;
+            }
+
+            if(!isset($data->id_remision)){
+
+                echo json_encode([
+                    'status'  	 => false,
+                    'message'    => $data
                 ]);
                 return;
             }
@@ -250,15 +261,133 @@ class Pedidos extends CI_Controller {
                 ]);
                 return;
             }
-            
+                        
         }
         catch (\Exception $exception){
-            echo $exception->getMessage();
+
+            if(!is_array($data)){
+                echo json_encode([
+                    'status'  	 => false,
+                    'message'    => $exception->getMessage()
+                ]);
+                return;
+            } 
         }
+        
         echo json_encode([
             'status'  	 => true,
             'data'       => $data
         ]);
 
+        return;
+
+    }
+    function generarDespachoGuias(){
+
+        $parametros   = $this->input->post();
+        $coordinadora = $this->getWS();
+
+        if(!isset($parametros['checkDP'])){
+
+            echo json_encode([
+                'status'  	 => false,
+                'message'    => "No se selecciono ninguna guia"
+            ]);
+            return;
+        }
+        
+        $ids_guias = $parametros['checkDP'];
+
+        $params = array(
+            'guias' => $ids_guias,
+            'margen_izquierdo' => 10,
+            'margen_superior' => 10,
+            'tipo_impresion' => 'LASER',
+        );
+
+        try{
+
+            $data = $coordinadora->Guias_generarDespacho($params);
+        
+            if(!$data){
+                echo json_encode([
+                    'status'  	 => false,
+                    'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra trasportadora"
+                ]);
+                return;
+            }
+
+            if(!is_array($data)){
+                echo json_encode([
+                    'status'  	 => false,
+                    'message'    => $data 
+                ]);
+                return;
+            }
+            
+            $data_insert =[
+                "url_pdf"                   => $data[0]->url,
+                "pdf"                       => $data[0]->impresion,
+                "codigo_despacho"           => $data[0]->codigo_despacho,
+                "div_cliente"               => $data[0]->div_cliente,
+                "cuenta_id"                 => $this->session->userdata('id_cuenta')
+            ];
+    
+            $id_despacho = $this->mgenerales->InsertarElemento('despacho',$data_insert);
+    
+            if(!$id_despacho){
+
+                $this->mpedidos->actulizarDespachoGuia($ids_guias,0,$data[0]->codigo_despacho);
+
+                echo json_encode([
+                    'status'  	 => false,
+                    'message'    => "No fue posible guardar el despacho en la base de datos pero la trasportadora si lo registro, por favor tome nota de su numero de desapacho <b>".$data[0]->codigo_despacho."</b>"
+                ]);
+                return;
+            }else{
+                $this->mpedidos->actulizarDespachoGuia($ids_guias,$id_despacho,$data[0]->codigo_despacho);
+            }
+            
+        }
+        catch (\Exception $exception){
+            echo json_encode([
+                'status'  	 => false,
+                'message'    => $exception->getMessage()
+            ]);
+            return;
+        }
+
+        echo json_encode([
+            'status'  	 => true,
+            'message'       => "Despacho <b>".$data[0]->codigo_despacho."</b> generado de forma correcta"
+        ]);
+
+        return;
+
+    }
+
+    function descargarrotulo($id_remision = 0){
+
+        $coordinadora = $this->getWS();
+
+        if(isset($_GET['id_remision'])){
+            $id_remision = $_GET['id_remision'];
+        }
+
+         $params = array(
+            'id_rotulo' => 5,
+            'codigos_remisiones' => array($id_remision)
+        );
+
+        $data = $coordinadora->Guias_imprimirRotulos($params);
+
+        if($data->error){
+
+            echo $data->errorMessage;
+            return;
+
+        }
+
+        $this->generarPdfBase64($data->rotulos);
     }
 }
