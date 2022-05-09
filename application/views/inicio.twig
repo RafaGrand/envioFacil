@@ -1,3 +1,130 @@
-<div class="container-principal">
-  <h4>Hola voy a ser inicio</h4>
+{# <nav>
+    <div class="nav-wrapper grey darken-3">
+        <ul>
+            <li><a href="#!"><span>Dashboard</span></a></li>
+        </ul>
+        <ul class="right">
+            <li><a href="#!"><i class="material-icons right">filter_list</i>Filters</a></li>
+        </ul>
+    </div>
+</nav> #}
+
+<style>
+.dashboard {
+    padding: 20px 15px;
+    width: 85%;
+    margin: auto;
+}
+
+@media (max-width: 1280px) {
+    .dashboard {
+        width: 100%;
+    }
+}
+
+.dashboard .card {
+    cursor: pointer
+}
+
+.dashboard .card .row {
+    margin-bottom: 0;
+}
+
+.dashboard .card-stats-number {
+    margin: 0;
+    font-weight: bold;
+}
+
+.dashboard .icon {
+    height: 140px;
+}
+
+.dashboard .icon {
+    width: 100px;
+}
+
+.dashboard .icon i {
+    width: 100%;
+    text-align: center;
+    color: rgba(0,0,0,.25)
+}
+.heading-primary {
+  font-size: 4rem;
+  font-weight: 800;
+}
+.span-blue {
+  color: #2196f3;
+}
+.slogan-text {
+  color: darkgray;
+  font-weight: 400;
+}
+</style>
+
+<div class="dashboard">
+    <div class="row">
+      <div class="col l12 m12 s12">
+        <h3 class="heading-primary">Envío <span class="span-blue">Fácil</span>.</h3>
+        <p class="slogan-text">Servicio de mensajería contraentrega.</p>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col l3 m6 s12">
+            <div class="card yellow darken-3 white-text valign-wrapper">
+                <div class="yellow darken-4 icon valign-wrapper">
+                    <i class="material-icons medium valign">build</i>
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                        <h3 class="card-stats-number">15</h3>
+                        <p>Novedades</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col l3 m6 s12">
+            <div class="card green white-text valign-wrapper">
+                <div class="green darken-2 icon valign-wrapper">
+                    <i class="material-icons medium valign">check_circle</i>
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                        <h3 class="card-stats-number">250</h3>
+                        <p>Total envíos despachados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col l3 m6 s12">
+            <div class="card red white-text valign-wrapper">
+                <div class="red darken-2 icon valign-wrapper">
+                    <i class="material-icons medium valign">error</i>
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                        <h3 class="card-stats-number">50</h3>
+                        <p>Total envíos sin despacho</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col l3 m6 s12">
+            <div class="card blue darken-1 white-text valign-wrapper">
+                <div class="blue darken-3 icon valign-wrapper">
+                    <i class="material-icons medium valign">account_balance</i>
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                        <h3 class="card-stats-number">$150.000</h3>
+                        <p>Comisión a la fecha</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col l6 m6 s12">
+        <button type="button" class="btn green" href="" id=""><i class="material-icons left">receipt</i><b>Realizar Nuevo Pedido</b></button>
+      </div>
+    </div>
 </div>

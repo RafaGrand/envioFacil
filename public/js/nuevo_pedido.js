@@ -93,7 +93,7 @@ function consultaCobertura(codigo_transportadora) {
                 const btn = document.querySelector(".btn-siguiente");
                 btn.disabled = false;
 
-                const select = document.querySelectorAll("#trasportadora option");
+                const select = document.querySelectorAll("#transportadora option");
                 select.forEach(option=>{
                     if (option.value == 1) {
                         option.disabled = false;
@@ -162,7 +162,7 @@ function validarCamposRequridosPaso2(){
     let ancho           = $('#ancho').val();
     let largo           = $('#largo').val();
     let peso            = $('#peso').val();
-    let trasportadora   = $('#trasportadora').val();
+    let transportadora   = $('#transportadora').val();
 
     if(contenido == ""){
         alerta('Debe de digitar el contenido del pedido');
@@ -179,7 +179,7 @@ function validarCamposRequridosPaso2(){
     }else if(peso == "" || peso <= 0){
         alerta('El <b>peso</b> del empaque es necesario');
         return false;
-    }else if(trasportadora == "" || trasportadora == "0"){
+    }else if(transportadora == "" || transportadora == "0"){
         alerta('Debe de seleccionar una transportadora disponible');
         return false;
     }else if(valor_declarado == "" || valor_declarado <= 0){

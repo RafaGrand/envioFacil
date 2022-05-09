@@ -165,7 +165,7 @@ class Pedidos extends CI_Controller {
             'nombre_remitente' => $dataSesion['nombre_user'],
             "direccion_remitente"   => $dataSesion['direccion'],    
             "telefono_remitente"    => $dataSesion['celular'],
-            "ciudad_remitente"      => $dataSesion['codigo_trasportadora'],
+            "ciudad_remitente"      => $dataSesion['codigo_transportadora'],
             'nit_destinatario' => '0',
             'div_destinatario' => '0',
             "nombre_destinatario"   => $parametros['nombre_destinatario'], 
@@ -213,7 +213,7 @@ class Pedidos extends CI_Controller {
             if(!$data){
                 echo json_encode([
                     'status'  	 => false,
-                    'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra trasportadora"
+                    'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra transportadora"
                 ]);
                 return;
             }
@@ -231,7 +231,7 @@ class Pedidos extends CI_Controller {
                 "nombre_remitente"          => $dataSesion['nombre_user'],
                 "direccion_remitente"       => $dataSesion['direccion'],    
                 "telefono_remitente"        => $dataSesion['celular'],
-                "ciudad_remitente"          => $dataSesion['codigo_trasportadora'],
+                "ciudad_remitente"          => $dataSesion['codigo_transportadora'],
                 "nombre_destinatario"       => $parametros['nombre_destinatario'], 
                 "direccion_destinatario"    => $parametros['direccion_destinatario'],   
                 "ciudad_destinatario"       => $parametros['municipio_destinatario'],
@@ -312,7 +312,7 @@ class Pedidos extends CI_Controller {
             if(!$data){
                 echo json_encode([
                     'status'  	 => false,
-                    'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra trasportadora"
+                    'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra transportadora"
                 ]);
                 return;
             }
@@ -341,7 +341,7 @@ class Pedidos extends CI_Controller {
 
                 echo json_encode([
                     'status'  	 => false,
-                    'message'    => "No fue posible guardar el despacho en la base de datos pero la trasportadora si lo registro, por favor tome nota de su numero de desapacho <b>".$data[0]->codigo_despacho."</b>"
+                    'message'    => "No fue posible guardar el despacho en la base de datos pero la transportadora si lo registro, por favor tome nota de su numero de desapacho <b>".$data[0]->codigo_despacho."</b>"
                 ]);
                 return;
             }else{

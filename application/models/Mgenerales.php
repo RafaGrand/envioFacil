@@ -106,7 +106,7 @@ class mgenerales extends CI_Model{
             'celular'           => $dataUser->celular,
             'email_user'        => $dataUser->email ?? 'Correo no registrado',
             'avatar'            => $dataUser->avatar ?? 'default_avatar.png',
-            'codigo_trasportadora'  =>$dataUser->codigo_transportadora,
+            'codigo_transportadora'  =>$dataUser->codigo_transportadora,
             'municipio'             =>$dataUser->municipio, 
             'id_departamento'       =>$dataUser->id_departamento,
             'departamento'          => $dataUser->departamento
