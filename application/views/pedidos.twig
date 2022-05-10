@@ -46,7 +46,7 @@
                         <td class="align-middle text-center text-xs" align="center">
                             
                             {% if pedido.id_estado == "10" %}
-                                <a href="#modal_rastreo" target="_blank" class="modal-trigger tooltipped" data-position="left"   data-tooltip="Rastrear pedido"><i class="material-icons">search</i></a>
+                                <a href="#modal_rastreo" target="_blank" onclick="rastrearPedido({{pedido.codigo_remision}})" class="modal-trigger tooltipped" data-position="left" data-tooltip="Rastrear pedido"><i class="material-icons">search</i></a>
 
                                 <a href="#modal_novedad" class="modal-trigger tooltipped" data-position="left"
                                 data-tooltip="Registrar novedad"><i class="material-icons">add_alert</i></a>

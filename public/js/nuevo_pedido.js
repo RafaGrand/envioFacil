@@ -23,6 +23,27 @@ function cambioPasoNuevoPedido(paso){
 
 }
 
+async function rastrearPedido(codigo_remision) {
+    NProgress.start();
+    try {
+        let formData = JSON.stringify({codigo_remision: codigo_remision})
+        const response = await fetch(`${get_base_url()}/pedidos/rastrear_pedido`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: formData,
+        })
+        const data = await response.json()
+        if(data) {
+            NProgress.done();
+            console.log(data)
+        }
+    } catch (error) {
+        console.error(`Error: ${error.message}`)
+    } 
+}
+
 function municipiosDepartamento(id_dpto){
      
     let html = '';

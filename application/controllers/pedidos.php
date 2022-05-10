@@ -69,22 +69,6 @@ class Pedidos extends CI_Controller {
         
     }
 
-    function rastreoSimple() {
-        $parametros = $this->input->post();
-
-        if(isset($parametros['usuario'],$parametros['clave'],$parametros['codigo_remision'])) {
-            $action = "Guias_rastreoSimple";
-
-            $resp = $this->soapCall($action, $parametros);
-
-            // echo("<pre>".print_r(json_encode($resp))."</pre>");
-            echo json_encode([
-                'status'  	 => true,
-                'message'    => $resp
-            ]);
-        }
-    }
-
     function lista_municipio(){
         $parametros = $this->input->post();
 
@@ -390,4 +374,39 @@ class Pedidos extends CI_Controller {
 
         $this->generarPdfBase64($data->rotulos);
     }
+
+    function rastrear_pedido() {
+        $coordinadora = $this->getWS();
+        $parametros = $this->input->post();
+        if(isset($parametros['codigo_remision'])) {
+            $params = ['codigos_remision'=>$parametros['codigo_remision']];
+            $data = $coordinadora->Guias_rastreoSimple($params);
+
+            if(!$data){
+                echo json_encode([
+                    'status'  	 => false,
+                    'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra transportadora"
+                ]);
+                return;
+            } else {
+                echo json_encode([
+                    'status'  	 => true,
+                    'message'    => $data
+                ]);
+                return;
+            }
+
+            // else if(!is_array($data)){
+            //     echo json_encode([
+            //         'status'  	 => false,
+            //         'message'    => $data 
+            //     ]);
+            //     return;
+            // }
+
+            
+        }
+
+    }
+
 }
