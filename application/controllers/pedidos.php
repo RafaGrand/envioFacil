@@ -378,10 +378,10 @@ class Pedidos extends CI_Controller {
     function rastrear_pedido() {
         $coordinadora = $this->getWS();
         $parametros = $this->input->post();
-        if(isset($parametros['codigo_remision'])) {
-            $params = ['codigos_remision'=>$parametros['codigo_remision']];
+        if(isset($parametros['id_remision'])) {
+            $params = ['codigos_remisiones'=>[$parametros['id_remision']]];
             $data = $coordinadora->Guias_rastreoSimple($params);
-
+            var_dump($data);
             if(!$data){
                 echo json_encode([
                     'status'  	 => false,

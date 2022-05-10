@@ -23,25 +23,40 @@ function cambioPasoNuevoPedido(paso){
 
 }
 
-async function rastrearPedido(codigo_remision) {
+function rastrearPedido(id_remision) {
     NProgress.start();
-    try {
-        let formData = JSON.stringify({codigo_remision: codigo_remision})
-        const response = await fetch(`${get_base_url()}/pedidos/rastrear_pedido`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: formData,
-        })
-        const data = await response.json()
-        if(data) {
+    // try {
+    //     let formData = JSON.stringify({codigo_remision: codigo_remision})
+    //     const response = await fetch(`${get_base_url()}/pedidos/rastrear_pedido`, {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: formData,
+    //     })
+    //     const data = await response.json()
+    //     if(data) {
+    //         NProgress.done();
+    //         console.log(data)
+    //     }
+    // } catch (error) {
+    //     console.error(`Error: ${error.message}`)
+    // }
+    $.ajax({
+        url:  get_base_url()+'/pedidos/rastrear_pedido',
+        type: 'POST',
+        data: {id_remision: id_remision},
+        success: function(response) {
             NProgress.done();
-            console.log(data)
+            let dataResponse = jQuery.parseJSON(response);
+            console.log(dataResponse)
+        } ,
+        error: function(){
+            NProgress.done();
+            alerta('No se puedo realizar la conexion con el WS');
+            return;
         }
-    } catch (error) {
-        console.error(`Error: ${error.message}`)
-    } 
+    }); 
 }
 
 function municipiosDepartamento(id_dpto){
