@@ -12,7 +12,7 @@ div.material-table {
     margin: 0;
     border: transparent 0 !important;
     height: 48px;
-    color: rgba(0, 0, 0, .84);
+    color: rgb(2 2 2 / 84%);
   }
   
   div.material-table .hiddensearch input:active {
@@ -120,7 +120,7 @@ div.material-table {
   }
   
   div.material-table .table-footer .material-pagination li a {
-    color: rgba(0, 0, 0, 0.54);
+    color: #2196f3;
   }
   
   div.material-table .table-footer .select-wrapper input.select-dropdown {
@@ -165,7 +165,7 @@ div.material-table {
   
   div.material-table table tr td a i {
     font-size: 18px;
-    color: rgba(0, 0, 0, 0.54);
+    color: #2196f3;
   }
   
   div.material-table table tr {
@@ -232,4 +232,8 @@ div.material-table {
   div.material-table table th:last-child,
   div.material-table table td:last-child {
     padding: 0 14px 0 0;
+  }
+
+  .mr-2 {
+      margin-right: 1rem;
   }
