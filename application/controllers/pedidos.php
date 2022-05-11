@@ -374,13 +374,13 @@ class Pedidos extends CI_Controller {
 
         $this->generarPdfBase64($data->rotulos);
     }
-
+    // Revisar porque solo sirve con el sandbox off
     function rastrear_pedido() {
         $coordinadora = $this->getWS();
         $parametros = $this->input->post();
         if(isset($parametros['codigo_remision'])) {
             $params = ['codigos_remision'=>[$parametros['codigo_remision']]];
-            $data = $coordinadora->Guias_rastreoSimple($params);
+            $data = $coordinadora->Guias_rastreoExtendido($params);
             if(!$data){
                 echo json_encode([
                     'status'  	 => false,

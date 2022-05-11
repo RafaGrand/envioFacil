@@ -23,25 +23,33 @@ function cambioPasoNuevoPedido(paso){
 
 }
 
+function feedTrackingModal(response) {
+    let detalleEstados = response[0].detalle_estados
+    let detalleNovedades = response[0].detalle_novedades
+    let containerNovedades = ""
+    let containerDetalle = ""
+    detalleEstados.map(estado=>{
+        let innerData = `<p><b>Movimiento:</b> ${estado.descripcion}</p>`
+        containerDetalle += innerData
+    })
+    detalleNovedades.map(novedad=>{
+        let innerData = `<p><b>Novedad:</b> ${novedad.descripcion}</p>`
+        containerNovedades += innerData
+    })
+    let container = `<h4>Guia #${response[0].codigo_remision}</h4>
+    <hr>
+    <p><b>Estado:</b> ${response[0].descripcion_estado}</p>
+    <p><b>Fecha Recogida:</b> ${response[0].fecha_recogida}, ${response[0].nombre_origen}</p>
+    <p><b>Fecha Entrega:</b> ${response[0].fecha_entrega}, ${response[0].nombre_destino}</p>
+    <hr>
+    ${containerDetalle}
+    <hr>
+    ${containerNovedades}`
+    return container
+}
+
 function rastrearPedido(codigo_remision) {
     NProgress.start();
-    // try {
-    //     let formData = JSON.stringify({codigo_remision: codigo_remision})
-    //     const response = await fetch(`${get_base_url()}/pedidos/rastrear_pedido`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: formData,
-    //     })
-    //     const data = await response.json()
-    //     if(data) {
-    //         NProgress.done();
-    //         console.log(data)
-    //     }
-    // } catch (error) {
-    //     console.error(`Error: ${error.message}`)
-    // }
     $.ajax({
         url:  get_base_url()+'/pedidos/rastrear_pedido',
         type: 'POST',
@@ -50,7 +58,9 @@ function rastrearPedido(codigo_remision) {
             const modalContainer = document.querySelector('#container-rastreos')
             NProgress.done();
             let dataResponse = JSON.parse(response);
-            modalContainer.innerHTML = JSON.stringify(dataResponse.message)
+            
+            let innerContainer = feedTrackingModal(dataResponse.message, modalContainer)
+            modalContainer.innerHTML = innerContainer
         } ,
         error: function(){
             NProgress.done();
