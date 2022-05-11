@@ -48,6 +48,34 @@ class mgenerales extends CI_Model{
 		return false;
     }
 
+    function getCountDespachados() {
+        $this->db->select('COUNT(estado_id) as count');
+        $this->db->where("estado_id", 10);
+        $query = $this->db->get('pedido');
+
+        if ($query->num_rows()>0) {
+			// return $query->result();
+            $result = $query->row();
+            return $result->count;  
+		}
+		
+		return false;
+    }
+
+    function getCountNoDespachados() {
+        $this->db->select('COUNT(estado_id) as count');
+        $this->db->where_not_in("estado_id", 10);
+        $query = $this->db->get('pedido');
+
+        if ($query->num_rows()>0) {
+			// return $query->result();
+            $result = $query->row();
+            return $result->count;  
+		}
+		
+		return false;
+    }
+
     function InsertarElemento($tabla,$data){
 
         if(!empty($tabla) && !empty($data) && is_array($data)){

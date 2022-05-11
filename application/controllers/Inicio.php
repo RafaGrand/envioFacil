@@ -21,6 +21,8 @@ class Inicio extends CI_Controller {
 				"data_sesion"           => $this->mgenerales->getDataSesion(),
 				"perfil_id"				=> $this->session->userdata('perfil_id'),
 				"dataTablaUsuarios"		=> $this->mgenerales->getdataTablaUsuarios(),
+				"pedidosDespachados"    => $this->mgenerales->getCountDespachados(),
+				"pedidosSinDespacho"    => $this->mgenerales->getCountNoDespachados(),
                 /*"sector_comercial"      => $this->mempresa->getSectorComercial(),
                 "cantidad_empresas"     => $this->musuario->UserCountEmpresa($this->session->userdata('id_usuario')),
 				"lista_empresa"         => $this->mempresa->getListaEmpresa($this->session->userdata('id_usuario')),

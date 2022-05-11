@@ -47,9 +47,9 @@ function rastrearPedido(codigo_remision) {
         type: 'POST',
         data: {codigo_remision: codigo_remision},
         success: function(response) {
+            const modalContainer = document.querySelector('#container-rastreos')
             NProgress.done();
             let dataResponse = JSON.parse(response);
-            const modalContainer = document.querySelector('#container-rastreos')
             modalContainer.innerHTML = JSON.stringify(dataResponse.message)
         } ,
         error: function(){
