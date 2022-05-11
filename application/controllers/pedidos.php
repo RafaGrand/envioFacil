@@ -378,10 +378,9 @@ class Pedidos extends CI_Controller {
     function rastrear_pedido() {
         $coordinadora = $this->getWS();
         $parametros = $this->input->post();
-        if(isset($parametros['id_remision'])) {
-            $params = ['codigos_remisiones'=>[$parametros['id_remision']]];
+        if(isset($parametros['codigo_remision'])) {
+            $params = ['codigos_remision'=>[$parametros['codigo_remision']]];
             $data = $coordinadora->Guias_rastreoSimple($params);
-            var_dump($data);
             if(!$data){
                 echo json_encode([
                     'status'  	 => false,
@@ -394,17 +393,7 @@ class Pedidos extends CI_Controller {
                     'message'    => $data
                 ]);
                 return;
-            }
-
-            // else if(!is_array($data)){
-            //     echo json_encode([
-            //         'status'  	 => false,
-            //         'message'    => $data 
-            //     ]);
-            //     return;
-            // }
-
-            
+            }            
         }
 
     }

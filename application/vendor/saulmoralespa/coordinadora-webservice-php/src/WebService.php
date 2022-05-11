@@ -229,6 +229,19 @@ class WebService
         return $this->call_soap(__FUNCTION__, $body);
     }
 
+    /**
+     * @param $params
+     * @return mixed
+     * @throws \Exception
+     */
+    public function Guias_rastreoExtendido($params)
+    {
+        $body = (object)array_merge($params, $this->_access_connect_guides());
+
+        return $this->call_soap(__FUNCTION__, $body);
+    }
+
+
     public function Guias_imprimirRotulos($params)
     {
         $body = (object)array_merge($params, $this->_access_connect_guides());

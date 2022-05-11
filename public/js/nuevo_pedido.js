@@ -23,7 +23,7 @@ function cambioPasoNuevoPedido(paso){
 
 }
 
-function rastrearPedido(id_remision) {
+function rastrearPedido(codigo_remision) {
     NProgress.start();
     // try {
     //     let formData = JSON.stringify({codigo_remision: codigo_remision})
@@ -45,11 +45,12 @@ function rastrearPedido(id_remision) {
     $.ajax({
         url:  get_base_url()+'/pedidos/rastrear_pedido',
         type: 'POST',
-        data: {id_remision: id_remision},
+        data: {codigo_remision: codigo_remision},
         success: function(response) {
             NProgress.done();
-            let dataResponse = jQuery.parseJSON(response);
-            console.log(dataResponse)
+            let dataResponse = JSON.parse(response);
+            const modalContainer = document.querySelector('#container-rastreos')
+            modalContainer.innerHTML = JSON.stringify(dataResponse.message)
         } ,
         error: function(){
             NProgress.done();
