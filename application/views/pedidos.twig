@@ -22,8 +22,8 @@
                             <th> Ciudad </th>
                             <th> Estado guía</th>
                             <th> Transportadora </th>
-                            <th> Flete </th>
                             <th> Comision </th>
+                            <th> Valor envio </th>
                             <th> Total </th>
                             <th></th>
                         </tr>
@@ -47,9 +47,9 @@
                                 <td class="red-text"><b>{{pedido.estado}}</b></td>
                             {% endif %}
                             <td>{{pedido.transportadora}}</td>
-                            <td>$0</td>
-                            <td>$0</td>
-                            <td>$0</td>
+                            <td>{{pedido.valor_comision}}</td>
+                            <td>{{pedido.valor_flete}}</td>
+                            <td>{{pedido.total}}</td>
 
                             <td class="align-middle text-center text-xs" align="center">
                                 
@@ -68,10 +68,6 @@
 
                                 <a href="{{base_url}}pedidos/descargarrotulo?id_remision={{pedido.id_remision}}" class="tooltipped" target="_blank" 
                                 data-position="left" data-tooltip="Generar rótulo"><i class="material-icons">print</i>    </a>
-
-                                <a href="#modal_recibo_venta" class="modal-trigger tooltipped"
-                                data-position="left" data-tooltip="Generar recibo de venta"><i class="material-icons">library_books</i>
-                                </a>
                                 <label>
                                     <span></span>
                                 </label>

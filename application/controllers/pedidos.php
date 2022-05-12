@@ -127,6 +127,19 @@ class Pedidos extends CI_Controller {
         $dataSesion = $this->mgenerales->getDataSesion();
         $parametros = $this->input->post();
 
+        $dataCotizador = $this->cotizarPedido($parametros);
+
+        if(!is_object($dataCotizador)){
+
+            echo json_encode([
+                'status'  	 => false,
+                'message'    => "No fue posible cotizar el envio del pedido. Error: ".$dataCotizador
+            ]);
+            return;
+        }
+
+        /*object(stdClass)#34 (10) { ["flete_total"]=> int(15808) ["flete_fijo"]=> float(15438) ["flete_variable"]=> float(370) ["peso_liquidado"]=> float(1) ["otros_valores"]=> float(0) ["producto"]=> int(2) ["ubl"]=> int(2) ["volumen"]=> float(0.01) ["peso_real"]=> float(1) ["dias_entrega"]=> int(3) }*/
+
         $coordinadora = $this->getWS();
 
         $cart_prods[] = (object)array(
@@ -221,6 +234,9 @@ class Pedidos extends CI_Controller {
                 "ciudad_destinatario"       => $parametros['municipio_destinatario'],
                 "telefono_destinatario"     => $parametros['telefono_destinatario'],
                 "valor_declarado"           => $parametros['valor_declarado'],
+                "valor_comision"            => (float)$parametros['valor_declarado'] * self::PORCENTAJE_COMISION,
+                "valor_flete"               => $dataCotizador->flete_total,
+                "dias_entrega"              => $dataCotizador->dias_entrega,
                 "contenido"                 => $parametros['contenido'],
                 "alto"                      => $parametros['alto'],
                 "ancho"                     => $parametros['ancho'],
@@ -266,6 +282,7 @@ class Pedidos extends CI_Controller {
         return;
 
     }
+
     function generarDespachoGuias(){
 
         $parametros   = $this->input->post();
@@ -374,12 +391,13 @@ class Pedidos extends CI_Controller {
 
         $this->generarPdfBase64($data->rotulos);
     }
+
     // Revisar porque solo sirve con el sandbox off
     function rastrear_pedido() {
         $coordinadora = $this->getWS();
         $parametros = $this->input->post();
         if(isset($parametros['codigo_remision'])) {
-            $params = ['codigos_remision'=>[$parametros['codigo_remision']]];
+            $params = ['codigos_remision'=>[/*$parametros['codigo_remision']*/51074506680]];
             $data = $coordinadora->Guias_rastreoExtendido($params);
             if(!$data){
                 echo json_encode([
@@ -398,4 +416,33 @@ class Pedidos extends CI_Controller {
 
     }
 
+    function cotizarPedido($parametros){
+
+        $coordinadora = $this->getWS();
+
+        $item_detalle[] = (object)array(
+            "ubl"                   => "",
+            "alto"                  => (float)$parametros['alto'],
+            "ancho"                 => (float)$parametros['ancho'],
+            "largo"                 => (float)$parametros['largo'],
+            "peso"                  => (float)$parametros['peso'],
+            "unidades"              => (float)1,
+        );
+
+        $params = array(
+            'nit'               => self::NIT,
+            'div'               => '01',
+            'cuenta'            => '1',
+            'producto'          => '1',
+            'origen'            => $parametros['cod_mpio_origen'],
+            'destino'           => $parametros['municipio_destinatario'],
+            'valoracion'        => '1',
+            'nivel_servicio'    =>  array(
+                "item"  => 1
+            ),
+            'detalle'           => $item_detalle
+        );
+
+        return  $coordinadora->Cotizador_cotizar($params);
+    }
 }

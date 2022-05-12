@@ -77,6 +77,10 @@ class CI_Controller {
     CONST PERFIL_ADMIN = 1;
     CONST PERFIL_USUARIO = 2;
 
+    CONST NIT = 1004736927;
+
+    CONST PORCENTAJE_COMISION = 0.06;
+
 	/**
 	 * Reference to the CI singleton
 	 *

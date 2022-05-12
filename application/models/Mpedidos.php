@@ -37,7 +37,7 @@ class mpedidos extends CI_Model{
 
 	function getListaPedidos($id_estado = ''){
 
-		$this->db->select('
+		$this->db->select("
 			p.id_pedido,
 			p.fecha_creacion,
 			p.id_remision,
@@ -49,7 +49,10 @@ class mpedidos extends CI_Model{
 			m.nombre as ciudad,
 			t.nombre as transportadora,
 			e.estado,
-			e.id_estado');
+			e.id_estado,
+			CONCAT('$',REPLACE(FORMAT(p.valor_comision ,0),',','.')) as valor_comision,
+			CONCAT('$',REPLACE(FORMAT(p.valor_flete ,0),',','.')) as valor_flete,			
+			CONCAT('$',REPLACE(FORMAT((p.valor_declarado + p.valor_flete) ,0),',','.')) as total");
 		$this->db->from('pedido p');
 		$this->db->join('estado e', 'e.id_estado  = p.estado_id');
 		$this->db->join('transportadora t', 't.id_transportadora  = p.transportadora_id');

@@ -37,9 +37,10 @@
                     </div>
                     <div class="input-field col m6">
                         <select name="municipio_remitente" id="municipio_remitente">
-                            <option value="{{data_sesion.codigo_transportadora}}" selected disabled>{{data_sesion.municipio}}</option>
+                            <option value="{{data_sesion.codigo_transportadora}}" selected>{{data_sesion.municipio}}</option>
                         </select>
                         <label>Municipio</label>
+                        <input type="hidden" name="cod_mpio_origen" id="cod_mpio_origen" value="{{data_sesion.codigo_transportadora}}" />
                     </div>
                     <div class="input-field col m12">
                         <input id="direccion_remitente" type="text" class="validate" disabled value="{{data_sesion.direccion}}">
@@ -101,19 +102,19 @@
                     <h5 class="grey-text">Dimensión del empaque:</h5> 
                     <div class="input-field col m2">
                         <input id="alto" name="alto" type="number" class="validate">
-                        <label for="alto">Alto</label>
+                        <label for="alto">Alto (cm)</label>
                     </div>
                     <div class="input-field col m2">
                         <input id="ancho" name="ancho" type="number" class="validate">
-                        <label for="ancho">Ancho</label>
+                        <label for="ancho">Ancho (cm)</label>
                     </div>
                     <div class="input-field col m2">
                         <input id="largo" name="largo" type="number" class="validate">
-                        <label for="largo">Largo</label>
+                        <label for="largo">Largo (cm)</label>
                     </div>
                     <div class="input-field col m2">
                         <input id="peso" name="peso" type="number" class="validate">
-                        <label for="peso">Peso</label>
+                        <label for="peso">Peso (kg)</label>
                     </div>
                 </div>
                 <div class="col m12">
