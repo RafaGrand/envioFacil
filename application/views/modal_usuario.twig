@@ -1,6 +1,13 @@
 <div id="modal_usuario" class="modal modal-fixed-footer modal-general" style="border-radius:10px; width:90%; height:90%;">
     <div class="modal-content">
-        <h4>Usuarios actualmente registrados:</h4>
+        <div class="row">
+            <div class="col m10">
+                <h4>Usuarios actualmente registrados:</h4>
+            </div>
+            <div class="col m2 right-align">
+                <button class="btn modal-trigger blue" href="#md-new-user">NUEVO USUARIO</button>
+            </div>
+        </div>
         <table class="center highlight">
             <thead>
                 <tr>
@@ -10,7 +17,7 @@
                     <th>Celular</th>
                     <th>Estado</th>
                     <th>Cambiar Estado</th>
-                    <th>Restablecer Contraseña</th>
+                    <th>Editar</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,7 +28,7 @@
                     <td>{{data.email}}</td>
                     <td>{{data.celular}}</td>
                     {% if data.id_estado == "1"  %}
-                        <td class="text-estad-{{data.id_usuario}}o green-text"><b>{{data.estado}}</b></td>
+                        <td class="text-estad-{{data.id_usuario}} green-text"><b>{{data.estado}}</b></td>
                     {% elseif data.id_estado == "6" %}
                         <td class="text-estado-{{data.id_usuario}} blue-text"><b>{{data.estado}}</b></td>
                     {% else %}
@@ -36,8 +43,8 @@
                         </select>
                     </td>
                     <td class="center-align">
-                        <a class="btn-floating  waves-effect waves-light btn-small blue tooltipped"  data-tooltip="Generar Cambio Contraseña" data-position="bottom" onclick="GenerarClave({{data.id_usuario}})">
-                            <i class="material-icons">vpn_key</i>
+                        <a class="btn-floating  waves-effect waves-light btn-small orange tooltipped"  data-tooltip="Editar Usuario" data-position="bottom" onclick="abrirEditarUsuario({{data.id_usuario}})">
+                            <i class="material-icons">create</i>
                         </a>
                     </td>
                 </tr>

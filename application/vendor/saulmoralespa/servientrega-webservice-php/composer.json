@@ -1,0 +1,29 @@
+{
+    "name": "saulmoralespa/servientrega-webservice-php",
+    "description": "Web service Servientrega PHP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Saul Morales",
+            "email": "info@saulmoraespa.com",
+            "homepage": "http://saulmoralespa.com",
+            "role": "Developer"
+        }
+    ],
+    "type": "library",
+    "require": {
+        "php": ">=7.3",
+        "ext-soap": "*",
+        "ext-simplexml": "*",
+        "guzzlehttp/guzzle": "^6.5.4"
+    },
+    "require-dev": {
+        "vlucas/phpdotenv": "^5.2",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Servientrega\\": "src/"
+        }
+    }
+}

@@ -71,7 +71,7 @@
   }
 
   #menu-principal{
-      color: #4b74fd;
+      color: #ffffff;
       font-weight: bold;
   }
 
@@ -81,3 +81,32 @@
     
       
   }
+
+
+  .encabezado-modal{
+    width: 100%;
+    background: #00C389;
+    border-radius:10px; 
+    padding-top: 10px;
+    padding-bottom: 0.5px;
+    color: white;
+    font-weight: bold;
+  }
+
+  .encabezado-modal-despachos{
+    width: 100%;
+    background: #2196F3 ;
+    border-radius:10px; 
+    padding-top: 10px;
+    padding-bottom: 0.5px;
+    color: white;
+    font-weight: bold;
+  }
+
+  .container-principal{
+    width: 100%;
+    min-height: 350px;
+    padding: 20px;
+    background: whitesmoke;
+  }
+  

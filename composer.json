@@ -16,7 +16,9 @@
 	"require": {
 		"php": ">=5.3.7",
 		"twig/twig": "~1.0",
-		"mpdf/mpdf": "^8.0"
+		"mpdf/mpdf": "^8.0",
+		"saulmoralespa/coordinadora-webservice-php": "^1.0",
+		"saulmoralespa/servientrega-webservice-php": "^1.0"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
@@ -24,5 +26,8 @@
 	"require-dev": {
 		"mikey179/vfsstream": "1.1.*",
 		"phpunit/phpunit": "4.* || 5.*"
-	}
+	},
+	"autoload": {
+		"classmap": ["application/core"]
+   }
 }
