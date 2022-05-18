@@ -1,30 +1,18 @@
 <nav class="nav-extended" id="nav-menu-principal">
-    <div class="nav-wrapper">
-      <a class="brand-logo right" id="logo-empresa"><img src="{{base_url}}public/imagenes/logo-ct.png" ><span class="ms-auto"> EnvioFacil</span></a>
-      <a data-target="slide-out" class="sidenav-trigger"><i style="font-size:35px;" class="material-icons  blue-text"><b>menu</b></i></a>
-      <ul id="nav-mobile" class="left hide-on-med-and-down" style="margin-bottom:15px;">
+
+  <div class="nav-wrapper">
+    {# <a class="brand-logo right" id="logo-empresa"><img src="{{base_url}}public/imagenes/logomenu.png" ></a> #}
+      <ul id="nav-mobile" class="left tabs tabs-transparent">
         <li>
-          <!--<li><a onclick="cerrarSesion()"><i class="material-icons" title="Cerrar sesion">logout</i></a></li>-->
           <button data-target="slide-out" class="btn waves-effect waves-light   btn-flat sidenav-trigger transparent" >
-            <i style="font-size:35px;" class="material-icons large blue-text" ><b>menu</b></i>
+            <i style="font-size:35px;" class="material-icons white-text" ><b>menu</b></i>
           </button>
         </li>
-        <li>
-          <h5 style="font-size:32px;" class="menu-nom-empresa">{{data_sesion.nombre_empresa}}</h5>
-        </li>
+        <li class="tab"><a id="menu-principal" class="menu-inicio" style="font-size:1.3rem;"   onclick="cargarModulo()">Inicio</a></li>
+        <li class="tab"><a id="menu-principal" class="menu-pedidos" style="font-size:1.3rem;"   onclick="cargarModulo('pedidos')">Pedidos</a></li>
+        <li class="tab"><a id="menu-principal" class="menu-novedades" style="font-size:1.3rem;"  onclick="cargarModulo('novedades')">Novedades</a></li>
       </ul>
-    </div>
-    <div class="row nav-content">
-      <div class="col s6 m11">
-        <ul class="tabs tabs-transparent" style="margin-bottom:10px;">
-          <li class="tab"><a id="menu-principal" class="menu-inicio" style="font-size:18px;"   onclick="cargarModulo()">Inicio</a></li>
-          {# <li class="tab"><a class="menu-vender" style="font-size:18px;"   onclick="cargarModulo('vender')">Vender</a></li> #}
-          <li class="tab"><a id="menu-principal" class="menu-pedidos" style="font-size:18px;"   onclick="cargarModulo('pedidos')">Pedidos</a></li>
-          {# <li class="tab"><a class="menu-cierres" style="font-size:18px;" onclick="cargarModulo('cierres')">Cierres</a></li> #}
-          <li class="tab"><a id="menu-principal" class="menu-novedades" style="font-size:18px;"  onclick="cargarModulo('novedades')">Novedades</a></li>
-        </ul>
-      </div>
-    </div>
+  </div>
 </nav>
 
 
@@ -37,5 +25,7 @@
 {% include 'aside.twig' %}
 {% include 'modal_perfil.twig' %}
 {% include 'modal_usuario.twig' %}
+{% include 'modal_crear_usuario.twig' %}
+{% include 'modal_editar_usuario.twig' %}
 
   

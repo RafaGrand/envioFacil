@@ -13,7 +13,7 @@ CREATE TABLE perfil (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE departamento (
-	id_departamento int(20) NOT NULL AUTO_INCREMENT,
+	id_departamento int(11) NOT NULL AUTO_INCREMENT,
 	nombre varchar(255) NOT NULL,
 	codigo int(20) NOT NULL,
 	PRIMARY KEY (id_departamento),
@@ -23,9 +23,9 @@ CREATE TABLE departamento (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE municipio (
-	id_municipio int(20) NOT NULL AUTO_INCREMENT,
-	departamento_id int(20) NOT NULL,
-	codigo int(11) NOT NULL,
+	id_municipio int(11) NOT NULL AUTO_INCREMENT,
+	departamento_id int(11) NOT NULL,
+	codigo_trasportadora int(8) unsigned zerofill,
 	nombre varchar(255) NOT NULL,
 	PRIMARY KEY(id_municipio),
     estado_id int not null DEFAULT 1,
@@ -646,3 +646,68 @@ CREATE TABLE novedad_empleado_defecto (
   estado_id int DEFAULT '1',
   PRIMARY KEY (id_novedad_empleado_defecto)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_danish_ci;
+
+
+
+CREATE table transportadora(
+    id_transportadora int not null AUTO_INCREMENT,
+    nombre varchar(60),
+    usuario_ws varchar(60),
+    clave_ws varchar(100),
+    url_ws varchar(200),
+    estado_id int DEFAULT 1,
+    PRIMARY KEY(id_transportadora),
+    FOREIGN KEY (estado_id)
+        REFERENCES estado (id_estado)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE pedido(
+    id_pedido int not null AUTO_INCREMENT,
+    fecha_creacion datetime DEFAULT current_timestamp,
+    nombre_remitente varchar(60),
+    direccion_remitente varchar(200),
+    telefono_remitente varchar(10),
+    ciudad_remitente varchar(10),
+    nombre_destinatario varchar(60),
+    direccion_destinatario varchar(200),
+    ciudad_destinatario varchar(10),
+    telefono_destinatario varchar(10),
+    valor_declarado float,
+    contenido varchar(100),
+    alto  float,
+    ancho float,
+    largo float,
+    peso float,
+    unidades int,
+    id_remision varchar(20),
+    codigo_remision varchar(20),
+    pdf_guia text,
+    cuenta_id int,
+    estado_id int DEFAULT 9,
+    despacho_id int DEFAULT 0
+    PRIMARY KEY (id_pedido),
+    FOREIGN KEY (cuenta_id)
+        REFERENCES cuenta (id_cuenta),
+    FOREIGN KEY (estado_id)
+        REFERENCES estado (id_estado),
+    FOREIGN KEY (despacho_id)
+        REFERENCES despacho (id_despacho)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE table despacho(
+    id_despacho int not null AUTO_INCREMENT,
+    url_pdf varchar (200),
+    pdf text,
+    codigo_despacho varchar(20),
+    div_cliente varchar(10),
+    fecha_creacion datetime DEFAULT current_timestamp,
+    cuenta_id int,
+    estado_id int DEFAULT 10,
+    PRIMARY KEY(id_despacho),
+    index(codigo_despacho),
+    FOREIGN KEY (cuenta_id)
+        REFERENCES cuenta (id_cuenta),
+    FOREIGN KEY (estado_id)
+        REFERENCES estado (id_estado)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,237 +1,130 @@
-<div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div class="card">
-            <div class="card-header p-3 pt-2">
-              <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                <i class="material-icons opacity-10">weekend</i>
-              </div>
-              <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Ventas Diarias</p>
-                <h4 class="mb-0">$530.000</h4>
-              </div>
-            </div>
-            <hr class="dark horizontal my-0">
-            <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>respecto a la semana anterior</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div class="card">
-            <div class="card-header p-3 pt-2">
-              <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
-                <i class="material-icons opacity-10">person</i>
-              </div>
-              <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Usuarios</p>
-                <h4 class="mb-0">2,300</h4>
-              </div>
-            </div>
-            <hr class="dark horizontal my-0">
-            <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>respecto al mes anterior</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div class="card">
-            <div class="card-header p-3 pt-2">
-              <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                <i class="material-icons opacity-10">person</i>
-              </div>
-              <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Nuevos Pedidos</p>
-                <h4 class="mb-0">32</h4>
-              </div>
-            </div>
-            <hr class="dark horizontal my-0">
-            <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> respecto al día anterior</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6">
-          <div class="card">
-            <div class="card-header p-3 pt-2">
-              <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                <i class="material-icons opacity-10">weekend</i>
-              </div>
-              <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Ingresos</p>
-                <h4 class="mb-0">$103,430</h4>
-              </div>
-            </div>
-            <hr class="dark horizontal my-0">
-            <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>respecto al día anterior</p>
-            </div>
-          </div>
-        </div>
-      </div>
+{# <nav>
+    <div class="nav-wrapper grey darken-3">
+        <ul>
+            <li><a href="#!"><span>Dashboard</span></a></li>
+        </ul>
+        <ul class="right">
+            <li><a href="#!"><i class="material-icons right">filter_list</i>Filters</a></li>
+        </ul>
+    </div>
+</nav> #}
 
-      <div class="row mb-4">
-        <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
-            <div class="card-body px-0 pb-2">
-              <div class="table-responsive">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"># Pedido</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Valor</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">212121</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> $14,000 </span>
-                      </td>
-                      <td class="align-middle">
-                        <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
-                            <div class="progress-percentage">
-                              <span class="text-xs font-weight-bold">60%</span>
-                            </div>
-                          </div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">1234</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> $3,000 </span>
-                      </td>
-                      <td class="align-middle">
-                        <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
-                            <div class="progress-percentage">
-                              <span class="text-xs font-weight-bold">10%</span>
-                            </div>
-                          </div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-info w-10" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">5456</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> Not set </span>
-                      </td>
-                      <td class="align-middle">
-                        <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
-                            <div class="progress-percentage">
-                              <span class="text-xs font-weight-bold">100%</span>
-                            </div>
-                          </div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">56456</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> $20,500 </span>
-                      </td>
-                      <td class="align-middle">
-                        <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
-                            <div class="progress-percentage">
-                              <span class="text-xs font-weight-bold">100%</span>
-                            </div>
-                          </div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">454545</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> $500 </span>
-                      </td>
-                      <td class="align-middle">
-                        <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
-                            <div class="progress-percentage">
-                              <span class="text-xs font-weight-bold">25%</span>
-                            </div>
-                          </div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-info w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="25"></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">54546</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> $2,000 </span>
-                      </td>
-                      <td class="align-middle">
-                        <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
-                            <div class="progress-percentage">
-                              <span class="text-xs font-weight-bold">40%</span>
-                            </div>
-                          </div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-info w-40" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+<style>
+.dashboard {
+    padding: 20px 15px;
+    width: 85%;
+    margin: auto;
+}
+
+@media (max-width: 1280px) {
+    .dashboard {
+        width: 100%;
+    }
+}
+
+.dashboard .card {
+    cursor: pointer
+}
+
+.dashboard .card .row {
+    margin-bottom: 0;
+}
+
+.dashboard .card-stats-number {
+    margin: 0;
+    font-weight: bold;
+}
+
+.dashboard .icon {
+    height: 140px;
+}
+
+.dashboard .icon {
+    width: 100px;
+}
+
+.dashboard .icon i {
+    width: 100%;
+    text-align: center;
+    color: rgba(0,0,0,.25)
+}
+.heading-primary {
+  font-size: 4rem;
+  font-weight: 800;
+}
+.span-blue {
+  color: #2196f3;
+}
+.slogan-text {
+  color: darkgray;
+  font-weight: 400;
+}
+</style>
+
+<div class="dashboard">
+    <div class="row">
+      <div class="col l12 m12 s12">
+        <h3 class="heading-primary">Envío <span class="span-blue">Fácil</span>.</h3>
+        <p class="slogan-text">Servicio de mensajería contraentrega.</p>
       </div>
     </div>
+    <div class="row">
+        <div class="col l3 m6 s12">
+            <div class="card yellow darken-3 white-text valign-wrapper">
+                <div class="yellow darken-4 icon valign-wrapper">
+                    <i class="material-icons medium valign">build</i>
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                        <h3 class="card-stats-number">0</h3>
+                        <p>Novedades</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col l3 m6 s12">
+            <div class="card green white-text valign-wrapper">
+                <div class="green darken-2 icon valign-wrapper">
+                    <i class="material-icons medium valign">check_circle</i>
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                        <h3 class="card-stats-number">{{pedidosDespachados}}</h3>
+                        <p>Total envíos despachados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col l3 m6 s12">
+            <div class="card red white-text valign-wrapper">
+                <div class="red darken-2 icon valign-wrapper">
+                    <i class="material-icons medium valign">error</i>
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                        <h3 class="card-stats-number">{{pedidosSinDespacho}}</h3>
+                        <p>Total envíos sin despacho</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col l3 m6 s12">
+            <div class="card blue darken-1 white-text valign-wrapper">
+                <div class="blue darken-3 icon valign-wrapper">
+                    <i class="material-icons medium valign">account_balance</i>
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                        <h3 class="card-stats-number">$0.00</h3>
+                        <p>Comisión a la fecha</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col l6 m6 s12">
+        <button type="button" class="btn green" href="" id="" onclick="cargarModulo('pedidos')"><i class="material-icons left">receipt</i><b>Realizar Nuevo Pedido</b></button>
+      </div>
+    </div>
+</div>

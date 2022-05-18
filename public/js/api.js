@@ -1,11 +1,4 @@
 export class API {
-    async buscaCobertura(obj) {
-        try {
-            console.log(obj)
-        } catch (error) {
-            console.error(`Error: ${error.message}`)
-        }
-    }
 
     async simularEnvio(obj) {
         try {

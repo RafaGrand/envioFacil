@@ -1,0 +1,88 @@
+<style>
+    #modal_despachos{
+        height : 90%;
+        border-radius:10px; 
+        width:90%;
+    }
+
+    #content-modal{
+        padding : 5px;
+    }
+
+    .div-form{
+        padding : 10px;
+        margin: 10px;
+    }
+
+
+    #tabla-lista-despachos{
+        width : 95%;
+        margin-left : 20px;
+        margin-right: 20px;
+    }
+</style>
+
+<div id="modal_despachos" class="modal modal-fixed-footer">
+    <div class="modal-content" id="content-modal">          
+        <div class="encabezado-modal-despachos center-align">
+            <h4>Seleccione las guias para genera el despacho</h4>
+        </div>
+        <form method="POST" name="fmrGuiasDespacho" id="fmrGuiasDespacho">
+            <table class="highlight" id="tabla-lista-despachos">
+                <thead>
+                    <tr>
+                        <th class="th-nomina" ><p><label><input type="checkbox"  class="check_todos" onclick="seleccionarDeseleccionarCheck()" /><span></span></label></th>
+                        <th> Fecha </th>
+                        <th> Guía </th>
+                        <th> Articulo </th>
+                        <th> Nombre </th>
+                        <th> Teléfono </th>
+                        <th> Dirección </th>
+                        <th> Ciudad </th>
+                        <th> Estado guía </th>
+                        <th> Transportadora </th>
+                    </tr>
+                </thead>  
+                <tbody>
+                    {% if listaPedidosSinDespacho %}
+                        {% for pedido in listaPedidosSinDespacho %} 
+                            <tr>   
+                                <td>
+                                    <p>
+                                        <label>
+                                            <input type="checkbox" class="checkDP" name="checkDP[]" value="{{pedido.codigo_remision}}" onclick="detectarCheckSeleccionado()"/>
+                                                <span></span>
+                                        </label>
+                                    </p>
+                                </td>               
+                                <td>{{pedido.fecha_creacion}}</td>
+                                <td>{{pedido.codigo_remision}}</td>
+                                <td>{{pedido.contenido}}</td>
+                                <td>{{pedido.nombre_destinatario}}</td>
+                                <td>{{pedido.telefono_destinatario}}</td>
+                                <td>{{pedido.direccion_destinatario}}</td>
+                                <td>{{pedido.ciudad}}</td>                    
+                                <td class="red-text"><b>{{pedido.estado}}</b></td>
+                                <td>{{pedido.transportadora}}</td>
+                            </tr>
+                        {% endfor %}
+
+                    {% else %}    
+                        <tr>
+                            <td colspan="9" class="center-align">
+                                <h5 class="grey-text">No hay guias pendientes por despachar</h5>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    
+                </tbody>              
+            </table>
+        </form>
+    </div>    
+    <div class="modal-footer">
+        <div class="center-align">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat btn-cancelar">CANCELAR</a>
+        <button class="waves-effect waves-light btn green  btn-guardar-despacho" type="button" onclick="generarDespachoGuias()" >GENERAR DESPACHO</button>
+        </div>
+    </div>
+</div>
