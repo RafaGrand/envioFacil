@@ -67,4 +67,42 @@ class musuario extends CI_Model{
 
 		return $response;
 	}
+
+	function TraerDataUsuario($id_usuario) {
+		$this->db->where("id_usuario", $id_usuario);
+		$query = $this->db->get("usuario");
+
+		if ($query->num_rows()>0) {
+			return $query->result();
+		}
+		
+		return false;
+	}
+
+	function ActualizarUsuario($parametros) {
+		$response = new stdClass();
+		$response->status  = false;
+		$response->message = 'Se presento un error al actualizar los datos';
+
+		$this->db->where('id_usuario', $parametros['id']);
+		$this->db->update('usuario',[
+			'nombre'     =>$parametros['nombre'],
+			'apellido'   =>$parametros['apellido'], 
+			'email'     =>$parametros['correo'], 
+			'celular'    =>$parametros['celular'],
+			'direccion'  =>$parametros['direccion'], 
+		]);
+
+		if ($this->db->affected_rows() > 0) {
+			$response->status  = true;
+			$response->message = 'Usuario actualizado de forma exitosa.';
+			return $response;
+		}elseif($this->db->affected_rows() == 0){
+			$response->status  = true;
+			$response->message = 'No se detecto ningún cambio.';
+			return $response;
+		}
+
+		return $response;
+	}
 }

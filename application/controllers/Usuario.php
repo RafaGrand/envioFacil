@@ -46,4 +46,57 @@ class Usuario extends CI_Controller {
 		return ;
 	
 	}
+
+	public function GetUserData() {
+		$parametros = $this->input->post();
+
+		if(!isset($parametros['id_usuario']) || empty($parametros['id_usuario'])){
+			
+            echo json_encode([
+                "status"  	 => false,
+                "message"    => "Faltan parametros para editar el usuario"
+            ]);
+            return ;
+        }
+
+		$response = $this->musuario->TraerDataUsuario($parametros['id_usuario']);
+
+		if(!$response){
+			
+			echo json_encode([
+				"status"  	 => false,
+				"message"    => 'No se actualizo ningun registro'
+			]);
+
+			return ;
+		}  
+
+		echo json_encode([
+			"status"  	 => true,
+			"message"    => $response
+		]);
+		return ;
+	}
+
+	public function UpdateUsuario() {
+		$parametros = $this->input->post();
+
+		$response = $this->musuario->ActualizarUsuario($parametros);
+
+		if(!$response){
+			
+			echo json_encode([
+				"status"  	 => false,
+				"message"    => 'No se actualizo ningun registro'
+			]);
+
+			return ;
+		}  
+
+		echo json_encode([
+			"status"  	 => true,
+			"message"    => $response
+		]);
+		return ;
+	}
 }
