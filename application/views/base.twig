@@ -69,6 +69,7 @@
 <script type="text/javascript" src="{{base_url}}public/js/usuario.js"></script>
 <script type="text/javascript" src="{{base_url}}public/js/nuevo_pedido.js"></script>
 <script type="text/javascript" src="{{base_url}}public/js/despachos.js"></script>
+<script type="text/javascript" src="{{base_url}}public/js/guias.js"></script>
 {# <script type="module" defer="defer" src="{{base_url}}public/js/gestionPedidos.js"></script> #}
 <script src="{{base_url}}public/js/datatable.js" defer></script>
 <script type="module" src="{{base_url}}public/ionicons/ionicons.esm.js"></script>
@@ -108,6 +109,7 @@ if (win && document.querySelector('#sidenav-scrollbar')) {
     $(document).ready(function(){//INICIALIZA LOS COMPONENTES DE MATERIALIZE 
 
         $('.sidenav').sidenav();
+        $('.modal').modal();
          $('.modal').modal({dismissible:false,endingTop:5});
         $('select').formSelect();
         $('.tooltipped').tooltip();

@@ -1,3 +1,0 @@
-function funciona(){
-    alert();
-}

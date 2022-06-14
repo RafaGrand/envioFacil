@@ -31,7 +31,8 @@ class Pedidos extends CI_Controller {
 				"dataTablaUsuarios"		=> $this->mgenerales->getdataTablaUsuarios(),
                 "departamentos"         => $this->mgenerales->getDepartamentos(),
                 "listaPedidos"          => $this->mpedidos->getListaPedidos(),
-                "listaPedidosSinDespacho"=> $this->mpedidos->getListaPedidos(self::SIN_DESPACHO)
+                "listaPedidosSinDespacho"=> $this->mpedidos->getListaPedidos(self::SIN_DESPACHO),
+                "GuiasSinLiquidar"		=> $this->mgenerales->getGuiasSinLiquidar()
             ]);
 
         }else{
@@ -223,6 +224,12 @@ class Pedidos extends CI_Controller {
                 ]);
                 return;
             }
+
+            $comison = ((float)$parametros['valor_declarado'] + (float)$dataCotizador->flete_total)  * self::PORCENTAJE_COMISION;
+
+            if($comison < 4500){
+                $comison = 4500;
+            }
     
             $data_insert =[
                 "nombre_remitente"          => $dataSesion['nombre_user'],
@@ -234,7 +241,7 @@ class Pedidos extends CI_Controller {
                 "ciudad_destinatario"       => $parametros['municipio_destinatario'],
                 "telefono_destinatario"     => $parametros['telefono_destinatario'],
                 "valor_declarado"           => $parametros['valor_declarado'],
-                "valor_comision"            => (float)$parametros['valor_declarado'] * self::PORCENTAJE_COMISION,
+                "valor_comision"            => $comison,
                 "valor_flete"               => $dataCotizador->flete_total,
                 "dias_entrega"              => $dataCotizador->dias_entrega,
                 "contenido"                 => $parametros['contenido'],
@@ -376,7 +383,7 @@ class Pedidos extends CI_Controller {
         }
 
          $params = array(
-            'id_rotulo' => 5,
+            'id_rotulo' => 10,
             'codigos_remisiones' => array($id_remision)
         );
 
@@ -444,5 +451,38 @@ class Pedidos extends CI_Controller {
         );
 
         return  $coordinadora->Cotizador_cotizar($params);
+    }
+
+    function guetGuiasSinLiquidarCuenta(){
+        
+        $parametros = $this->input->post();
+
+        if(!isset($parametros['id_cuenta'])){
+            echo json_encode([
+                'status'  	 => false,
+                'message'    => 'El id de la cuenta o usuario no es valido'
+            ]);
+            return;
+        }
+        
+        $pedidos = $this->mpedidos->guetGuiasSinLiquidarCuenta($parametros['id_cuenta']);
+
+        if(!$pedidos){
+            echo json_encode([
+                'status'  	 => true,
+                'message'    => 'No hay pedidos pendientes por liquidar',
+                'data'       => false
+
+            ]);
+            return;
+        }
+
+        echo json_encode([
+            'status'  	 => true,
+            'message'    => '',
+            'data'       => $pedidos
+        ]);
+        return;
+
     }
 }

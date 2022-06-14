@@ -25,7 +25,8 @@ class Novedades extends CI_Controller {
 				"dataTablaUsuarios"		=> $this->mgenerales->getdataTablaUsuarios(),
                 "departamentos"         => $this->mgenerales->getDepartamentos(),
                 "listaNovedades"        => $this->mnovedades->getListaNovedades(),
-                "listaNovedadesSinGestion"=> $this->mnovedades->getListaNovedades(self::SIN_GESTION)
+                "listaNovedadesSinGestion"=> $this->mnovedades->getListaNovedades(self::SIN_GESTION),
+                "GuiasSinLiquidar"		=> $this->mgenerales->getGuiasSinLiquidar()
             ]);
 
         }else{

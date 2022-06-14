@@ -50,6 +50,7 @@ class mgenerales extends CI_Model{
 
     function getCountDespachados() {
         $this->db->select('COUNT(estado_id) as count');
+        $this->db->where("cuenta_id",$this->session->userdata('id_cuenta'));
         $this->db->where("estado_id", 10);
         $query = $this->db->get('pedido');
 
@@ -64,6 +65,7 @@ class mgenerales extends CI_Model{
 
     function getCountNoDespachados() {
         $this->db->select('COUNT(estado_id) as count');
+        $this->db->where("cuenta_id",$this->session->userdata('id_cuenta'));
         $this->db->where_not_in("estado_id", 10);
         $query = $this->db->get('pedido');
 
@@ -209,4 +211,29 @@ class mgenerales extends CI_Model{
 		
 		return false;
 	}
+
+    function getGuiasSinLiquidar(){
+
+        $this->db->select("
+            c.id_cuenta,
+            UPPER(concat(u.nombre,' ',u.apellido)) as usuario,
+            count(1) as total_guias, 
+            CONCAT('$',REPLACE(FORMAT(sum(p.valor_declarado - p.valor_comision - p.valor_flete),0),',','.')) as valor_pagar"
+        );
+
+		$this->db->from('pedido p');
+        $this->db->join('cuenta c', 'c.id_cuenta  = p.cuenta_id');
+        $this->db->join('usuario u', 'u.cuenta_id = c.id_cuenta');
+		$this->db->where("p.estado_liquidacion",11);
+        $this->db->where("p.estado_id",10);
+        $this->db->group_by("c.id_cuenta");
+		$query = $this->db->get();
+
+		if ($query->num_rows()>0) {
+			return $query->result();
+		}
+		
+		return false;
+
+    }
 }

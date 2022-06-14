@@ -23,8 +23,10 @@
                             <th> Estado guía</th>
                             <th> Transportadora </th>
                             <th> Comision </th>
+                            <!--<th> Valor declarado </th>-->
                             <th> Valor envio </th>
-                            <th> Total </th>
+                            <th> Valor a cobrar </th>
+                            <th> Valor a recibir </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -48,8 +50,11 @@
                             {% endif %}
                             <td>{{pedido.transportadora}}</td>
                             <td>{{pedido.valor_comision}}</td>
+                            <!--<td>{{pedido.valor_declarado}}</td>-->
                             <td>{{pedido.valor_flete}}</td>
-                            <td>{{pedido.total}}</td>
+                            <td>{{pedido.valor_cobrar}}</td>
+                            <td>{{pedido.valor_recibir}}</td>
+                            
 
                             <td class="align-middle text-center text-xs" align="center">
                                 
@@ -61,7 +66,7 @@
                                 {% endif %}
 
                                 {% if pedido.id_estado == "9" %}
-                                    <a href="#modal_editar_pedido" class="modal-trigger tooltipped" data-position="left" data-tooltip="Editar pedido"><i class="material-icons">create</i></a>
+                                    <a href="#" class="tooltipped" data-position="left" data-tooltip="Editar pedido" onclick="abrirEditarPedido({{pedido.id_pedido}});"><i class="material-icons">create</i></a>
                                 {% endif %}
 
                                 
@@ -86,7 +91,6 @@
 {% include 'modal_pedidos.twig' %}
 {% include 'modal_despachos.twig' %}
 {% include 'modal_cobertura.twig' %}
-{% include 'modal_rastreo.twig' %}
 {% include 'modal_editar_pedido.twig' %}
 {% include 'modal_novedad.twig' %}
 {% include 'modal_rotulo.twig' %}

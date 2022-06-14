@@ -296,7 +296,11 @@ function guardarPedido(){
 			return;
         }                                                                                           
 	});
-
-
 }
 
+function abrirEditarPedido(id_pedido){
+
+    //alert(id_pedido);
+    $('#modal_editar_pedido').modal('open', true);
+
+}

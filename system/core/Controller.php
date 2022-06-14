@@ -59,7 +59,8 @@ class CI_Controller {
     CONST ESTADO_ELIMINADO  = 5;
     CONST ESTADO_EN_PROCESO = 6;
     CONST SIN_DESPACHO      = 9;
-    CONST DESPACHADO        = 10;    
+    CONST DESPACHADO        = 10;   
+    CONST SIN_GESTION       = 0;
 
     CONST CLASE_SALARIO 			= 1;
 	CONST CLASE_AUX_TRANSPORTE 		= 2;

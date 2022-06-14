@@ -1,0 +1,53 @@
+<style>
+
+#modal_liquidacion_guias{
+	height : 90%;
+	border-radius:20px;
+	padding-top:0px; 
+	padding-bottom:0px; 
+	max-height:700px;
+}
+</style> 
+
+<div id="modal_liquidacion_guias" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="encabezado-modal center-align">
+                <h4>Liquidacion de Guias</h4>
+        </div>
+        <p>Listado de usuario con guias pendientes por pagar</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th class="center-align">total guias a pagar</th>
+                    <th>Valor a pagar</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if GuiasSinLiquidar %}
+                    {% for data in GuiasSinLiquidar %} 
+                        <tr class="tr-cuenta-{{data.id_cuenta}}">
+                            <td>{{data.usuario}}</td>
+                            <td class="center-align">{{data.total_guias}}</td>
+                            <td class="green-text"><b>{{data.valor_pagar}}</b></td>
+                            <td>
+                                <button type="button" class="btn  blue mr-2" title="ver guias" onclick="verGuiasSinLiquidar({{data.id_cuenta}})">
+                                    <i class="material-icons left" style="margin-right: 2px;">remove_red_eye</i>
+                                    <b>Ver guias</b>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td class="grey-text">No hay guias pendientes por liquidar</td>
+                    </tr>
+                {% endif %}
+            </tblody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CERRAR</a>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<style>
+
+#modal_guias_sin_liquidar{
+	height : 90%;
+	border-radius:20px;
+	padding-top:0px; 
+	padding-bottom:0px; 
+	max-height:700px;
+    width: 90%;
+}
+</style> 
+
+<div id="modal_guias_sin_liquidar" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="encabezado-modal center-align">
+                <h4>Guias del usuario</h4>
+        </div>
+        <p>Listado de guias pendientes por pagar</p>
+        <table class="highlight">
+            <thead>
+                <th></th>
+                <th>Fecha</th>
+                <th>Usuario</th>
+                <th>guia</th>
+                <th>estado guia</th>
+                <th>Transportadora</th>
+                <th>Comision</th>
+                <th>valor envio</th>
+                <th>Valor cobrado</th>
+                <th>Valor a pagar</th>
+                <th></th>
+            </thead>
+            <tbody class="tbody-guias-sin-liquidar">
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CERRAR</a>
+        <button type="button" class="btn green mr-2"  title="Liquidar guias" onclick="liquidarGuiasCuenta()">
+            <i class="material-icons left" style="margin-right: 2px;">money_off</i>
+            <b>Liquidar guias</b>
+        </button>
+    </div>
+</div>
