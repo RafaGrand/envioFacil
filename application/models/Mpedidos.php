@@ -130,4 +130,63 @@ class mpedidos extends CI_Model{
 		return false;
 
 	}
+
+	function anularGuia($codigo_remision,$intento = 1){
+
+		$this->db->query("
+            UPDATE pedido
+                SET 
+                    estado_id         =".self::ESTADO_ANULADO."
+            WHERE codigo_remision ='".$codigo_remision."'");
+
+		if ($this->db->affected_rows() == 0) {
+			$this-anularGuia($codigo_remision,2);
+			if($intento == 2){
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	function getDataPedido($id_pedido){
+
+		$this->db->select("
+			p.id_pedido,
+			p.nombre_remitente,
+			p.direccion_remitente,
+			p.telefono_remitente,
+			p.ciudad_remitente,
+			p.nombre_destinatario,
+			p.direccion_destinatario,
+			p.ciudad_destinatario,
+			p.telefono_destinatario,
+			p.valor_declarado,
+			p.valor_comision,
+			p.valor_flete,
+			p.dias_entrega,
+			p.contenido,
+			p.alto,
+			p.ancho,
+			p.largo,
+			p.peso,
+			p.unidades,
+			p.id_remision,
+			p.codigo_remision,
+			p.transportadora_id,
+			m.id_municipio,
+			m.departamento_id");
+		$this->db->from('pedido p');
+		$this->db->join('municipio m', 'm.codigo_transportadora  = p.ciudad_destinatario');
+		$this->db->where("p.id_pedido",$id_pedido);
+
+		$query = $this->db->get();
+
+		if ($query->num_rows()>0) {
+			return $query->row();
+		}
+		
+		return false;
+
+	}
 }

@@ -61,21 +61,19 @@
                                 {% if pedido.id_estado == "10" %}
                                     <a href="#modal_rastreo" target="_blank" onclick="rastrearPedido('{{pedido.codigo_remision}}')" class="modal-trigger tooltipped" data-position="left" data-tooltip="Rastrear pedido"><i class="material-icons">search</i></a>
 
-                                    <a href="#modal_novedad" class="modal-trigger tooltipped" data-position="left"
-                                    data-tooltip="Registrar novedad"><i class="material-icons">add_alert</i></a>
                                 {% endif %}
 
                                 {% if pedido.id_estado == "9" %}
-                                    <a href="#" class="tooltipped" data-position="left" data-tooltip="Editar pedido" onclick="abrirEditarPedido({{pedido.id_pedido}});"><i class="material-icons">create</i></a>
+                                    <a href="#" class="tooltipped" data-position="left" data-tooltip="Editar pedido" onclick="abrirEditarPedido({{pedido.id_pedido}},'{{pedido.codigo_remision}}');"><i class="material-icons">create</i></a>
                                 {% endif %}
-
                                 
-
-                                <a href="{{base_url}}pedidos/descargarrotulo?id_remision={{pedido.id_remision}}" class="tooltipped" target="_blank" 
-                                data-position="left" data-tooltip="Generar rótulo"><i class="material-icons">print</i>    </a>
-                                <label>
-                                    <span></span>
-                                </label>
+                                {% if pedido.id_estado != "12" %}
+                                    <a href="{{base_url}}pedidos/descargarrotulo?id_remision={{pedido.id_remision}}" class="tooltipped" target="_blank" 
+                                    data-position="left" data-tooltip="Generar rótulo">
+                                        <i class="material-icons">print</i>
+                                    </a>
+                                {% endif %}
+                         
                             </td>
 
                         </tr>

@@ -26,39 +26,39 @@
                 <div class="col m6">
                     <h5 class="grey-text">Datos de quien envia</h5> 
                     <div class="input-field col m12">
-                        <input id="nombre_remitente" type="text" class="validate" value="{{data_sesion.nombre_user}}" disabled>
-                        <label for="nombre_remitente">Nombre Completo</label>
+                        <input id="nombre_remitente_edit" type="text" class="validate" value="{{data_sesion.nombre_user}}" disabled>
+                        <label for="nombre_remitente_edit">Nombre Completo</label>
                     </div>
                     <div class="input-field col m6">
-                        <select name="departamento_remitente" id="departamento_remitente">
+                        <select name="departamento_remitente_edit" id="departamento_remitente_edit">
                             <option value="{{data_sesion.id_departamento}}" selected>{{data_sesion.departamento}}</option>
                         </select>
                         <label>Departamentos</label>
                     </div>
                     <div class="input-field col m6">
-                        <select name="municipio_remitente" id="municipio_remitente">
+                        <select name="municipio_remitente_edit" id="municipio_remitente_edit">
                             <option value="{{data_sesion.codigo_transportadora}}" selected disabled>{{data_sesion.municipio}}</option>
                         </select>
                         <label>Municipio</label>
                     </div>
                     <div class="input-field col m12">
-                        <input id="direccion_remitente" type="text" class="validate" disabled value="{{data_sesion.direccion}}">
-                        <label for="direccion_remitente">Direccion</label>
+                        <input id="direccion_remitente_edit" type="text" class="validate" disabled value="{{data_sesion.direccion}}">
+                        <label for="direccion_remitente_edit">Direccion</label>
                     </div>
                     <div class="input-field col m12">
-                        <input id="telefono_remitente" type="text" class="validate" disabled value="{{data_sesion.celular}}">
-                        <label for="telefono_remitente">Telefono</label>
+                        <input id="telefono_remitente_edit" type="text" class="validate" disabled value="{{data_sesion.celular}}">
+                        <label for="telefono_remitente_edit">Telefono</label>
                     </div>
                 </div>
 
                 <div class="col m6">
                     <h5 class="grey-text">Datos de quien recibe</h5> 
                     <div class="input-field col m12">
-                        <input id="nombre_destinatario" name="nombre_destinatario" type="text" class="validate">
-                        <label for="nombre_destinatario">Nombre Completo</label>
+                        <input id="nombre_destinatario_edit" name="nombre_destinatario_edit" type="text" class="validate">
+                        <label for="nombre_destinatario_edit">Nombre Completo</label>
                     </div>
                     <div class="input-field col m6">
-                        <select name="departamento_destinatario" id="departamento_destinatario" onchange="municipiosDepartamento(this.value)" >
+                        <select name="departamento_destinatario_edit" id="departamento_destinatario_edit" onchange="municipiosDepartamento(this.value,'municipio_destinatario_edit')" >
                             <option selected disabled>- Seleccione -</option>
                             {% if departamentos %}                   
                                 {% for departamento in departamentos %}
@@ -69,18 +69,18 @@
                         <label>Departamentos</label>
                     </div>
                     <div class="input-field col m6">
-                        <select name="municipio_destinatario" id="municipio_destinatario" onchange="consultaCobertura(this.value)" >
+                        <select name="municipio_destinatario_edit" id="municipio_destinatario_edit" onchange="consultaCobertura(this.value)" >
                             <option value="" disabled selected>- Municipios -</option>
                         </select>
                         <label>Municipio</label>
                     </div>
                     <div class="input-field col m12">
-                        <input id="direccion_destinatario" name="direccion_destinatario" type="text" class="validate">
-                        <label for="direccion_destinatario">Direccion</label>
+                        <input id="direccion_destinatario_edit" name="direccion_destinatario_edit" type="text" class="validate">
+                        <label for="direccion_destinatario_edit">Direccion</label>
                     </div>
                     <div class="input-field col m12">
-                        <input id="telefono_destinatario" name="telefono_destinatario" type="text" class="validate">
-                        <label for="telefono_destinatario">Telefono</label>
+                        <input id="telefono_destinatario_edit" name="telefono_destinatario_edit" type="text" class="validate">
+                        <label for="telefono_destinatario_edit">Telefono</label>
                     </div>
                 </div>
             </div>
@@ -89,44 +89,37 @@
                 <div class="col m12">
                     <h5 class="grey-text">Información del envío:</h5> 
                     <div class="input-field col m9">
-                        <input id="contenido" name="contenido" type="text" class="validate">
-                        <label for="contenido">Contenido</label>
+                        <input id="contenido_edit" name="contenido_edit" type="text" class="validate">
+                        <label for="contenido_edit">Contenido</label>
                     </div>
                     <div class="input-field col m3">
-                        <input id="valor_declarado" name="valor_declarado" type="number" class="validate">
-                        <label for="valor_declarado">Valor Declarado</label>
+                        <input id="valor_declarado_edit" name="valor_declarado_edit" type="number" class="validate">
+                        <label for="valor_declarado_edit">Valor Declarado</label>
                     </div>
                 </div>
                 <div class="col m12">
                     <h5 class="grey-text">Dimensión del empaque:</h5> 
                     <div class="input-field col m2">
-                        <input id="alto" name="alto" type="number" class="validate">
-                        <label for="alto">Alto</label>
+                        <input id="alto_edit" name="alto_edit" type="number" class="validate">
+                        <label for="alto_edit">Alto</label>
                     </div>
                     <div class="input-field col m2">
-                        <input id="ancho" name="ancho" type="number" class="validate">
-                        <label for="ancho">Ancho</label>
+                        <input id="ancho_edit" name="ancho_edit" type="number" class="validate">
+                        <label for="ancho_edit">Ancho</label>
                     </div>
                     <div class="input-field col m2">
-                        <input id="largo" name="largo" type="number" class="validate">
-                        <label for="largo">Largo</label>
+                        <input id="largo_edit" name="largo_edit" type="number" class="validate">
+                        <label for="largo_edit">Largo</label>
                     </div>
                     <div class="input-field col m2">
-                        <input id="peso" name="peso" type="number" class="validate">
-                        <label for="peso">Peso</label>
+                        <input id="peso_edit" name="peso_edit" type="number" class="validate">
+                        <label for="peso_edit">Peso</label>
                     </div>
                 </div>
                 <div class="col m12">
                     <div class="input-field col m5">
-                        <select name="transportadora" id="transportadora" class="browser-default" >
-                            <option value="0" selected>- <b>transportadoras Disponibles</b> -</option>
-                            <option value="1" disabled>Coordinadora</option>
-                            <option value="2" disabled>Servientrega</option>
-                        </select>
-                    </div>
-                    <div class="input-field col m5">
-                        <select name="transportadora" id="transportadora" class="browser-default" >
-                            <option value="0" selected>- <b>transportadoras Disponibles</b> -</option>
+                        <select name="transportadora_edit" id="transportadora_edit" class="browser-default" >
+                            <option value="0" disabled>- <b>transportadoras Disponibles</b> -</option>
                             <option value="1" disabled>Coordinadora</option>
                             <option value="2" disabled>Servientrega</option>
                         </select>
@@ -136,16 +129,18 @@
         </div>
         
         <div class="modal-footer">
+            <input name="id_pedido_edit" id="id_pedido_edit" value="" type="hidden"  />
+            <input name="codigo_remision_edit" id="codigo_remision_edit" value="" type="hidden"  />
             <div class="center-align">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat btn-cancelar">CANCELAR</a>
-            <button class="waves-effect waves-light btn blue hide btn-atras" type="button" onclick="cambioPasoNuevoPedido('1')">
+            <button class="waves-effect waves-light btn blue hide btn-atras" type="button" onclick="cambioPasoNuevoPedido('1','_edit')">
                 <i class="material-icons left">arrow_back</i>Atras
             </button>
-            <button class="waves-effect waves-light btn blue btn-siguiente" type="button" onclick="cambioPasoNuevoPedido('2')" disabled>
+            <button class="waves-effect waves-light btn blue btn-siguiente" type="button" onclick="cambioPasoNuevoPedido('2','_edit')" disabled>
                 <i class="material-icons right">arrow_forward</i>Siguiente
             </button>
             <button class="waves-effect waves-light btn green hide btn-guardar-pedido" type="button" onclick="guardarEditarPedido()" >EDITAR PEDIDO</button>
-            <button class="waves-effect waves-light btn red btn-guardar-pedido" type="button" onclick="anularPedido()" >ANULAR PEDIDO</button>
+            <button class="waves-effect waves-light btn red btn-guardar-pedido" type="button" onclick="anularGuia()" >ANULAR PEDIDO</button>
             </div>
         </div>
     </form>

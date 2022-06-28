@@ -115,7 +115,7 @@ class Pedidos extends CI_Controller {
 
         try{
             $coordinadora = new WebService($apikey, $password, $nit, $id_client, $user_guide, $password_guide);
-            $coordinadora->sandbox_mode(true); //true for tests or false for production
+            $coordinadora->sandbox_mode(false); //true for tests or false for production
             return $coordinadora;
         }
         catch (\Exception $exception){
@@ -150,7 +150,7 @@ class Pedidos extends CI_Controller {
             "ancho"                 => (float)$parametros['ancho'],
             "largo"                 => (float)$parametros['largo'],
             "unidades"              => (float)1,
-            "referencia"            => "12345678",
+            "referencia"            => "",
             "nombre_empaque"        => "some name"
         );
 
@@ -158,7 +158,7 @@ class Pedidos extends CI_Controller {
         $params = array(
             'codigo_remision' => '',
             'fecha' => '',
-            'id_remitente' => $dataSesion['id_cuenta'],
+            'id_remitente' => '',
             'nit_remitente' => '',
             'nombre_remitente' => $dataSesion['nombre_user'],
             "direccion_remitente"   => $dataSesion['direccion'],    
@@ -404,7 +404,7 @@ class Pedidos extends CI_Controller {
         $coordinadora = $this->getWS();
         $parametros = $this->input->post();
         if(isset($parametros['codigo_remision'])) {
-            $params = ['codigos_remision'=>[/*$parametros['codigo_remision']*/51074506680]];
+            $params = ['codigos_remision'=>[$parametros['codigo_remision']]];
             $data = $coordinadora->Guias_rastreoExtendido($params);
             if(!$data){
                 echo json_encode([
@@ -483,6 +483,81 @@ class Pedidos extends CI_Controller {
             'data'       => $pedidos
         ]);
         return;
+
+    }
+
+    function anularGuia(){
+
+        $parametros = $this->input->post();
+
+        if(!isset($parametros['codigo_remision'])){
+            echo json_encode([
+                'status'  	 => false,
+                'message'    => 'El codigo de la guia no es valido'
+            ]);
+            return;
+        }
+        
+        $coordinadora = $this->getWS();
+        $response = $coordinadora->Guias_anularGuia(["codigo_remision" => $parametros['codigo_remision']]);
+
+        if($response !== true){
+            echo json_encode([
+                'status'  	 => false,
+                'message'    => $response
+            ]);
+            return;
+        }
+
+        $responseDB = $this->mpedidos->anularGuia($parametros['codigo_remision']);
+
+        if($responseDB){
+            echo json_encode([
+                'status'  	 => true,
+                'message'    => "El codigo de remision <b>".$parametros['codigo_remision']."</b> fue anulado de forma correcta "
+            ]);
+        }else{
+            echo json_encode([
+                'status'  	 => true,
+                'message'    => "La transportadora anulo el codigo de remision <b>".$parametros['codigo_remision']."</b> pero nuestro sistema no pudo atulizar el registro<br><b>POR FAVOR CONTACTE A SOPORTE</b>"
+            ]);
+        }
+    }
+
+    function abrirEditarPedido(){
+
+        $parametros = $this->input->post();
+
+        if(!isset($parametros['id_pedido'])){
+            echo json_encode([
+                'status'  	 => false,
+                'message'    => 'El id del registro no es valido'
+            ]);
+            return;
+        }
+
+        $data = $this->mpedidos->getDataPedido($parametros['id_pedido']);
+
+        if(!$data){
+            echo json_encode([
+                'status'  	 => false,
+                'message'    => 'No se encontro informacion en la  base de datos para el pedido seleccionado'
+            ]);
+            return;
+        }
+
+        echo json_encode([
+            'status'  	 => true,
+            'data'       => $data
+        ]);
+
+    }
+
+    function guardarEditarPedido(){
+
+        $parametros = $this->input->post();
+
+        
 
     }
 }
