@@ -139,21 +139,26 @@ class Pedidos extends CI_Controller {
             return;
         }
 
-        /*object(stdClass)#34 (10) { ["flete_total"]=> int(15808) ["flete_fijo"]=> float(15438) ["flete_variable"]=> float(370) ["peso_liquidado"]=> float(1) ["otros_valores"]=> float(0) ["producto"]=> int(2) ["ubl"]=> int(2) ["volumen"]=> float(0.01) ["peso_real"]=> float(1) ["dias_entrega"]=> int(3) }*/
-
         $coordinadora = $this->getWS();
 
         $cart_prods[] = (object)array(
-            "peso"                  => (float)$parametros['peso'],
+            "peso"                  => (int)$parametros['peso'],
             "ubl"                   => "0", 
-            "alto"                  => (float)$parametros['alto'],
-            "ancho"                 => (float)$parametros['ancho'],
-            "largo"                 => (float)$parametros['largo'],
-            "unidades"              => (float)1,
+            "alto"                  => (int)$parametros['alto'],
+            "ancho"                 => (int)$parametros['ancho'],
+            "largo"                 => (int)$parametros['largo'],
+            "unidades"              => (int)1,
             "referencia"            => "",
             "nombre_empaque"        => "some name"
         );
 
+        $recaudo[] = (object)array(
+            "referencia"      => '',
+            "valor"           => (float)$parametros['valor_declarado'], 
+            "valor_base_iva"  => 0,
+            "valor_iva	"     => 0,
+            "forma_pago"      => 5
+        );
 
         $params = array(
             'codigo_remision' => '',
@@ -173,16 +178,16 @@ class Pedidos extends CI_Controller {
             "valor_declarado"       => $parametros['valor_declarado'],
             'codigo_cuenta' => "2",
             'codigo_producto' => "0",
-            'nivel_servicio' => "1",
+            'nivel_servicio' => "22",
             'linea' => '',
             "contenido" => $parametros['contenido'],
-            'referencia' => 'refeeradd',
+            'referencia' => '',
             'observaciones' => '',
             'estado' => 'IMPRESO',
             'detalle' => $cart_prods,
             'cuenta_contable' => '',
             'centro_costos' => '',
-            'recaudos' => '',
+            'recaudos' => $recaudo,
             'margen_izquierdo' => '',
             'margen_superior' => '',
             'id_rotulo' => '0',

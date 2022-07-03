@@ -7,7 +7,6 @@ class Inicio extends CI_Controller {
 		parent::__construct();
 		$this->load->model('musuario');
 		$this->load->model('mgenerales');
-        $this->load->model('mempresa');
 	}
 	
 	public function index(){
@@ -24,11 +23,6 @@ class Inicio extends CI_Controller {
 				"pedidosDespachados"    => $this->mgenerales->getCountDespachados(),
 				"pedidosSinDespacho"    => $this->mgenerales->getCountNoDespachados(),
 				"GuiasSinLiquidar"		=> $this->mgenerales->getGuiasSinLiquidar()
-                /*"sector_comercial"      => $this->mempresa->getSectorComercial(),
-                "cantidad_empresas"     => $this->musuario->UserCountEmpresa($this->session->userdata('id_usuario')),
-				"lista_empresa"         => $this->mempresa->getListaEmpresa($this->session->userdata('id_usuario')),
-				"id_empresa"            => $this->session->userdata('id_empresa'),
-				"name_user"             => $this->session->userdata('nombre')*/
             ]);
 
         }else{

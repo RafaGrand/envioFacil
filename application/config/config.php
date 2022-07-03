@@ -24,6 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/plataforma/';
+//$config['base_url'] = 'https://enviofacil.com.co/plataforma/';
+
 
 //CREADO POR LUIS DAVID MONTES MOSQUERA 
 
