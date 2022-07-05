@@ -22,7 +22,9 @@ class Inicio extends CI_Controller {
 				"dataTablaUsuarios"		=> $this->mgenerales->getdataTablaUsuarios(),
 				"pedidosDespachados"    => $this->mgenerales->getCountDespachados(),
 				"pedidosSinDespacho"    => $this->mgenerales->getCountNoDespachados(),
-				"GuiasSinLiquidar"		=> $this->mgenerales->getGuiasSinLiquidar()
+				//"GuiasSinLiquidar"		=> $this->mgenerales->getGuiasSinLiquidar(),
+				"valorGuiasEntregadas"	=> $this->mgenerales->getValorGuiasEntregadas(),
+				"departamentos"         => $this->mgenerales->getDepartamentos(),
             ]);
 
         }else{

@@ -53,11 +53,11 @@
 <div class="dashboard">
     <div class="row">
       <div class="col l12 m12 s12">
-        <h3 class="heading-primary">Envío <span class="span-blue">Fácil</span>.</h3>
-        <p class="slogan-text">Servicio de mensajería contraentrega.</p>
+        <h3 class="heading-primary">Reportes <span class="span-blue">Envío Fácil</span>.</h3>
       </div>
     </div>
     <div class="row">
+
         <div class="col l3 m6 s12">
             <div class="card green white-text valign-wrapper">
                 <div class="green darken-2 icon valign-wrapper">
@@ -65,12 +65,12 @@
                 </div>
                 <div class="card-content">
                     <div class="row">
-                        <h3 class="card-stats-number">{{pedidosDespachados}}</h3>
-                        <p>Total envíos despachados</p>
+                        <h5>Guias</h5>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="col l3 m6 s12">
             <div class="card red white-text valign-wrapper">
                 <div class="red darken-2 icon valign-wrapper">
@@ -78,12 +78,12 @@
                 </div>
                 <div class="card-content">
                     <div class="row">
-                        <h3 class="card-stats-number">{{pedidosSinDespacho}}</h3>
-                        <p>Total envíos sin despacho</p>
+                        <h5>Liquidacion de Guias</h5>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="col l3 m6 s12">
             <div class="card blue darken-1 white-text valign-wrapper">
                 <div class="blue darken-3 icon valign-wrapper">
@@ -91,20 +91,10 @@
                 </div>
                 <div class="card-content">
                     <div class="row" title="Este saldo puede variar dependiendo de las novedades de la guia">
-                        {% if valorGuiasEntregadas.valor != null %}
-                            <h5 class="card-stats-number">${{valorGuiasEntregadas.valor}}</h5>
-                        {% else %}
-                            <h3 class="card-stats-number">$0</h3>
-                        {% endif %}
-                        <p>Saldo de guias entregadas sin liquidar</p>
+                        <h5>Usuarios</h5>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-      <div class="col l6 m6 s12">
-        <button type="button" class="btn green" href="" id="" onclick="cargarModulo('pedidos')"><i class="material-icons left">receipt</i><b>Realizar Nuevo Pedido</b></button>
-      </div>
     </div>
 </div>

@@ -80,17 +80,20 @@ class musuario extends CI_Model{
 	}
 
 	function ActualizarUsuario($parametros) {
+
 		$response = new stdClass();
 		$response->status  = false;
 		$response->message = 'Se presento un error al actualizar los datos';
 
 		$this->db->where('id_usuario', $parametros['id']);
 		$this->db->update('usuario',[
-			'nombre'     =>$parametros['nombre'],
-			'apellido'   =>$parametros['apellido'], 
-			'email'     =>$parametros['correo'], 
-			'celular'    =>$parametros['celular'],
-			'direccion'  =>$parametros['direccion'], 
+			'nombre'     	=>$parametros['edit_nombre'],
+			'apellido'   	=>$parametros['edit_apellido'], 
+			'email'     	=>$parametros['edit_correo'], 
+			'celular'    	=>$parametros['edit_celular'],
+			'telefono_fijo' =>$parametros['edit_celular'],
+			'municipio_id'  =>$parametros['municipio_user_edit'], 
+			'direccion'  	=>$parametros['edit_direccion'], 
 		]);
 
 		if ($this->db->affected_rows() > 0) {
@@ -104,5 +107,30 @@ class musuario extends CI_Model{
 		}
 
 		return $response;
+	}
+
+	function actualizarClave($parametros){
+
+		$response = new stdClass();
+		$response->status  = false;
+		$response->message = 'Se presento un error al actualizar los datos';
+
+		$this->db->where('id_usuario', $parametros['id_usuario']);
+		$this->db->update('usuario',[
+			'clave'  =>sha1($parametros['clave_1']), 
+		]);
+
+		if ($this->db->affected_rows() > 0) {
+			$response->status  = true;
+			$response->message = 'Contraseña actualizada de forma exitosa.';
+			return $response;
+		}elseif($this->db->affected_rows() == 0){
+			$response->status  = true;
+			$response->message = 'No se detecto ningún cambio.';
+			return $response;
+		}
+
+		return $response;
+
 	}
 }

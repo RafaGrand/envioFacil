@@ -16,23 +16,27 @@
                 <h4>Guias del usuario</h4>
         </div>
         <p>Listado de guias pendientes por pagar</p>
-        <table class="highlight">
-            <thead>
-                <th></th>
-                <th>Fecha</th>
-                <th>Usuario</th>
-                <th>guia</th>
-                <th>estado guia</th>
-                <th>Transportadora</th>
-                <th>Comision</th>
-                <th>valor envio</th>
-                <th>Valor cobrado</th>
-                <th>Valor a pagar</th>
-                <th></th>
-            </thead>
-            <tbody class="tbody-guias-sin-liquidar">
-            </tbody>
-        </table>
+        <form name="fmr_liquidacion_guias" id="fmr_liquidacion_guias" method="POST">
+            <table class="highlight">
+                <thead>
+                    <th></th>
+                    <th>Fecha</th>
+                    <th>Usuario</th>
+                    <th>Guia</th>
+                    <th>Estado guia</th>
+                    <th>Transportadora</th>
+                    <th>Comision</th>
+                    <th>Valor envio</th>
+                    <th>Valor cobrado</th>
+                    <th>Valor a pagar</th>
+                    <th>Estado del recaudo</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody class="tbody-guias-sin-liquidar">
+                </tbody>
+            </table>
+        </form>
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">CERRAR</a>

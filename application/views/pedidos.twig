@@ -5,7 +5,7 @@
                 <div class="table-header">
                     {# <span class="table-title">Pedidos</span> #}
                     <button type="button" class="btn modal-trigger green mr-2" href="#modal_pedidos" id="btn-nuevo-pedido"><i class="material-icons left">receipt</i><b>Nuevo Pedido</b></button>
-                    <button type="button" class="btn modal-trigger blue" href="#modal_despachos" id="btn-generar-despacho"><i class="material-icons left">local_shipping</i><b>Generar Despacho</b></button>
+                    <button type="button" class="btn modal-trigger blue" href="#modal_despachos" id="btn-generar-despacho" disabled><i class="material-icons left">local_shipping</i><b>Generar Despacho</b></button>
                     <div class="actions">
                         <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
                     </div>
@@ -41,8 +41,10 @@
                             <td>{{pedido.telefono_destinatario}}</td>
                             <td>{{pedido.direccion_destinatario}}</td>
                             <td>{{pedido.ciudad}}</td>
-                            {% if pedido.id_estado == "10"  %}
+                            {% if pedido.id_estado == "13"  %}
                                 <td class="green-text"><b>{{pedido.estado}}</b></td>
+                            {% elseif pedido.id_estado == "10" %}
+                                <td class="orange-text"><b>{{pedido.estado}}</b></td>
                             {% elseif pedido.id_estado == "9" %}
                                 <td class="blue-text"><b>{{pedido.estado}}</b></td>
                             {% else %}
@@ -58,7 +60,7 @@
 
                             <td class="align-middle text-center text-xs" align="center">
                                 
-                                {% if pedido.id_estado == "10" %}
+                                {% if pedido.id_estado != "12" %}
                                     <a href="#modal_rastreo" target="_blank" onclick="rastrearPedido('{{pedido.codigo_remision}}')" class="modal-trigger tooltipped" data-position="left" data-tooltip="Rastrear pedido"><i class="material-icons">search</i></a>
 
                                 {% endif %}

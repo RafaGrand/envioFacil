@@ -21,7 +21,10 @@ class Pedidos extends CI_Controller {
 	public function index(){
 
         if($this->session->userdata('login')){	
-			
+
+            //Importante esta funcion no eliminar (ver descripcion en la funcion)
+            $this->actulizarEstadoGuiasWS("CUENTA","WEB");
+
 		    $this->load->view('base',[
                 "base_url"              =>base_url(),
                 "modulo"                =>'pedidos.twig',
@@ -30,9 +33,9 @@ class Pedidos extends CI_Controller {
                 "perfil_id"				=> $this->session->userdata('perfil_id'),
 				"dataTablaUsuarios"		=> $this->mgenerales->getdataTablaUsuarios(),
                 "departamentos"         => $this->mgenerales->getDepartamentos(),
-                "listaPedidos"          => $this->mpedidos->getListaPedidos(),
-                "listaPedidosSinDespacho"=> $this->mpedidos->getListaPedidos(self::SIN_DESPACHO),
-                "GuiasSinLiquidar"		=> $this->mgenerales->getGuiasSinLiquidar()
+                "listaPedidos"          => $this->mpedidos->getListaPedidos('','CUENTA'),
+                "listaPedidosSinDespacho"=> $this->mpedidos->getListaPedidos(self::IMPRESO,'CUENTA'),
+                //"GuiasSinLiquidar"		=> $this->mgenerales->getGuiasSinLiquidar()
             ]);
 
         }else{
@@ -122,6 +125,30 @@ class Pedidos extends CI_Controller {
             echo $exception->getMessage();
         }
     }
+
+    function cotizar(){
+
+        $parametros = $this->input->post();
+
+        $dataCotizador = $this->cotizarPedido($parametros);
+
+        if(!is_object($dataCotizador)){
+
+            echo json_encode([
+                'status'  	 => false,
+                'message'    => "No fue posible cotizar el envio del pedido. Error: ".$dataCotizador
+            ]);
+            return;
+        }
+
+        echo json_encode([
+            'status'  	 => true,
+            'message'    => "",
+            "data"       => $dataCotizador
+        ]);
+        return;
+    }
+
 
     function guardarPedido(){
 
@@ -469,10 +496,14 @@ class Pedidos extends CI_Controller {
             ]);
             return;
         }
-        
-        $pedidos = $this->mpedidos->guetGuiasSinLiquidarCuenta($parametros['id_cuenta']);
 
-        if(!$pedidos){
+        $codgios_remisiones =  $this->mpedidos->guetGuiasSinLiquidarCuenta($parametros['id_cuenta']);
+        
+        foreach($codgios_remisiones as $codigo_remision){
+            $this->consultarEstadoRecaudoGuia($codigo_remision->codigo_remision);
+        }
+    
+        if(!$codgios_remisiones){
             echo json_encode([
                 'status'  	 => true,
                 'message'    => 'No hay pedidos pendientes por liquidar',
@@ -481,6 +512,8 @@ class Pedidos extends CI_Controller {
             ]);
             return;
         }
+
+        $pedidos = $this->mpedidos->guetGuiasSinLiquidarCuenta($parametros['id_cuenta']);
 
         echo json_encode([
             'status'  	 => true,
@@ -507,6 +540,9 @@ class Pedidos extends CI_Controller {
         $response = $coordinadora->Guias_anularGuia(["codigo_remision" => $parametros['codigo_remision']]);
 
         if($response !== true){
+
+            $responseDB = $this->mpedidos->cambarEstadoGuia($parametros['codigo_remision'],1,self::ESTADO_ANULADO);
+
             echo json_encode([
                 'status'  	 => false,
                 'message'    => $response
@@ -514,7 +550,7 @@ class Pedidos extends CI_Controller {
             return;
         }
 
-        $responseDB = $this->mpedidos->anularGuia($parametros['codigo_remision']);
+        $responseDB = $this->mpedidos->cambarEstadoGuia($parametros['codigo_remision'],1,self::ESTADO_ANULADO);
 
         if($responseDB){
             echo json_encode([
@@ -561,8 +597,157 @@ class Pedidos extends CI_Controller {
     function guardarEditarPedido(){
 
         $parametros = $this->input->post();
+    }
 
+    /*
+        Funcion encargada de revisar y homologar el estado de la guia en la transportadora, siempre consultara las guias que originalmente se encuentren en estado IMPRESO.
+    */
+    function actulizarEstadoGuiasWS($tipo_busqueda = "TODOS",$canal = 'WS'){
+
+        $guias_estado_impreso = $this->mpedidos->getListaPedidos(self::IMPRESO,$tipo_busqueda);
+        $array_remisiones = null;
+
+        if($guias_estado_impreso){
+
+            foreach($guias_estado_impreso as $guias){
+                $array_remisiones[] = $guias->codigo_remision;
+            }
+
+            $params = [
+                "codigos_remision" => $array_remisiones
+            ];
+
+            $coordinadora = $this->getWS();
+            $data = $coordinadora->Guias_rastreoSimple($params);
+            
+            if(is_array($data)){          
+                foreach($data as $guia){
+                    if($guia->codigo_estado != 0){
+                        if($guia->codigo_estado == 6){
+                            $this->mpedidos->cambarEstadoGuia($guia->codigo_remision,1,self::ESTADO_ENTREGADO);
+                        }else{
+                            $this->mpedidos->cambarEstadoGuia($guia->codigo_remision,1,self::DESPACHADO);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($canal == "WS"){
+            echo json_encode([
+                'status'  	 => true,
+                'message'    => ''
+            ]);
+            return;
+        }
+
+        return true;
+    }
+
+    function getGuiasSinLiquidar(){
+
+        $data = $this->mgenerales->getGuiasSinLiquidar();
+
+        if(!$data){
+
+            echo json_encode([
+                'status'  	 => true,
+                'message'    => 'No hay guias pendientes por liquidar',
+                'data'       => false
+            ]);
+            return;
+        }
+
+        echo json_encode([
+            'status'  	 => true,
+            'message'    => '',
+            'data'       => $data
+        ]);
+        return;
+    }
+
+    function consultarEstadoRecaudoGuia($codigo_remision = ""){
+
+        $response = new stdClass();
+		$response->status  = false;
+        $response->estado  = '';
+		$response->message = 'No se pudo validar el estado del recaudo';
+
+        if(empty($codigo_remision)){
+            $response->message = 'El codigo de remision no puede estar vacio';
+            return  $response;   
+        }
+
+        $coordinadora = $this->getWS();
+
+        $params = [
+            "referencia"      => "",
+            "codigo_remision" => $codigo_remision
+        ];
+
+        $data = $coordinadora->Guias_estadoRecaudo($params);
+
+        if(is_object($data)){
+            if(isset($data->estado)){
+                $this->mpedidos->actulizarEstadoRecaudoGuia($codigo_remision,$data->estado);
+                $response->status  = true;
+                $response->estado  = $data->estado;
+                $response->message = '';
+            }
+        }else{
+            if(is_string($data)){
+                $response->message = $data;
+            }
+        }
+
+        return $response;
+    }
+
+    function liquidarGuiasCuenta(){
+
+        $parametros = $this->input->post();
+
+        if(!isset($parametros['ids_pedidos'])) {
+            echo json_encode([
+                "status" => false,
+                "message"=> "No hay registros seleccionados"
+            ]);
+            return;
+        }
         
+        $ids_pedidos = $parametros['ids_pedidos'];
+
+        for($i = 0; $i < count($ids_pedidos); $i++){
+            $this->mpedidos->actulizarEstadoLiquidacion($ids_pedidos[$i],self::ESTADO_LIQUIDADO);
+        }
+
+        echo json_encode([
+            "status" => true,
+            "message"=> "Procceso terminado con exito, por favor verifique que las guias hayan quedado liquidadas."
+        ]);
+        return;
 
     }
+
+    function rechazarLiqudacionPedido(){
+
+        $parametros = $this->input->post();
+
+        if(!isset($parametros['id_pedido'],$parametros['observacion'])){
+            echo json_encode([
+                "status" => true,
+                "message"=> "Faltan parametros para completar la operacion"
+            ]);
+            return;
+        }
+
+        $response = $this->mpedidos->actulizarEstadoLiquidacion($parametros['id_pedido'],self::ESTADO_RECHAZADO,$parametros['observacion']);
+
+        echo json_encode([
+            "status" => $response,
+            "message"=> ""
+        ]);
+        return;
+    }
+
 }

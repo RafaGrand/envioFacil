@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/plataforma/';
-//$config['base_url'] = 'https://enviofacil.com.co/plataforma/';
+//$config['base_url'] = 'http://localhost/plataforma/';
+$config['base_url'] = 'https://enviofacil.com.co/plataforma/';
 
 
 //CREADO POR LUIS DAVID MONTES MOSQUERA 

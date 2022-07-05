@@ -66,7 +66,7 @@ class mgenerales extends CI_Model{
     function getCountNoDespachados() {
         $this->db->select('COUNT(estado_id) as count');
         $this->db->where("cuenta_id",$this->session->userdata('id_cuenta'));
-        $this->db->where_not_in("estado_id", 10);
+        $this->db->where("estado_id", self::IMPRESO);
         $query = $this->db->get('pedido');
 
         if ($query->num_rows()>0) {
@@ -199,9 +199,9 @@ class mgenerales extends CI_Model{
 	}
 
     function getMunicipios($id_dpto) {
-		$this->db->select('codigo_transportadora, nombre');
+		$this->db->select('id_municipio,codigo_transportadora, nombre');
 		$this->db->from('municipio m');
-		$this->db->where("m.departamento_id = ".$id_dpto);
+		$this->db->where("m.departamento_id = '".$id_dpto."'");
         $this->db->order_by('nombre');
 		$query = $this->db->get();
 
@@ -224,13 +224,33 @@ class mgenerales extends CI_Model{
 		$this->db->from('pedido p');
         $this->db->join('cuenta c', 'c.id_cuenta  = p.cuenta_id');
         $this->db->join('usuario u', 'u.cuenta_id = c.id_cuenta');
-		$this->db->where("p.estado_liquidacion",11);
-        $this->db->where("p.estado_id",10);
+		$this->db->where("p.estado_liquidacion",self::ESTADO_PENDIENTE);
+        $this->db->where("p.estado_id",self::ESTADO_ENTREGADO);
         $this->db->group_by("c.id_cuenta");
 		$query = $this->db->get();
 
 		if ($query->num_rows()>0) {
 			return $query->result();
+		}
+		
+		return false;
+
+    }
+
+    function getValorGuiasEntregadas(){
+
+        $this->db->select("REPLACE(FORMAT(SUM(valor_declarado - (valor_comision + valor_flete)),0),',','.') as valor");
+
+		$this->db->from('pedido p');
+        $this->db->join('cuenta c', 'c.id_cuenta  = p.cuenta_id');
+        $this->db->where("p.cuenta_id",$this->session->userdata('id_cuenta'));
+		$this->db->where("p.estado_liquidacion",self::ESTADO_PENDIENTE);
+        $this->db->where("p.estado_id",self::ESTADO_ENTREGADO);        
+
+		$query = $this->db->get();
+
+		if ($query->num_rows()>0) {
+			return $query->row();
 		}
 		
 		return false;

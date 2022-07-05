@@ -79,22 +79,21 @@ function poblarModalEdicionUsuario(id) {
         type: 'POST',
         data: {id_usuario: id},
         success: function(response) {
-            NProgress.done();
-            let dataResponse = JSON.parse(response)
-            let userData = dataResponse.message
-            let campoNombre = document.querySelector('#edit_nombre')
-            let campoApellido = document.querySelector('#edit_apellido')
-            let campoMail = document.querySelector('#edit_correo')
-            let campoCel = document.querySelector('#edit_celular')
-            let campoDir = document.querySelector('#edit_direccion')
-            let campoId = document.querySelector('#user_id')
 
-            campoNombre.value = userData[0].nombre
-            campoApellido.value = userData[0].apellido
-            campoMail.value = userData[0].email
-            campoCel.value = userData[0].celular
-            campoDir.value = userData[0].direccion
-            campoId.value = id
+            NProgress.done();
+
+            let dataResponse = JSON.parse(response)
+
+            var data = dataResponse.message;
+
+            console.log(data[0]);
+
+            $('#edit_nombre').val(data[0].nombre);
+            $('#edit_apellido').val(data[0].apellido);
+            $('#edit_correo').val(data[0].email);
+            $('#edit_celular').val(data[0].telefono_fijo);
+            $('#edit_direccion').val(data[0].direccion);
+            $('#user_id').val(data[0].cuenta_id);
 
         } ,
         error: function(){
@@ -105,18 +104,39 @@ function poblarModalEdicionUsuario(id) {
     }); 
 }
 
-function actualizarUsuario(form) {
+function actualizarUsuario() {
+
+    var municipio = $("#municipio_user_edit").val();
+
+    if(municipio === null){
+        alerta('Debe seleccionar una municipio');
+        return;
+    }
+
     NProgress.start();
 
-    $.ajax({                                                                             
+    $.ajax({                                                                      
 		type: 'POST',                                                                              
 		url:  get_base_url()+'/Usuario/UpdateUsuario',										
 		data: $("#fmedicionuser").serialize(),      
-		success: function(response)                                                            
-		{ 
-			NProgress.done();
-            let dataResponse = JSON.parse(response)
-			alerta(JSON.stringify(dataResponse.message),'success');
+		success: function(response){ 
+
+            try{
+				var dataResponse = jQuery.parseJSON(response);
+			}catch(e){
+				var dataResponse = new Object();
+				dataResponse.status = false;
+				dataResponse.message = 'Error al intentar actulizar el usuario';
+			}
+
+            if(!dataResponse.status){
+				alerta(dataResponse.message);
+				NProgress.done();
+				return;
+			}
+
+            NProgress.done();
+			alerta(dataResponse.message,'success');
 		},
 		error: function(){
             NProgress.done();
@@ -124,4 +144,59 @@ function actualizarUsuario(form) {
 			return;
         }                                                                                           
 	});
+}
+
+function actualizarClave(){
+
+    var id_usuario  = $("#user_id").val();
+    var clave_1     = $("#clave_1").val();
+    var clave_2     = $("#clave_2").val();
+
+    if(clave_1.length < 8){
+        alerta('La contraseña debe tener minimo 8 caracteres');
+        $("#clave_1").val('');
+        $("#clave_2").val('');
+        return;
+    }
+
+    if(clave_1 != clave_2){
+        alerta('Las contraseñas no coinciden');
+        $("#clave_1").val('');
+        $("#clave_2").val('');
+        return;
+    }
+
+    $.ajax({                                                                             
+		type: 'POST',                                                                              
+		url:  get_base_url()+'/Usuario/actualizarClave',										
+		data: {id_usuario:id_usuario,clave_1:clave_1,clave_2:clave_2},      
+		success: function(response){
+			
+            try{
+				var dataResponse = jQuery.parseJSON(response);
+			}catch(e){
+				var dataResponse = new Object();
+				dataResponse.status = false;
+				dataResponse.message = 'Error al intentar actulizar la contraseña';
+			}
+
+            if(!dataResponse.status){
+				alerta(dataResponse.message);
+				NProgress.done();
+				return;
+			}
+
+            NProgress.done();
+			alerta(dataResponse.message,'success');
+            $("#clave_1").val('');
+            $("#clave_2").val('');
+
+		},
+		error: function(){
+            NProgress.done();
+            alerta('Se presento un error al intentar editar la contraseña');
+			return;
+        }                                                                                           
+	});
+
 }

@@ -24,26 +24,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                {% if GuiasSinLiquidar %}
-                    {% for data in GuiasSinLiquidar %} 
-                        <tr class="tr-cuenta-{{data.id_cuenta}}">
-                            <td>{{data.usuario}}</td>
-                            <td class="center-align">{{data.total_guias}}</td>
-                            <td class="green-text"><b>{{data.valor_pagar}}</b></td>
-                            <td>
-                                <button type="button" class="btn  blue mr-2" title="ver guias" onclick="verGuiasSinLiquidar({{data.id_cuenta}})">
-                                    <i class="material-icons left" style="margin-right: 2px;">remove_red_eye</i>
-                                    <b>Ver guias</b>
-                                </button>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr>
-                        <td class="grey-text">No hay guias pendientes por liquidar</td>
-                    </tr>
-                {% endif %}
+            <tbody class="GuiasSinLiquidar">
             </tblody>
         </table>
     </div>

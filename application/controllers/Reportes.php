@@ -5,10 +5,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // use Coordinadora\WebService;
 use Coordinadora\WebService;
 
-class Novedades extends CI_Controller {
+class Reportes extends CI_Controller {
     public function __construct(){
 		parent::__construct();
-		$this->load->model('mnovedades');
+		$this->load->model('mreportes');
 		$this->load->model('mgenerales');
 	}
 	
@@ -18,15 +18,12 @@ class Novedades extends CI_Controller {
 			
 		    $this->load->view('base',[
                 "base_url"              =>base_url(),
-                "modulo"                =>'novedades.twig',
-                "opcion_menu"           => 'novedades',
+                "modulo"                =>'reportes.twig',
+                "opcion_menu"           => 'reportes',
                 "data_sesion"           => $this->mgenerales->getDataSesion(),
                 "perfil_id"				=> $this->session->userdata('perfil_id'),
 				"dataTablaUsuarios"		=> $this->mgenerales->getdataTablaUsuarios(),
-                "departamentos"         => $this->mgenerales->getDepartamentos(),
-                "listaNovedades"        => $this->mnovedades->getListaNovedades(),
-                "listaNovedadesSinGestion"=> $this->mnovedades->getListaNovedades(self::SIN_GESTION),
-                "GuiasSinLiquidar"		=> $this->mgenerales->getGuiasSinLiquidar()
+                "departamentos"         => $this->mgenerales->getDepartamentos()
             ]);
 
         }else{

@@ -95,8 +95,49 @@ class Usuario extends CI_Controller {
 
 		echo json_encode([
 			"status"  	 => true,
-			"message"    => $response
+			"message"    => $response->message
 		]);
 		return ;
+	}
+
+	public function actualizarClave(){
+		
+		$parametros = $this->input->post();
+
+		if(!isset($parametros['id_usuario'],$parametros['clave_1'],$parametros['clave_2'])){
+			echo json_encode([
+				"status"  	 => false,
+				"message"    => 'Faltan parametros para completar la operacion'
+			]);
+			return ;
+		}
+
+		if($parametros['clave_1'] != $parametros['clave_2']){
+			echo json_encode([
+				"status"  	 => false,
+				"message"    => 'Las contraseñas no coinciden'
+			]);
+			return ;
+		}
+
+		$response = $this->musuario->actualizarClave($parametros);
+
+		if(!$response){
+			
+			echo json_encode([
+				"status"  	 => false,
+				"message"    => 'No se actualizo ningun registro'
+			]);
+
+			return ;
+		}  
+
+		echo json_encode([
+			"status"  	 => true,
+			"message"    => $response->message
+		]);
+		return ;
+
+
 	}
 }

@@ -35,7 +35,7 @@ class mpedidos extends CI_Model{
 		return false;
 	}
 
-	function getListaPedidos($id_estado = ''){
+	function getListaPedidos($id_estado = '',$tipo_busqueda = 'TODOS'){
 
 		$this->db->select("
 			p.id_pedido,
@@ -59,7 +59,11 @@ class mpedidos extends CI_Model{
 		$this->db->join('estado e', 'e.id_estado  = p.estado_id');
 		$this->db->join('transportadora t', 't.id_transportadora  = p.transportadora_id');
 		$this->db->join('municipio m', 'm.codigo_transportadora  = p.ciudad_destinatario','left');
-		$this->db->where("p.cuenta_id",$this->session->userdata('id_cuenta'));
+
+		if($tipo_busqueda != "TODOS"){
+			$this->db->where("p.cuenta_id",$this->session->userdata('id_cuenta'));
+		}
+		
 		$this->db->order_by('p.id_pedido', 'DESC');
 
 		if(!empty($id_estado)){
@@ -109,7 +113,8 @@ class mpedidos extends CI_Model{
 			CONCAT('$',REPLACE(FORMAT(p.valor_declarado ,0),',','.')) as valor_declarado,
 			CONCAT('- $',REPLACE(FORMAT(p.valor_flete ,0),',','.')) as valor_flete,			
 			CONCAT('$',REPLACE(FORMAT((p.valor_declarado) ,0),',','.')) as valor_cobrar,
-			CONCAT('$',REPLACE(FORMAT((p.valor_declarado - p.valor_comision - p.valor_flete ) ,0),',','.')) as valor_recibir");
+			CONCAT('$',REPLACE(FORMAT((p.valor_declarado - p.valor_comision - p.valor_flete ) ,0),',','.')) as valor_recibir,
+			p.estado_recaudo");
 		$this->db->from('pedido p');
 		$this->db->join('cuenta c', 'c.id_cuenta  = p.cuenta_id');
         $this->db->join('usuario u', 'u.cuenta_id = c.id_cuenta');
@@ -117,8 +122,8 @@ class mpedidos extends CI_Model{
 		$this->db->join('transportadora t', 't.id_transportadora  = p.transportadora_id');
 		$this->db->join('municipio m', 'm.codigo_transportadora  = p.ciudad_destinatario','left');
 		$this->db->where("p.cuenta_id",$id_cuenta);
-		$this->db->where("p.estado_liquidacion",11);
-        $this->db->where("p.estado_id",10);
+		$this->db->where("p.estado_liquidacion",self::ESTADO_PENDIENTE);
+        $this->db->where("p.estado_id",self::ESTADO_ENTREGADO);
 		$this->db->order_by('p.id_pedido', 'DESC');
 
 		$query = $this->db->get();
@@ -131,16 +136,16 @@ class mpedidos extends CI_Model{
 
 	}
 
-	function anularGuia($codigo_remision,$intento = 1){
+	function cambarEstadoGuia($codigo_remision,$intento = 1,$estado){
 
 		$this->db->query("
             UPDATE pedido
                 SET 
-                    estado_id         =".self::ESTADO_ANULADO."
+                    estado_id         =".$estado."
             WHERE codigo_remision ='".$codigo_remision."'");
 
 		if ($this->db->affected_rows() == 0) {
-			$this-anularGuia($codigo_remision,2);
+			$this->cambarEstadoGuia($codigo_remision,2);
 			if($intento == 2){
 				return false;
 			}
@@ -187,6 +192,39 @@ class mpedidos extends CI_Model{
 		}
 		
 		return false;
+
+	}
+
+	function actulizarEstadoRecaudoGuia($codigo_remision,$estado){
+
+		$this->db->query("
+            UPDATE pedido
+                SET 
+				estado_recaudo         ='".$estado."'
+            WHERE codigo_remision ='".$codigo_remision."'");
+
+		if ($this->db->affected_rows() == 0) {
+			return false;
+		}
+
+		return true;
+
+	}
+
+	function actulizarEstadoLiquidacion($id_pedido,$id_estado,$observacion = ''){
+
+		$this->db->query("
+            UPDATE pedido
+                SET 
+				estado_liquidacion         ='".$id_estado."',
+				observacion_liquidacion    ='".$observacion."'
+            WHERE id_pedido =".$id_pedido);
+
+		if ($this->db->affected_rows() == 0) {
+			return false;
+		}
+
+		return true;
 
 	}
 }

@@ -1,5 +1,5 @@
-function guardarPedido(){
-
+function cotizar(){
+    
     if(!validarCamposRequridosPaso2()){
         return;
     }
@@ -8,11 +8,92 @@ function guardarPedido(){
 
     $.ajax({                                                                             
 		type: 'POST',                                                                              
+		url:  get_base_url()+'/pedidos/cotizar',										
+		data: $("#fmrnuevopedido").serialize(),      
+		success: function(response)                                                            
+		{   
+
+			try{
+				var dataResponse = jQuery.parseJSON(response);
+			}catch(e){
+				var dataResponse = new Object();
+				dataResponse.status = false;
+				dataResponse.message = 'Se presento un error al intentar cotzar el pedido';
+			}
+
+			if(!dataResponse.status){
+				alerta(dataResponse.message);
+				NProgress.done();
+				return;
+			}
+
+            let data = dataResponse.data;
+            
+            NProgress.done();
+            var departamento_remitente      = $('select[name="departamento_remitente"] option:selected').text();
+            var municipio_remitente         = $('select[name="municipio_remitente"] option:selected').text();
+            var departamento_destinatario   = $('select[name="departamento_destinatario"] option:selected').text();
+            var municipio_destinatario      = $('select[name="municipio_destinatario"] option:selected').text();
+
+            html = ' '+
+            '<ul>'+
+                '<li><b>Municipio Origen:</b> '+municipio_remitente+'</li>'+
+                '<li><b>Municipio Destino:</b> '+municipio_destinatario+'</li>'+
+                '<hr>'+
+                '<li><b>Dias Aprox Entrega:</b> '+data.dias_entrega+'</li>'+
+                '<li><b>Valor Declarado:</b> $'+$("#valor_declarado").val()+'</li>'+
+                '<li><b>Valor Flete :</b> $'+data.flete_total+'</li>'+
+            '</ul>'+
+            '<span class="red-text">Nota: Los Valores de fletes calculados por esta opción, pueden variar al momento de generar la factura correspondiente.'+
+           '</span>';
+
+
+            Swal.fire({
+				icon: 'success',
+				title: 'Resultado de la cotización',
+                html: html,
+				backdrop: 'swal2-backdrop-show',
+				allowOutsideClick: false,
+				allowEscapeKey: false,
+				position: 'center',
+				showConfirmButton: true,
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '<span style="font-size:16px"><strong>Generar Guia</strong></span>',
+				width: 600
+			}).then((result) => {
+				if (result.isConfirmed) {
+					guardarPedido();
+				}
+			});
+		} ,
+		error: function(){
+            NProgress.done();
+            alerta('Se presento un error al intentar cotzar el pedido');
+			return;
+        }                                                                                           
+	});
+
+}
+
+function guardarPedido(){
+
+    if(!validarCamposRequridosPaso2()){
+        return;
+    }
+
+    NProgress.start();
+
+    $(".btn-atras").attr('disabled',true);
+    $(".btn-guardar-pedido").attr('disabled',true);
+
+    $.ajax({                                                                             
+		type: 'POST',                                                                              
 		url:  get_base_url()+'/pedidos/guardarPedido',										
 		data: $("#fmrnuevopedido").serialize(),      
 		success: function(response)                                                            
 		{   
-            console.log(response);
+
 			try{
 				var dataResponse = jQuery.parseJSON(response);
 			}catch(e){
@@ -24,6 +105,8 @@ function guardarPedido(){
 			if(!dataResponse.status){
 				alerta(dataResponse.message);
 				NProgress.done();
+                $(".btn-atras").removeAttr('disabled');
+                $(".btn-guardar-pedido").removeAttr('disabled');
 				return;
 			}
 
@@ -51,6 +134,8 @@ function guardarPedido(){
 			});
 		} ,
 		error: function(){
+            $(".btn-atras").removeAttr('disabled');
+            $(".btn-guardar-pedido").removeAttr('disabled');
             NProgress.done();
             alerta('Se presento un error al intentar crear el pedido');
 			return;
@@ -95,7 +180,7 @@ function verGuiasSinLiquidar(id_cuenta){
             for(i = 0; i < data.length; i++){
                 
                 html += ''+
-                    '<tr>'+
+                    '<tr class="tr-'+data[i].id_pedido+'">'+
                         '<td>'+
                             '<p>'+
                                 '<label>'+
@@ -113,12 +198,16 @@ function verGuiasSinLiquidar(id_cuenta){
                         '<td>'+data[i].valor_flete+'</td>'+
                         '<td>'+data[i].valor_cobrar+'</td>'+
                         '<td>'+data[i].valor_recibir+'</td>'+
+                        '<td>'+data[i].estado_recaudo+'</td>'+
                         '<td>'+
-                            '<a href="#modal_rastreo"  onclick="rastrearPedido(\''+data[i].codigo_remision+'\')" class="modal-trigger tooltipped" data-position="left" data-tooltip="Rastrear pedido"><i class="material-icons">search</i></a>'+
+                            '<a href="#modal_rastreo"  onclick="rastrearPedido(\''+data[i].codigo_remision+'\')" class="modal-trigger" title="Rastrear pedido"><i class="material-icons">search</i></a>'+
+                        '</td>'+
+                        '<td>'+
+                            '<a href="#" style="color:red;" onclick="rechazarLiqudacionPedido(\''+data[i].id_pedido+'\')" title="Rechazar Liquidacion por Novedad"><i class="material-icons">clear</i></a>'+
                         '</td>'+
                     '</tr>';
             }
-
+            $('.tooltipped').tooltip();
             $(".tbody-guias-sin-liquidar").append(html);
             	
             NProgress.done();
@@ -150,17 +239,10 @@ function  liquidarGuiasCuenta(){
 
 			NProgress.start();
 
-			let id_cuenta = $("#id_cuenta").val();
-			
-			var formData = new FormData();
-			formData.append('id_cuenta', id_cuenta);
-
-			/*$.ajax({
+			$.ajax({
 				type: 'post',
-				url: get_base_url() + 'ajuste/eliminarCuentaCatalogo',
-				data: formData,
-				contentType: false,
-				processData: false,
+				url: get_base_url() + 'pedidos/liquidarGuiasCuenta',
+				data: $("#fmr_liquidacion_guias").serialize(),  
 				success: function (response) {
 
 					try {
@@ -168,7 +250,7 @@ function  liquidarGuiasCuenta(){
 					} catch (e) {
 						var dataResponse = new Object();
 						dataResponse.status = false;
-						dataResponse.message = 'Error al procesar la informacion de la cuenta seleccionada';
+						dataResponse.message = 'Error al intentar liquidar al usuario';
 					}
 
 					if (!dataResponse.status) {
@@ -177,19 +259,25 @@ function  liquidarGuiasCuenta(){
 						return;
 					}
 
-					var data = dataResponse.data;
-
-					toast("<b>Registro eliminado</b>","success");
-					$(".fila-catalogo-"+id_registro).remove();			
-					NProgress.done();
+                    NProgress.done();
+                    
+                    Swal.fire({
+                        title: 'Luiquidacion de Guias',
+                        icon: 'success',
+                        html: '<p style="font-size:18px">'+dataResponse.message+'</p>',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '<span style="font-size:16px">Aceptar</span>',
+                    }).then((result) => {
+                        window.location.href = get_base_url() + 'inicio';
+                    });
 
 				},
 				error: function () {
 					NProgress.done();
-					alerta('Error al procesar la informacion de la cuenta seleccionada');
+					alerta('Error al intentar liquidar al usuario');
 					return;
 				}
-			});*/
+			});
 		}
 	})
 }
@@ -387,7 +475,7 @@ function guardarEditarPedido(){
 	});
 }
 
-function municipiosDepartamento(id_dpto,select = 'municipio_destinatario',selected = false){
+function municipiosDepartamento(id_dpto,select = 'municipio_destinatario',selected = false,value='codigo_transportadora'){
      
     let html = '';
     $(".btn-siguiente").attr('disabled',true);
@@ -422,9 +510,13 @@ function municipiosDepartamento(id_dpto,select = 'municipio_destinatario',select
             var atributo = '';
             for(let i=0;i<dataMunicipio.data.length;i++){
 
-                atributo = dataMunicipio.data[i].codigo_transportadora == selected ? 'selected' : '' ; 
-
-                html += '<option '+atributo+' value="'+dataMunicipio.data[i].codigo_transportadora+'">'+dataMunicipio.data[i].nombre+'</option>'; 
+                if(value == 'codigo_transportadora'){
+                    atributo = dataMunicipio.data[i].codigo_transportadora == selected ? 'selected' : '' ; 
+                    html += '<option '+atributo+' value="'+dataMunicipio.data[i].codigo_transportadora+'">'+dataMunicipio.data[i].nombre+'</option>'; 
+                }else{
+                    atributo = dataMunicipio.data[i].id_municipio == selected ? 'selected' : '' ; 
+                    html += '<option '+atributo+' value="'+dataMunicipio.data[i].id_municipio+'">'+dataMunicipio.data[i].nombre+'</option>'; 
+                }
             }
 
             $("#"+select).append(html);
@@ -526,3 +618,161 @@ function validarCamposRequridosPaso2(formulario = ''){
 
     return true;
 }
+
+function actulizarEstadoGuiasWS(){
+    
+    NProgress.start();
+
+    $.ajax({                                                                             
+		type: 'POST',                                                                              
+		url:  get_base_url()+'/pedidos/actulizarEstadoGuiasWS',										
+		data: null,      
+		success: function(response)                                                            
+		{   
+			try{
+				var dataResponse = jQuery.parseJSON(response);
+			}catch(e){
+				var dataResponse = new Object();
+				dataResponse.status = false;
+				dataResponse.message = 'Error al intentar actualizar los estados de las guias, por favor intente mas tarde';
+			}
+
+			if(!dataResponse.status){
+				alerta(dataResponse.message);
+				NProgress.done();
+				return;
+			}
+            
+            NProgress.done();
+            getGuiasSinLiquidar();
+            $('#modal_liquidacion_guias').modal('open', true);
+
+		} ,
+		error: function(){
+            NProgress.done();
+            alerta('Error al intentar actualizar los estados de las guias, por favor intente mas tarde');
+			return;
+        }                                                                                           
+	});
+    NProgress.done();
+}
+
+function getGuiasSinLiquidar(){
+    
+    $(".GuiasSinLiquidar").empty();
+
+    $.ajax({                                                                             
+		type: 'POST',                                                                              
+		url:  get_base_url()+'/pedidos/getGuiasSinLiquidar',										
+		data: null,
+		success: function(response)                                                            
+		{   
+			try{
+				var dataResponse = jQuery.parseJSON(response);
+			}catch(e){
+				var dataResponse = new Object();
+				dataResponse.status = false;
+				dataResponse.message = 'Error al intentar obtener las guias pendientes por liquidar';
+			}
+
+			if(!dataResponse.status || !dataResponse.data){
+				//alerta(dataResponse.message);
+                var html = '<tr><td class="grey-text">No hay guias pendientes por liquidar</td></tr>';
+                $(".GuiasSinLiquidar").append(html);
+				return;
+			}
+
+            data = dataResponse.data;
+
+            var html = '';
+            var data = dataResponse.data;
+
+            for(i = 0; i < data.length; i++){
+                
+                html += ''+
+                    '<tr class="tr-cuenta-'+data[i].id_cuenta+'">'+
+                        '<td>'+data[i].usuario+'</td>'+
+                        '<td class="center-align">'+data[i].total_guias+'</td>'+
+                        '<td class="green-text"><b>'+data[i].valor_pagar+'</b></td>'+
+                        '<td>'+
+                            '<button type="button" class="btn  blue mr-2" title="ver guias" onclick="verGuiasSinLiquidar('+data[i].id_cuenta+')">'+
+                                '<i class="material-icons left" style="margin-right: 2px;">remove_red_eye</i>'+
+                                '<b>Ver guias</b>'+
+                            '</button>'+
+                        '</td>'+
+                    '</tr>';
+            }
+
+            $(".GuiasSinLiquidar").append(html);
+
+		},
+		error: function(){
+            NProgress.done();
+            alerta('Error al intentar obtener las guias pendientes por liquidar');
+			return;
+        }                                                                                           
+	});
+
+}
+
+function rechazarLiqudacionPedido(id_pedido){
+    
+    Swal.fire({
+        title: 'Observacipón',
+        input: 'text',
+        inputAttributes: {
+            style: 'text-align: center;font-size:20px;font-weight: bold;border-width:0.01',
+            maxlength : '100',
+        },
+        position: 'center',
+		showConfirmButton: true,
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		confirmButtonText: '<span style="font-size:16px"><strong>Guardar</strong></span>',
+		cancelButtonText: '<span style="font-size:16px"><strong>Cancelar</strong></span>',
+        preConfirm: (observacion) => { 
+            
+            if(observacion.length < 3){
+                alerta('La Obseración no es Valida');
+                return;
+            }
+            
+            NProgress.start();
+
+            $.ajax({                                                                             
+                type: 'POST',                                                                              
+                url:  get_base_url()+'/pedidos/rechazarLiqudacionPedido',										
+                data: {id_pedido: id_pedido,observacion: observacion},      
+                success: function(response)                                                            
+                {   
+                    try{
+                        var dataResponse = jQuery.parseJSON(response);
+                    }catch(e){
+                        var dataResponse = new Object();
+                        dataResponse.status = false;
+                        dataResponse.message = 'Error al intentar actualizar el estado de la guia, por favor intente mas tarde';
+                    }
+
+                    if(!dataResponse.status){
+                        alerta('No se guardo el estado, recargue la pagina he intente de nuevo');
+                        NProgress.done();
+                        return;
+                    }
+
+                    $(".tr-"+id_pedido).remove();
+                    toast("Guia rechazada de forma correcta",'success',true);
+                    NProgress.done();    
+
+                } ,
+                error: function(){
+                    NProgress.done();
+                    alerta('Error al intentar actualizar el estado de la guia, por favor intente mas tarde');
+                    return;
+                }                                                                                           
+            });
+            NProgress.done();
+
+        }
+      });
+}
+

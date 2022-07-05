@@ -249,6 +249,13 @@ class WebService
         return $this->call_soap(__FUNCTION__, $body);
     }
 
+    public function Guias_estadoRecaudo($params)
+    {
+        $body = (object)array_merge($params, $this->_access_connect_guides());
+
+        return $this->call_soap(__FUNCTION__, $body);
+    }
+
     /**
      * @param $name_function
      * @param array $params

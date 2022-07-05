@@ -711,3 +711,20 @@ CREATE table despacho(
     FOREIGN KEY (estado_id)
         REFERENCES estado (id_estado)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*
+    ESTADOS DESPACHO COORDINADORA
+
+
+    1 -> A RECIBIR POR COORDINADORA
+
+    2 -> EN TERMINAL ORIGEN
+
+    3 -> EN TRANSPORTE
+
+    4 -> EN TERMINAL DESTINO
+
+    6 -> ENTREGADA
+    
+*/

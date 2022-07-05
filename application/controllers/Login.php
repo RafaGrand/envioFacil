@@ -62,6 +62,7 @@ class Login extends CI_Controller {
 				'celular' 		=> $parametros['celular'],
 				'email' 		=> $parametros['correo'],
 				'direccion'		=> $parametros['direccion'],
+				'municipio_id'	=> $parametros['municipio_user'],
 				'estado_id'     => self::ESTADO_EN_PROCESO,
 				'perfil_id'     => self::PERFIL_USUARIO,
 				'cuenta_id ' 	=> $cuenta_id
