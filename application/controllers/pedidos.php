@@ -196,7 +196,7 @@ class Pedidos extends CI_Controller {
             "direccion_remitente"   => $dataSesion['direccion'],    
             "telefono_remitente"    => $dataSesion['celular'],
             "ciudad_remitente"      => $dataSesion['codigo_transportadora'],
-            'nit_destinatario'      => '0',
+            'nit_destinatario'      => $parametros['nit_destinatario'],
             'div_destinatario'      => '0',
             "nombre_destinatario"   => $parametros['nombre_destinatario'], 
             "direccion_destinatario"=> $parametros['direccion_destinatario'],   
@@ -286,7 +286,8 @@ class Pedidos extends CI_Controller {
                 "codigo_remision"           => $data->codigo_remision,
                 "pdf_guia"                  => $data->pdf_guia,
                 "cuenta_id"                 => $dataSesion['id_cuenta'],
-                "transportadora_id "        => 1
+                "transportadora_id "        => 1,
+                "nit_destinatario"          => $parametros['nit_destinatario']
             ];    
     
     

@@ -78,16 +78,38 @@
                     </div>
                     <div class="row">
                         <div class="input-field col m3">                
-                            <select name="municipio_user_edit" id="municipio_user_edit">
-                                <option value="" disabled selected>Cuenta de ahorros</option>
+                            <select name="edit_banco" id="edit_banco">
+                                <option value="" disabled>--Seleccione--</option>
+                                <option value="Bancolombia" >Bancolombia</option>
+                                <option value="Av villas" >Av villas</option>
+                                <option value="Banco de Bogota" >Banco de Bogota</option>
+                                <option value="Banco popula" >Banco popula</option>
+                                <option value="Banco de Occidente" >Banco de Occidente</option>
+                                <option value="BBVA" >BBVA</option>
+                                <option value="Colpatria" >Colpatria</option>
+                                <option value="Scotiabank" >Scotiabank</option>
+                                <option value="Banco Agrario" >Banco Agrario</option>
+                                <option value="Banco Pichincha" >Banco Pichincha</option>
+                                <option value="Banco W" >Banco W</option>
+                                <option value="Banco caja social" >Banco caja social</option>
+                            </select>
+                            <label>Banco</label>
+                        </div>
+                        <div class="input-field col m3">                
+                            <select name="edit_tipo_cuenta" id="edit_tipo_cuenta">
+                                <option value="" disabled>--Seleccione--</option>
+                                <option value="AHORROS">AHORROS</option>
+                                <option value="CORRIENTE">CORRIENTE</option>
+                                <option value="CONVENIO">CONVENIO</option>
+                                <option value="OTRO">OTRO</option>
                             </select>
                             <label>Tipo de cuenta banco</label>
                         </div>
-                        <div class="input-field col m3">
+                        <div class="input-field col m2">
                             <input id="edit_numero_cuenta" name="edit_numero_cuenta" type="text" class="validate" required>
                             <label for="edit_numero_cuenta" class="active"># de cuenta bancaria</label>
                         </div>
-                        <div class="col m6">
+                        <div class="col m4">
                             <div class="row row-password">
                                 <div class="input-field col m6">
                                     <input id="clave_1" name="clave_1" type="password" class="validate" required>
