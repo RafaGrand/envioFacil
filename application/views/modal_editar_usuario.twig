@@ -9,6 +9,14 @@
         height:650px !important;
     }
 
+    .row-password{
+        border: solid;
+        border-width: 0.1px;
+        border-color: grey;
+        border-radius: 8px;
+        padding-top: 10px;
+    }
+
 </style>
 <div id="md-edit-user" class="modal modal-fixed-footer modal-general">
     <div class="modal-content" id="content-modal">
@@ -17,33 +25,31 @@
         </div>
         <br>
         <div class="row">
-            <div class="col m6">
+            <div class="col m11">
                 <form  method="POST" action="#" name="fmedicionuser" id="fmedicionuser">
                     <h5 class="grey-text">Datos del usuario:</h5>
                     <input type="hidden" id="user_id" name="id" type="text" required>
                     <div class="row">
-                        <div class="input-field col m6">
+                        <div class="input-field col m3">
                             <input id="edit_nombre" name="edit_nombre" type="text" class="validate" required>
                             <label for="edit_nombre" class="active">Nombres</label>
                         </div>
-                        <div class="input-field col m6">                
+                        <div class="input-field col m3">                
                             <input id="edit_apellido" name="edit_apellido" type="text" class="validate" required>
                             <label for="edit_apellido" class="active">Apellidos</label>
+                        </div>
+                        <div class="input-field col m3">                               
+                            <input id="edit_correo" name="edit_correo" type="email" class="validate" required>
+                            <label for="edit_correo" class="active">Email</label>
+                        </div>
+                        <div class="input-field col m3">
+                            <input id="edit_celular" name="edit_celular" type="text" class="validate" minlength="10" maxlength="10" required>
+                            <label for="edit_celular" class="active">Celular</label>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="input-field col m6">                               
-                            <input id="edit_correo" name="edit_correo" type="email" class="validate" required>
-                            <label for="edit_correo" class="active">Email</label>
-                        </div>
-                        <div class="input-field col m6">
-                            <input id="edit_celular" name="edit_celular" type="text" class="validate" minlength="10" maxlength="10" required>
-                            <label for="edit_celular" class="active">Celular</label>
-                        </div>
-                    </div>  
-                    <div class="row">
-                        <div class="input-field col m6">
+                        <div class="input-field col m3">
                             <select name="departamento_destinatario" id="departamento_destinatario" onchange="municipiosDepartamento(this.value,'municipio_user_edit',false,'id_municipio')" >
                                 <option selected disabled>- Seleccione -</option>
                                 {% if departamentos %}                   
@@ -54,39 +60,52 @@
                             </select>
                             <label>Departamentos</label>
                         </div>
-                        <div class="input-field col m6">
+                        <div class="input-field col m3">
                             <select name="municipio_user_edit" id="municipio_user_edit">
                                 <option value="" disabled selected>- Municipios -</option>
                             </select>
                             <label>Municipio</label>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col m12">
+
+                        <div class="input-field col m3">
                             <input id="edit_direccion" name="edit_direccion" type="text" class="validate" minlength="10" required>
                             <label for="edit_direccion" class="active">Direccion</label>
+                        </div>
+                        <div class="input-field col m3">
+                            <input id="edit_numero_documento" name="edit_numero_documento" type="text" class="validate" required>
+                            <label for="edit_numero_documento" class="active">Numero de documento</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col m3">                
+                            <select name="municipio_user_edit" id="municipio_user_edit">
+                                <option value="" disabled selected>Cuenta de ahorros</option>
+                            </select>
+                            <label>Tipo de cuenta banco</label>
+                        </div>
+                        <div class="input-field col m3">
+                            <input id="edit_numero_cuenta" name="edit_numero_cuenta" type="text" class="validate" required>
+                            <label for="edit_numero_cuenta" class="active"># de cuenta bancaria</label>
+                        </div>
+                        <div class="col m6">
+                            <div class="row row-password">
+                                <div class="input-field col m6">
+                                    <input id="clave_1" name="clave_1" type="password" class="validate" required>
+                                    <label for="clave_1" class="active">Contraseña</label>
+                                </div>
+                                <div class="input-field col m6">                
+                                    <input id="clave_2" name="clave_2" type="password" class="validate" required>
+                                    <label for="clave_2" class="active">Confirmar Contraseña</label>
+                                </div>
+                                <div class="input-field col m12"> 
+                                    <button class="waves-effect waves-light btn blue" type="button" onclick="actualizarClave();">ACTULIZAR CONTRASEÑA</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="col m1">
-            </div>
-            <div class="col m5">
-                <h5 class="grey-text">Cambiar Contraseña:</h5>
-                <div class="row">
-                    <div class="input-field col m6">
-                        <input id="clave_1" name="clave_1" type="password" class="validate" required>
-                        <label for="clave_1" class="active">Contraseña</label>
-                    </div>
-                    <div class="input-field col m6">                
-                        <input id="clave_2" name="clave_2" type="password" class="validate" required>
-                        <label for="clave_2" class="active">Confirmar Contraseña</label>
-                    </div>
-                    <div class="input-field col m12"> 
-                        <button class="waves-effect waves-light btn blue" type="button" onclick="actualizarClave();">ACTULIZAR CONTRASEÑA</button>
-                    </div>
-                </div>
-            </div>
+    
         </div>
     </div>
     <div class="modal-footer">

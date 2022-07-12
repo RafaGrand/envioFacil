@@ -68,7 +68,28 @@ class mpedidos extends CI_Model{
 
 		if(!empty($id_estado)){
 			$this->db->where("p.estado_id",$id_estado);
+		}else{
+			$this->db->where("p.estado_id <>".self::ESTADO_ANULADO);
 		}
+
+		$query = $this->db->get();
+
+		if ($query->num_rows()>0) {
+			return $query->result();
+		}
+		
+		return false;
+	}
+
+	function getListaPedidosCambioEstado(){
+
+		$this->db->select("
+			p.codigo_remision");
+		$this->db->from('pedido p');
+		$this->db->where("p.cuenta_id",$this->session->userdata('id_cuenta'));
+		$this->db->order_by('p.id_pedido', 'DESC');
+		$this->db->where_not_in("p.estado_id",[self::ESTADO_ANULADO,self::ESTADO_ENTREGADO]);
+		$this->db->limit(10);
 
 		$query = $this->db->get();
 
@@ -145,10 +166,11 @@ class mpedidos extends CI_Model{
             WHERE codigo_remision ='".$codigo_remision."'");
 
 		if ($this->db->affected_rows() == 0) {
-			$this->cambarEstadoGuia($codigo_remision,2);
+			/*$this->cambarEstadoGuia($codigo_remision,2,$estado);
 			if($intento == 2){
 				return false;
-			}
+			}*/
+			return false;
 		}
 
 		return true;

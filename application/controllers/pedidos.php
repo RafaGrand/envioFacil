@@ -188,41 +188,41 @@ class Pedidos extends CI_Controller {
         );
 
         $params = array(
-            'codigo_remision' => '',
-            'fecha' => '',
-            'id_remitente' => '',
-            'nit_remitente' => '',
-            'nombre_remitente' => $dataSesion['nombre_user'],
+            'codigo_remision'       => '',
+            'fecha'                 => '',
+            'id_remitente'          => '',
+            'nit_remitente'         => '',
+            'nombre_remitente'      => $dataSesion['nombre_user'],
             "direccion_remitente"   => $dataSesion['direccion'],    
             "telefono_remitente"    => $dataSesion['celular'],
             "ciudad_remitente"      => $dataSesion['codigo_transportadora'],
-            'nit_destinatario' => '0',
-            'div_destinatario' => '0',
+            'nit_destinatario'      => '0',
+            'div_destinatario'      => '0',
             "nombre_destinatario"   => $parametros['nombre_destinatario'], 
             "direccion_destinatario"=> $parametros['direccion_destinatario'],   
             "ciudad_destinatario"   => $parametros['municipio_destinatario'],
             "telefono_destinatario" => $parametros['telefono_destinatario'],
             "valor_declarado"       => $parametros['valor_declarado'],
-            'codigo_cuenta' => "2",
-            'codigo_producto' => "0",
-            'nivel_servicio' => "22",
-            'linea' => '',
-            "contenido" => $parametros['contenido'],
-            'referencia' => '',
-            'observaciones' => '',
-            'estado' => 'IMPRESO',
-            'detalle' => $cart_prods,
-            'cuenta_contable' => '',
-            'centro_costos' => '',
-            'recaudos' => $recaudo,
-            'margen_izquierdo' => '',
-            'margen_superior' => '',
-            'id_rotulo' => '0',
-            'usuario_vmi' => '',
-            'formato_impresion' => '',
-            'atributo1_nombre' => '',
-            'atributo1_valor' => '',
-            'notificaciones' => (object)array(
+            'codigo_cuenta'         => "2",
+            'codigo_producto'       => "0",
+            'nivel_servicio'        => "22",
+            'linea'                 => '',
+            "contenido"             => $parametros['contenido'],
+            'referencia'            => '',
+            'observaciones'         => '',
+            'estado'                => 'IMPRESO',
+            'detalle'               => $cart_prods,
+            'cuenta_contable'       => '',
+            'centro_costos'         => '',
+            'recaudos'              => $recaudo,
+            'margen_izquierdo'      => '',
+            'margen_superior'       => '',
+            'id_rotulo'             => '0',
+            'usuario_vmi'           => '',
+            'formato_impresion'     => '',
+            'atributo1_nombre'      => '',
+            'atributo1_valor'       => '',
+            'notificaciones'        => (object)array(
             ),
             'atributos_retorno' => (object)array(
                 'nit' => '',
@@ -460,7 +460,7 @@ class Pedidos extends CI_Controller {
         $coordinadora = $this->getWS();
 
         $item_detalle[] = (object)array(
-            "ubl"                   => "",
+            "ubl"                   => "2",
             "alto"                  => (float)$parametros['alto'],
             "ancho"                 => (float)$parametros['ancho'],
             "largo"                 => (float)$parametros['largo'],
@@ -471,13 +471,13 @@ class Pedidos extends CI_Controller {
         $params = array(
             'nit'               => self::NIT,
             'div'               => '01',
-            'cuenta'            => '1',
-            'producto'          => '1',
+            'cuenta'            => '2',
+            'producto'          => '0',
             'origen'            => $parametros['cod_mpio_origen'],
             'destino'           => $parametros['municipio_destinatario'],
-            'valoracion'        => '1',
+            'valoracion'        => (float)$parametros['valor_declarado'],
             'nivel_servicio'    =>  array(
-                "item"  => 1
+                "item"  => ''
             ),
             'detalle'           => $item_detalle
         );
@@ -604,7 +604,8 @@ class Pedidos extends CI_Controller {
     */
     function actulizarEstadoGuiasWS($tipo_busqueda = "TODOS",$canal = 'WS'){
 
-        $guias_estado_impreso = $this->mpedidos->getListaPedidos(self::IMPRESO,$tipo_busqueda);
+        $coordinadora = $this->getWS();
+        $guias_estado_impreso = $this->mpedidos->getListaPedidosCambioEstado();
         $array_remisiones = null;
 
         if($guias_estado_impreso){
@@ -613,11 +614,11 @@ class Pedidos extends CI_Controller {
                 $array_remisiones[] = $guias->codigo_remision;
             }
 
+
             $params = [
                 "codigos_remision" => $array_remisiones
             ];
 
-            $coordinadora = $this->getWS();
             $data = $coordinadora->Guias_rastreoSimple($params);
             
             if(is_array($data)){          
