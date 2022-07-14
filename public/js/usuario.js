@@ -92,9 +92,20 @@ function poblarModalEdicionUsuario(id) {
             $('#edit_apellido').val(data[0].apellido);
             $('#edit_correo').val(data[0].email);
             $('#edit_celular').val(data[0].telefono_fijo);
-            $('#edit_direccion').val(data[0].direccion);
-            $('#user_id').val(data[0].cuenta_id);
 
+            if(data[0].departamento_id != null){
+                $('#edit_departamento_destinatario').val(data[0].departamento_id);  
+                municipiosDepartamento(data[0].departamento_id,'municipio_user_edit',data[0].municipio_id,'id_municipio');     
+            }
+
+            $('#edit_direccion').val(data[0].direccion);
+            $('#edit_tipo_cuenta').val(data[0].tipo_cuenta);
+            $('#edit_numero_cuenta').val(data[0].numero_cuenta_banco);
+            $('#edit_banco').val(data[0].banco);
+            $('#edit_numero_documento').val(data[0].numero_documento);
+            $('#id_usuario').val(data[0].id_usuario);     
+            $('select').formSelect();
+            
         } ,
         error: function(){
             NProgress.done();
@@ -107,9 +118,15 @@ function poblarModalEdicionUsuario(id) {
 function actualizarUsuario() {
 
     var municipio = $("#municipio_user_edit").val();
+    var edit_banco = $("#edit_banco").val();
 
     if(municipio === null){
         alerta('Debe seleccionar una municipio');
+        return;
+    }
+
+    if(edit_banco === null){
+        alerta('Debe seleccionar un banco');
         return;
     }
 

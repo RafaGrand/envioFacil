@@ -69,8 +69,12 @@ class musuario extends CI_Model{
 	}
 
 	function TraerDataUsuario($id_usuario) {
+		$this->db->select('cuenta_id,u.id_usuario,u.nombre,u.apellido,u.email,u.celular,u.telefono_fijo,
+		municipio_id,u.direccion,u.tipo_cuenta,u.numero_cuenta_banco,u.banco,u.numero_documento,m.departamento_id');
+		$this->db->from('usuario u');
+		$this->db->join('municipio m', 'm.id_municipio  = u.municipio_id','left');
 		$this->db->where("id_usuario", $id_usuario);
-		$query = $this->db->get("usuario");
+		$query = $this->db->get();
 
 		if ($query->num_rows()>0) {
 			return $query->result();
@@ -85,15 +89,20 @@ class musuario extends CI_Model{
 		$response->status  = false;
 		$response->message = 'Se presento un error al actualizar los datos';
 
-		$this->db->where('id_usuario', $parametros['id']);
+
+		$this->db->where('id_usuario', $parametros['id_usuario']);
 		$this->db->update('usuario',[
-			'nombre'     	=>$parametros['edit_nombre'],
-			'apellido'   	=>$parametros['edit_apellido'], 
-			'email'     	=>$parametros['edit_correo'], 
-			'celular'    	=>$parametros['edit_celular'],
-			'telefono_fijo' =>$parametros['edit_celular'],
-			'municipio_id'  =>$parametros['municipio_user_edit'], 
-			'direccion'  	=>$parametros['edit_direccion'], 
+			'nombre'     			=>$parametros['edit_nombre'],
+			'apellido'   			=>$parametros['edit_apellido'], 
+			'email'     			=>$parametros['edit_correo'], 
+			'celular'    			=>$parametros['edit_celular'],
+			'telefono_fijo' 		=>$parametros['edit_celular'],
+			'municipio_id'  		=>$parametros['municipio_user_edit'], 
+			'direccion'  			=>$parametros['edit_direccion'], 
+			'tipo_cuenta'			=>$parametros['edit_tipo_cuenta'],
+			'numero_cuenta_banco'	=>$parametros['edit_numero_cuenta'],
+			'banco'					=>$parametros['edit_banco'],
+			'numero_documento'		=>$parametros['edit_numero_documento']
 		]);
 
 		if ($this->db->affected_rows() > 0) {

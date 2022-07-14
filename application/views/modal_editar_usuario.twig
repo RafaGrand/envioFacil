@@ -9,14 +9,6 @@
         height:650px !important;
     }
 
-    .row-password{
-        border: solid;
-        border-width: 0.1px;
-        border-color: grey;
-        border-radius: 8px;
-        padding-top: 10px;
-    }
-
 </style>
 <div id="md-edit-user" class="modal modal-fixed-footer modal-general">
     <div class="modal-content" id="content-modal">
@@ -28,7 +20,7 @@
             <div class="col m11">
                 <form  method="POST" action="#" name="fmedicionuser" id="fmedicionuser">
                     <h5 class="grey-text">Datos del usuario:</h5>
-                    <input type="hidden" id="user_id" name="id" type="text" required>
+                    <input type="hidden" id="id_usuario" name="id_usuario" type="text" required>
                     <div class="row">
                         <div class="input-field col m3">
                             <input id="edit_nombre" name="edit_nombre" type="text" class="validate" required>
@@ -50,7 +42,7 @@
 
                     <div class="row">
                         <div class="input-field col m3">
-                            <select name="departamento_destinatario" id="departamento_destinatario" onchange="municipiosDepartamento(this.value,'municipio_user_edit',false,'id_municipio')" >
+                            <select name="edit_departamento_destinatario" id="edit_departamento_destinatario" onchange="municipiosDepartamento(this.value,'municipio_user_edit',false,'id_municipio')" >
                                 <option selected disabled>- Seleccione -</option>
                                 {% if departamentos %}                   
                                     {% for departamento in departamentos %}
@@ -81,6 +73,7 @@
                             <select name="edit_banco" id="edit_banco">
                                 <option value="" disabled>--Seleccione--</option>
                                 <option value="Bancolombia" >Bancolombia</option>
+                                <option value="Nequi" >Nequi</option>
                                 <option value="Av villas" >Av villas</option>
                                 <option value="Banco de Bogota" >Banco de Bogota</option>
                                 <option value="Banco popula" >Banco popula</option>
@@ -92,6 +85,8 @@
                                 <option value="Banco Pichincha" >Banco Pichincha</option>
                                 <option value="Banco W" >Banco W</option>
                                 <option value="Banco caja social" >Banco caja social</option>
+                                <option value="Davivienda" >Davivienda</option>
+                                <option value="DaviPlata" >DaviPlata</option>
                             </select>
                             <label>Banco</label>
                         </div>
@@ -109,6 +104,8 @@
                             <input id="edit_numero_cuenta" name="edit_numero_cuenta" type="text" class="validate" required>
                             <label for="edit_numero_cuenta" class="active"># de cuenta bancaria</label>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col m4">
                             <div class="row row-password">
                                 <div class="input-field col m6">

@@ -47,7 +47,7 @@ function rastrearPedido(codigo_remision) {
 
 function consultaCobertura(codigo_transportadora) {
 
-    NProgress.start();
+    /*NProgress.start();
     $(".btn-siguiente").attr('disabled',true);
 
     $.ajax({
@@ -82,6 +82,16 @@ function consultaCobertura(codigo_transportadora) {
             alerta('No se puedo realizar la conexion con el WS');
             $(".btn-siguiente").attr('disabled',true);
             return;
+        }
+    });*/
+
+    $(".btn-siguiente").removeAttr('disabled');
+    
+    const select = document.querySelectorAll("#transportadora option");
+    select.forEach(option=>{
+        if (option.value == 1) {
+            option.disabled = false;
+            option.classList.remove("disabled")
         }
     });
 }
