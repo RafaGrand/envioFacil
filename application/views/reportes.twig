@@ -61,7 +61,7 @@
         <div class="col l3 m6 s12">
             <div class="card green white-text valign-wrapper">
                 <div class="green darken-2 icon valign-wrapper">
-                    <i class="material-icons medium valign">check_circle</i>
+                    <i class="material-icons medium valign">local_shipping</i>
                 </div>
                 <div class="card-content">
                     <div class="row">
@@ -72,9 +72,9 @@
         </div>
 
         <div class="col l3 m6 s12">
-            <div class="card red white-text valign-wrapper">
+            <div class="card red white-text valign-wrapper modal-trigger" href="#modal_filtro_liquidacion_guias">
                 <div class="red darken-2 icon valign-wrapper">
-                    <i class="material-icons medium valign">error</i>
+                    <i class="material-icons medium valign">assignment</i>
                 </div>
                 <div class="card-content">
                     <div class="row">
@@ -91,10 +91,46 @@
                 </div>
                 <div class="card-content">
                     <div class="row" title="Este saldo puede variar dependiendo de las novedades de la guia">
-                        <h5>Usuarios</h5>
+                        <h5>assignment_ind</h5>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="modal_filtro_liquidacion_guias" class="modal">
+    <div class="modal-content">
+        <h4>Reportes Liquidacion de Guias</h4>
+        <form method="GET" action="{{base_url}}reportes/liquidacion_de_guias" name="repo_liquidacion_guias" id="repo_liquidacion_guias" target="_blank">
+            <div class="row">
+                <div class="input-field col  m4">
+                    <input  id="fecha_ini" name="fecha_ini" type="date" class="validate" required>
+                    <label for="fecha_ini">Fecha Desde</label>
+                </div>
+                <div class="input-field col  m4">
+                    <input  id="fecha_fin" name="fecha_fin" type="date" class="validate" required>
+                    <label for="fecha_fin">Fecha Hasta</label>
+                </div>
+
+                {% if perfil_id == '1' %}
+                    <div class="input-field col m4">
+                        <select name="id_cuenta" id="id_cuenta" required >
+                            <option selected value="TODOS">TODOS</option>
+                            {% if listaUsuario %}                
+                                {% for usuario in listaUsuario %}
+                                    <option value="{{usuario.value}}">{{usuario.display}}</option>
+                                {% endfor %}   
+                            {% endif %}
+                        </select>
+                        <label>Usuario</label>
+                    </div>
+                {% endif %}
+            </div>
+            <button class="waves-effect waves-light btn green" type="submi">Descargar</button>
+        </form>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
     </div>
 </div>

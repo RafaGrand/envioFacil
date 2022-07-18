@@ -1,0 +1,41 @@
+<style type="text/css">
+
+		table, th, td {
+			text-align: left;
+			border: 1px solid black;		
+		}
+</style>
+<table>
+    <thead>
+        <tr>
+            <th>fecha</th>
+            <th>nombre</th>
+            <th>apellido</th>
+            <th>estado</th>
+            <th>transportadora</th>
+            <th>remision</th>
+            <th>ciudad destino</th>
+            <th>valor declarado</th>
+            <th>comision</th>
+            <th>valor flete</th>
+            <th>valor liquidado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in dataReporte %}
+            <tr>
+                <td>{{data.fecha}}</td>
+                <td>{{data.nombre}}</td>
+                <td>{{data.apellido}}</td>
+                <td>{{data.estado}}</td>
+                <td>{{data.transportadora}}</td>
+                <td>{{data.codigo_remision}}</td>
+                <td>{{data.ciudad_entrega}}</td>
+                <td>{{data.valor_declarado}}</td>
+                <td>{{data.valor_comision}}</td>
+                <td>{{data.valor_flete}}</td>
+                <td>{{data.valor_pagar}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

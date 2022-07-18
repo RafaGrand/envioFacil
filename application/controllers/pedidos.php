@@ -73,6 +73,36 @@ class Pedidos extends CI_Controller {
         
     }
 
+    function getCoberturaTransportadora(){
+
+        $parametros = $this->input->post();
+        
+        if(!isset($parametros['codigo_transportadora'])){            
+            echo json_encode([
+                "status" => false,
+                "message"=> "Faltan parametros para realizar la consulta"
+            ]);
+            return;
+        }
+
+        $data = $this->mpedidos->getCoberturaTransportadora($parametros['codigo_transportadora']);
+
+        if(!$data){            
+            echo json_encode([
+                "status" => false,
+                "message"=> "No se encontro informacion en la base de datos para el municipio seleccionado"
+            ]);
+            return;
+        }
+
+        echo json_encode([
+            "status" => true,
+            "data"   => $data,
+            "message"=> "Municipio con cobertura"
+        ]);
+        return;
+    }
+
     function lista_municipio(){
         $parametros = $this->input->post();
 

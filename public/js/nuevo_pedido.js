@@ -47,20 +47,36 @@ function rastrearPedido(codigo_remision) {
 
 function consultaCobertura(codigo_transportadora) {
 
-    /*NProgress.start();
+    NProgress.start();
     $(".btn-siguiente").attr('disabled',true);
 
     $.ajax({
-        url:  get_base_url()+'/pedidos/verCoberturas',
+        url:  get_base_url()+'/pedidos/getCoberturaTransportadora',
         type: 'POST',
-        data: null,
+        data: {codigo_transportadora : codigo_transportadora},
         success: function(response) {
-            NProgress.done();
-            let dataResponse = jQuery.parseJSON(response);
 
-             result = encontrarCobertura(codigo_transportadora,dataResponse.data);
-             //console.log(result);
-            if(result){
+            NProgress.done();
+
+            try {
+                var dataResponse = jQuery.parseJSON(response);
+            } catch (e) {
+                var dataResponse = new Object();
+                dataResponse.status = false;
+                dataResponse.message = 'Error al procesar la informacion de cobertura';
+            }
+
+            if (!dataResponse.status) {
+                NProgress.done();
+                alerta(dataResponse.message);
+                $(".btn-siguiente").attr('disabled',true);
+                return;
+            }
+
+
+
+            if(dataResponse.data.estado_id == 1 && dataResponse.data.activo_coordinadora == "S" ){
+                
                 toast('Municipio con cobertura','success');
                 $(".btn-siguiente").removeAttr('disabled');
 
@@ -79,11 +95,11 @@ function consultaCobertura(codigo_transportadora) {
         } ,
         error: function(){
             NProgress.done();
-            alerta('No se puedo realizar la conexion con el WS');
+            alerta('Error al procesar la informacion de cobertura');
             $(".btn-siguiente").attr('disabled',true);
             return;
         }
-    });*/
+    });
 
     $(".btn-siguiente").removeAttr('disabled');
     

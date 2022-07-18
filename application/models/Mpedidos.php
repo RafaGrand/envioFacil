@@ -35,6 +35,19 @@ class mpedidos extends CI_Model{
 		return false;
 	}
 
+
+	function getCoberturaTransportadora($codigo_transportadora) {
+
+		$this->db->select('estado_id,activo_coordinadora');
+		$this->db->from('municipio m');
+		$this->db->where("codigo_transportadora = ".$codigo_transportadora);
+		$query = $this->db->get();
+		if ($query->num_rows()>0) {
+			return $query->row();
+		}
+		return false;
+	}
+
 	function getListaPedidos($id_estado = '',$tipo_busqueda = 'TODOS'){
 
 		$this->db->select("

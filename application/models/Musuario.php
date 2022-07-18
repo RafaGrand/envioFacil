@@ -142,4 +142,16 @@ class musuario extends CI_Model{
 		return $response;
 
 	}
+
+	function getListaUsariosSelect(){
+
+		$this->db->select("CONCAT(nombre,' ',apellido) as display ,cuenta_id as value");
+		$query = $this->db->get('usuario');
+  
+		if ($query->num_rows()>0) {
+		  return $query->result();
+		}
+		
+		return false;
+	}
 }
