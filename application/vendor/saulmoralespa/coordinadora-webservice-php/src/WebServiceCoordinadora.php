@@ -8,7 +8,7 @@
 
 namespace Coordinadora;
 
-class WebService
+class WebServiceCoordinadora
 {
 
     const SANDBOX_URL_TRACKING_DISPATCHES = 'http://sandbox.coordinadora.com/ags/1.5/server.php?wsdl';

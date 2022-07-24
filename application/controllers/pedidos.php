@@ -3,7 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // require_once APPPATH.'vendor/autoload.php';
 // import webservice class
 // use Coordinadora\WebService;
-use Coordinadora\WebService;
+use Coordinadora\WebServiceCoordinadora; 
+use Servientrega\WebService;
+
 
 class Pedidos extends CI_Controller {
 
@@ -13,9 +15,6 @@ class Pedidos extends CI_Controller {
 		parent::__construct();
 		$this->load->model('mpedidos');
 		$this->load->model('mgenerales');
-        $this->location = "https://sandbox.coordinadora.com/agw/ws/guias/1.6/server.php";
-        // $this->guiasCiudades = new GuiasCiudades(); 
-        // $this->load->model('mempresa');
 	}
 	
 	public function index(){
@@ -42,36 +41,6 @@ class Pedidos extends CI_Controller {
             $this->load->view('base',["base_url"=>base_url(),"modulo"=>'login.twig']);
         }
 	}
-
-    function soapCall($action, $params) {
-
-        $client = new SoapClient($this->location.'?wsdl');
-
-        try {
-            $resp = $client->$action($params);
-            return $resp;
-
-        } catch(Exception $e) {
-            //crear log que guarde la respuesta erronea
-            return false;
-        }
-    }
-
-    function verCoberturas() {
-
-        $parametros = [];
-        $parametros['usuario'] = 'retabares.ws';
-        $parametros['clave']   = 'c04dbbaa14d2c5600ff7f2ac6de2d5ae161bf1cb5a7df20ee7050db5bae5a945';
-        $action                = "Guias_ciudades";
-
-        $resp = $this->soapCall($action, $parametros);
-
-        echo json_encode([
-            'status'  	 => true,
-            'data'       => $resp
-        ]);
-        
-    }
 
     function getCoberturaTransportadora(){
 
@@ -136,6 +105,7 @@ class Pedidos extends CI_Controller {
     }
 
     function getWS() {
+
         $apikey = 'c513d8b8-82de-11ec-a8a3-0242ac120002'; // your apikey of Coordinadora
         $password = 'fQ9uR3kM1xI4wM6h'; // your password of Coordinadora
         $nit = '1004736927'; //your nit
@@ -147,9 +117,29 @@ class Pedidos extends CI_Controller {
 
 
         try{
-            $coordinadora = new WebService($apikey, $password, $nit, $id_client, $user_guide, $password_guide);
+            $coordinadora = new WebServiceCoordinadora($apikey, $password, $nit, $id_client, $user_guide, $password_guide);
             $coordinadora->sandbox_mode(false); //true for tests or false for production
             return $coordinadora;
+        }
+        catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
+    }
+
+    function getWSserviEntrega() {
+        
+        $_login_user = "Luis1937";
+        $_pwd = "MZR0zNqnI/KplFlYXiFk7m8/G/Iqxb3O";
+        $_billing_code ="123456";
+        $id_client ="SER408";
+        $_name_pack ="ENVIOFACIL";
+
+        try{
+
+            $servientrega = new WebService($_login_user, $_pwd, $_billing_code, $id_client, $_name_pack);
+
+            echo "<pre>";
+            var_dump($servientrega->getToken());
         }
         catch (\Exception $exception){
             echo $exception->getMessage();
