@@ -34,7 +34,7 @@ class Pedidos extends CI_Controller {
 				"dataTablaUsuarios"		=> $this->mgenerales->getdataTablaUsuarios(),
                 "departamentos"         => $this->mgenerales->getDepartamentos(),
                 "listaPedidos"          => $this->mpedidos->getListaPedidos('','CUENTA'),
-                "listaPedidosSinDespacho"=> $this->mpedidos->getListaPedidos(self::IMPRESO,'CUENTA'),
+                //"listaPedidosSinDespacho"=> $this->mpedidos->getListaPedidos(self::IMPRESO,'CUENTA'),
                 //"GuiasSinLiquidar"		=> $this->mgenerales->getGuiasSinLiquidar()
             ]);
 

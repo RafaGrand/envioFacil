@@ -1,0 +1,63 @@
+<style type="text/css">
+
+		table, th, td {
+			text-align: left;
+			border: 1px solid black;		
+		}
+</style>
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>fecha</th>
+            <th>usuario</th>
+            <th>email</th>
+            <th># remision</th>
+            <th>contenido</th>
+            <th>alto</th>
+            <th>ancho</th>
+            <th>largo</th>
+            <th>peso</th>
+            <th>unidades</th>
+            <th>nombre destinatario</th>
+            <th>direccion destinatario</th>
+            <th>telefono destinatario</th>
+            <th>ciudad</th>
+            <th>transportadora</th>
+            <th>estado</th>
+            <th>estado liquidacion</th>
+            <th>valor comision</th>
+            <th>valor declarado</th>
+            <th>valor flete</th>
+            <th>valor recibir</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in dataReporte %}
+            <tr>
+                <td>{{data.id_pedido}}</td>
+                <td>{{data.fecha}}</td>
+                <td>{{data.usuario}}</td>
+                <td>{{data.email}}</td>
+                <td>{{data.codigo_remision}}</td>
+                <td>{{data.contenido}}</td>
+                <td>{{data.alto}}</td>
+                <td>{{data.ancho}}</td>
+                <td>{{data.largo}}</td>
+                <td>{{data.peso}}</td>
+                <td>{{data.unidades}}</td>
+                <td>{{data.nombre_destinatario}}</td>
+                <td>{{data.direccion_destinatario}}</td>
+                <td>{{data.telefono_destinatario}}</td>
+                <td>{{data.ciudad}}</td>
+                <td>{{data.transportadora}}</td>
+                <td>{{data.estado}}</td>
+                <td>{{data.estado_liquidacion}}</td>
+                <td>{{data.valor_comision}}</td>
+                <td>{{data.valor_declarado}}</td>
+                <td>{{data.valor_flete}}</td>
+                <td>{{data.valor_recibir}}</td>        
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

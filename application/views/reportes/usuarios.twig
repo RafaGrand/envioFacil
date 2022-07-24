@@ -1,0 +1,49 @@
+<style type="text/css">
+
+		table, th, td {
+			text-align: left;
+			border: 1px solid black;		
+		}
+</style>
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>fecha registro</th>
+            <th>numero documento</th>
+            <th>usuario</th>
+            <th>email</th>
+            <th>celular</th>
+            <th>telefono fijo</th>
+            <th>ciudad</th>
+            <th>direccion</th>
+            <th>tipo user</th>
+            <th>tipo cuenta</th>
+            <th>banco</th>
+            <th># cuenta banco</th>
+            <th>estado</th>            
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in dataReporte %}
+            <tr>
+                <td>{{data.id_usuario}}</td>
+                <td>{{data.fecha_registro}}</td>
+                <td>{{data.numero_documento}}</td>
+                <td>{{data.usuario}}</td>
+                <td>{{data.email}}</td>
+                <td>{{data.celular}}</td>
+                <td>{{data.telefono_fijo}}</td>
+                <td>{{data.ciudad}}</td>
+                <td>{{data.direccion}}</td>
+                <td>{{data.tipo_user}}</td>
+                <td>{{data.tipo_cuenta}}</td>
+                <td>{{data.banco}}</td>
+                <td>{{data.numero_cuenta_banco}}</td>
+                <td>{{data.estado}}</td>
+                    
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+

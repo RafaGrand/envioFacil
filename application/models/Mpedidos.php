@@ -73,6 +73,8 @@ class mpedidos extends CI_Model{
 		$this->db->join('transportadora t', 't.id_transportadora  = p.transportadora_id');
 		$this->db->join('municipio m', 'm.codigo_transportadora  = p.ciudad_destinatario','left');
 
+		$this->db->where("p.estado_liquidacion <>",4);
+		
 		if($tipo_busqueda != "TODOS"){
 			$this->db->where("p.cuenta_id",$this->session->userdata('id_cuenta'));
 		}

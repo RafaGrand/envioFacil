@@ -53,4 +53,43 @@ class Reportes extends CI_Controller {
 		$this->load->view('reportes/liquidacion_de_guias.twig',["dataReporte" => $response]);
 
     }
+
+    function guias(){
+
+        if(!isset($_GET['fecha_ini'],$_GET['fecha_fin'])){
+			"Faltan parametros";
+            return;
+		}
+
+        if(!isset($_GET['id_cuenta'])){
+            $id_cuenta = $this->session->userdata('id_cuenta');
+        }else{
+            $id_cuenta = $_GET['id_cuenta'];
+        }
+
+	    header("Content-Type:application/vnd.ms-excel");
+		header("Content-Disposition: attachment; filename=guias.xls");
+
+		$response = $this->mreportes->guias($_GET['fecha_ini'],$_GET['fecha_fin'],$id_cuenta);
+		
+		$this->load->view('reportes/guias.twig',["dataReporte" => $response]);
+
+    }
+
+    function usuarios(){
+
+        if(!isset($_GET['id_cuenta'])){
+            $id_cuenta = $this->session->userdata('id_cuenta');
+        }else{
+            $id_cuenta = $_GET['id_cuenta'];
+        }
+
+	    header("Content-Type:application/vnd.ms-excel");
+		header("Content-Disposition: attachment; filename=usuarios.xls");
+
+		$response = $this->mreportes->usuarios($id_cuenta);
+		
+		$this->load->view('reportes/usuarios.twig',["dataReporte" => $response]);
+
+    }
 }

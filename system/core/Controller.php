@@ -84,7 +84,7 @@ class CI_Controller {
 
     CONST NIT = 1004736927;
 
-    CONST PORCENTAJE_COMISION = 0.06;
+    CONST PORCENTAJE_COMISION = 0.05;
 
 	/**
 	 * Reference to the CI singleton
