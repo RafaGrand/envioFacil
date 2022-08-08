@@ -623,7 +623,7 @@ function actulizarEstadoGuiasWS(){
     
     NProgress.start();
 
-    $.ajax({                                                                             
+    /*$.ajax({                                                                             
 		type: 'POST',                                                                              
 		url:  get_base_url()+'/pedidos/actulizarEstadoGuiasWS',										
 		data: null,      
@@ -653,7 +653,10 @@ function actulizarEstadoGuiasWS(){
             alerta('Error al intentar actualizar los estados de las guias, por favor intente mas tarde');
 			return;
         }                                                                                           
-	});
+	});*/
+
+    getGuiasSinLiquidar();
+    $('#modal_liquidacion_guias').modal('open', true);
     NProgress.done();
 }
 

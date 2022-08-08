@@ -128,10 +128,10 @@ class Pedidos extends CI_Controller {
 
     function getWSserviEntrega() {
         
-        $_login_user = "Luis1937";
-        $_pwd = "MZR0zNqnI/KplFlYXiFk7m8/G/Iqxb3O";
-        $_billing_code ="123456";
-        $id_client ="SER408";
+        $_login_user = "1004736927suc1";
+        $_pwd = "123456";
+        $_billing_code ="SER125837";
+        $id_client ="1004736927          ";
         $_name_pack ="ENVIOFACIL";
 
         try{
@@ -632,27 +632,32 @@ class Pedidos extends CI_Controller {
         if($guias_estado_impreso){
 
             foreach($guias_estado_impreso as $guias){
-                $array_remisiones[] = $guias->codigo_remision;
-            }
 
+                $params = [
+                    "codigos_remision" => [$guias->codigo_remision]
+                ];
+    
+                $data = $coordinadora->Guias_rastreoSimple($params);
+                
+                if(is_array($data)){      
 
-            $params = [
-                "codigos_remision" => $array_remisiones
-            ];
+                    foreach($data as $guia){
 
-            $data = $coordinadora->Guias_rastreoSimple($params);
-            
-            if(is_array($data)){          
-                foreach($data as $guia){
-                    if($guia->codigo_estado != 0){
-                        if($guia->codigo_estado == 6){
-                            $this->mpedidos->cambarEstadoGuia($guia->codigo_remision,1,self::ESTADO_ENTREGADO);
-                        }else{
-                            $this->mpedidos->cambarEstadoGuia($guia->codigo_remision,1,self::DESPACHADO);
+                        if($guia->codigo_estado != 0){
+
+                            if($guia->codigo_estado == 6){
+                                $this->mpedidos->cambarEstadoGuia($guia->codigo_remision,1,self::ESTADO_ENTREGADO);
+                            }elseif($guia->codigo_estado == 8){
+                                $this->mpedidos->cambarEstadoGuia($guia->codigo_remision,1,self::CERRADA);
+                            }
+                            else{
+                                $this->mpedidos->cambarEstadoGuia($guia->codigo_remision,1,self::DESPACHADO);
+                            }
                         }
                     }
                 }
             }
+
         }
 
         if($canal == "WS"){

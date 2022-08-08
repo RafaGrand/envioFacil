@@ -58,6 +58,7 @@ class CI_Controller {
 	CONST ESTADO_LIQUIDADO  = 4;
     CONST ESTADO_ELIMINADO  = 5;
     CONST ESTADO_EN_PROCESO = 6;
+    CONST CERRADA           = 7;
     CONST IMPRESO           = 9;
     CONST DESPACHADO        = 10;   
     CONST SIN_GESTION       = 0;

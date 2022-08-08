@@ -103,9 +103,8 @@ class mpedidos extends CI_Model{
 		$this->db->from('pedido p');
 		$this->db->where("p.cuenta_id",$this->session->userdata('id_cuenta'));
 		$this->db->order_by('p.id_pedido', 'DESC');
-		$this->db->where_not_in("p.estado_id",[self::ESTADO_ANULADO,self::ESTADO_ENTREGADO]);
-		$this->db->limit(10);
-
+		$this->db->where_not_in("p.estado_id",[self::ESTADO_ANULADO,self::ESTADO_ENTREGADO,self::CERRADA]);
+	
 		$query = $this->db->get();
 
 		if ($query->num_rows()>0) {
