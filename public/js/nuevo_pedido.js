@@ -1,21 +1,33 @@
-function feedTrackingModal(response) {
+function feedTrackingModal(id_transportadora,response) {
+
+    console.log(response);
     let detalleEstados = response[0].detalle_estados
     let detalleNovedades = response[0].detalle_novedades
     let containerNovedades = ""
     let containerDetalle = ""
-    detalleEstados.map(estado=>{
-        let innerData = `<p><b>Movimiento:</b> ${estado.descripcion}</p>`
-        containerDetalle += innerData
-    })
-    detalleNovedades.map(novedad=>{
-        let innerData = `<p><b>Novedad:</b> ${novedad.descripcion}</p>`
-        containerNovedades += innerData
-    })
+
+
+    if(id_transportadora == 1){
+        detalleEstados.map(estado=>{
+            let innerData = `<p><b>Movimiento:</b> ${estado.descripcion}</p>`
+            containerDetalle += innerData
+        });
+        detalleNovedades.map(novedad=>{
+            let innerData = `<p><b>Novedad:</b> ${novedad.descripcion}</p>`
+            containerNovedades += innerData
+        });
+    }else if(id_transportadora == 2){
+        detalleEstados.map(estado=>{
+            let innerData = `<p><b>Movimiento:</b> ${estado.NomMov}</p>`
+            containerDetalle += innerData
+        });
+    }
+
     let container = `<h4>Guia #${response[0].codigo_remision}</h4>
     <hr>
     <p><b>Estado:</b> ${response[0].descripcion_estado}</p>
-    <p><b>Fecha Recogida:</b> ${response[0].fecha_recogida}, ${response[0].nombre_origen}</p>
-    <p><b>Fecha Entrega:</b> ${response[0].fecha_entrega}, ${response[0].nombre_destino}</p>
+    <p><b>Fecha Envio:</b> ${response[0].fecha_recogida}, ${response[0].nombre_origen}</p>
+    <p><b>Fecha Estado Actual:</b> ${response[0].fecha_entrega}, ${response[0].nombre_destino}</p>
     <hr>
     ${containerDetalle}
     <hr>
@@ -23,18 +35,18 @@ function feedTrackingModal(response) {
     return container
 }
 
-function rastrearPedido(codigo_remision) {
+function rastrearPedido(codigo_remision,id_transportadora) {
     NProgress.start();
     $.ajax({
         url:  get_base_url()+'/pedidos/rastrear_pedido',
         type: 'POST',
-        data: {codigo_remision: codigo_remision},
+        data: {codigo_remision: codigo_remision, id_transportadora: id_transportadora},
         success: function(response) {
             const modalContainer = document.querySelector('#container-rastreos')
             NProgress.done();
             let dataResponse = JSON.parse(response);
             
-            let innerContainer = feedTrackingModal(dataResponse.message, modalContainer)
+            let innerContainer = feedTrackingModal(id_transportadora,dataResponse.message, modalContainer)
             modalContainer.innerHTML = innerContainer
         } ,
         error: function(){

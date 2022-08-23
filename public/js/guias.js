@@ -200,7 +200,7 @@ function verGuiasSinLiquidar(id_cuenta){
                         '<td>'+data[i].valor_recibir+'</td>'+
                         '<td>'+data[i].estado_recaudo+'</td>'+
                         '<td>'+
-                            '<a href="#modal_rastreo"  onclick="rastrearPedido(\''+data[i].codigo_remision+'\')" class="modal-trigger" title="Rastrear pedido"><i class="material-icons">search</i></a>'+
+                            '<a href="#modal_rastreo"  onclick="rastrearPedido(\''+data[i].codigo_remision+'\','+data[i].transportadora_id+')" class="modal-trigger" title="Rastrear pedido"><i class="material-icons">search</i></a>'+
                         '</td>'+
                         '<td>'+
                             '<a href="#" style="color:red;" onclick="rechazarLiqudacionPedido(\''+data[i].id_pedido+'\')" title="Rechazar Liquidacion por Novedad"><i class="material-icons">clear</i></a>'+
@@ -360,8 +360,11 @@ function anularGuia(){
 
     NProgress.start();
     var codigo_remision = $("#codigo_remision_edit").val();
+    var id_transportadora = $("#transportadora_edit").val();
+
     var formData = new FormData();
     formData.append('codigo_remision', codigo_remision);
+    formData.append('id_transportadora', id_transportadora);
 
     $.ajax({
         type: 'post',

@@ -119,7 +119,7 @@ class mgenerales extends CI_Model{
 
     function getDataSesion(){
 
-        $this->db->select('u.email,u.avatar,u.direccion,u.celular,m.codigo_transportadora,m.nombre as municipio, d.id_departamento,d.nombre as departamento');
+        $this->db->select('u.email,u.avatar,u.direccion,u.celular,m.codigo_transportadora,m.nombre as municipio, d.id_departamento,d.nombre as departamento,u.numero_documento');
 		$this->db->from('usuario u');
 		$this->db->join('cuenta c', 'c.id_cuenta  = u.cuenta_id');
         $this->db->join('municipio m', 'm.id_municipio  = u.municipio_id','left');
@@ -132,6 +132,7 @@ class mgenerales extends CI_Model{
             'id_usuario'        => $this->session->userdata('id_usuario'),
             'id_cuenta'         => $this->session->userdata('id_cuenta'),
             'nombre_user'       => $this->session->userdata('nombre').' '. $this->session->userdata('apellidos'),
+            'numero_documento'  => $dataUser->numero_documento,
             'direccion'         => $dataUser->direccion,
             'celular'           => $dataUser->celular,
             'email_user'        => $dataUser->email ?? 'Correo no registrado',

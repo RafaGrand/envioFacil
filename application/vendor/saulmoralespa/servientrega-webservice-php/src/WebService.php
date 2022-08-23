@@ -18,8 +18,8 @@ class WebService
     private $_billing_code;
     private $_id_cient;
     private $_name_pack;
-    //private $_url_guides = 'http://web.servientrega.com:8081/GeneracionGuias.asmx?wsdl';
-    private $_url_guides = 'http://190.131.194.159:8059/GeneracionGuias.asmx?wsdl';
+    private $_url_guides = 'http://web.servientrega.com:8081/GeneracionGuias.asmx?wsdl';
+    //private $_url_guides = 'http://190.131.194.159:8059/GeneracionGuias.asmx?wsdl';
 
     /**
      * WebService constructor.
@@ -280,7 +280,8 @@ class WebService
             return $result;
 
         } catch (\Exception $exception) {
-            throw new  \Exception($exception->getMessage());
+            $result =  $exception->getMessage();
+            return $result;
         }
     }
 

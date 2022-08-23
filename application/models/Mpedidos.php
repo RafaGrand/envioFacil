@@ -59,6 +59,7 @@ class mpedidos extends CI_Model{
 			p.nombre_destinatario, 
 			p.direccion_destinatario,
 			p.telefono_destinatario,
+			p.transportadora_id,
 			m.nombre as ciudad,
 			t.nombre as transportadora,
 			e.estado,
@@ -102,6 +103,7 @@ class mpedidos extends CI_Model{
 			p.codigo_remision");
 		$this->db->from('pedido p');
 		$this->db->where("p.cuenta_id",$this->session->userdata('id_cuenta'));
+		$this->db->where("p.transportadora_id",1);
 		$this->db->order_by('p.id_pedido', 'DESC');
 		$this->db->where_not_in("p.estado_id",[self::ESTADO_ANULADO,self::ESTADO_ENTREGADO,self::CERRADA]);
 	
@@ -140,6 +142,7 @@ class mpedidos extends CI_Model{
 			p.direccion_destinatario,
 			p.telefono_destinatario,
 			m.nombre as ciudad,
+			transportadora_id,
 			t.nombre as transportadora,
 			e.estado,
 			e.id_estado,

@@ -138,12 +138,12 @@ class Pedidos extends CI_Controller {
 
             $servientrega = new WebService($_login_user, $_pwd, $_billing_code, $id_client, $_name_pack);
 
-            echo "<pre>";
-            var_dump($servientrega->getToken());
         }
         catch (\Exception $exception){
             echo $exception->getMessage();
         }
+  
+        return $servientrega;
     }
 
     function cotizar(){
@@ -186,160 +186,331 @@ class Pedidos extends CI_Controller {
             return;
         }
 
-        $coordinadora = $this->getWS();
-
-        $cart_prods[] = (object)array(
-            "peso"                  => (int)$parametros['peso'],
-            "ubl"                   => "0", 
-            "alto"                  => (int)$parametros['alto'],
-            "ancho"                 => (int)$parametros['ancho'],
-            "largo"                 => (int)$parametros['largo'],
-            "unidades"              => (int)1,
-            "referencia"            => "",
-            "nombre_empaque"        => "some name"
-        );
-
-        $recaudo[] = (object)array(
-            "referencia"      => '',
-            "valor"           => (float)$parametros['valor_declarado'], 
-            "valor_base_iva"  => 0,
-            "valor_iva	"     => 0,
-            "forma_pago"      => 5
-        );
-
-        $params = array(
-            'codigo_remision'       => '',
-            'fecha'                 => '',
-            'id_remitente'          => '',
-            'nit_remitente'         => '',
-            'nombre_remitente'      => $dataSesion['nombre_user'],
-            "direccion_remitente"   => $dataSesion['direccion'],    
-            "telefono_remitente"    => $dataSesion['celular'],
-            "ciudad_remitente"      => $dataSesion['codigo_transportadora'],
-            'nit_destinatario'      => $parametros['nit_destinatario'],
-            'div_destinatario'      => '0',
-            "nombre_destinatario"   => $parametros['nombre_destinatario'], 
-            "direccion_destinatario"=> $parametros['direccion_destinatario'],   
-            "ciudad_destinatario"   => $parametros['municipio_destinatario'],
-            "telefono_destinatario" => $parametros['telefono_destinatario'],
-            "valor_declarado"       => $parametros['valor_declarado'],
-            'codigo_cuenta'         => "2",
-            'codigo_producto'       => "0",
-            'nivel_servicio'        => "22",
-            'linea'                 => '',
-            "contenido"             => $parametros['contenido'],
-            'referencia'            => '',
-            'observaciones'         => '',
-            'estado'                => 'IMPRESO',
-            'detalle'               => $cart_prods,
-            'cuenta_contable'       => '',
-            'centro_costos'         => '',
-            'recaudos'              => $recaudo,
-            'margen_izquierdo'      => '',
-            'margen_superior'       => '',
-            'id_rotulo'             => '0',
-            'usuario_vmi'           => '',
-            'formato_impresion'     => '',
-            'atributo1_nombre'      => '',
-            'atributo1_valor'       => '',
-            'notificaciones'        => (object)array(
-            ),
-            'atributos_retorno' => (object)array(
-                'nit' => '',
-                'div' => '',
-                'nombre' => '',
-                'direccion' => '',
-                'codigo_ciudad' => '',
-                'telefono' => ''
-            ),
-            'nro_doc_radicados' => '',
-            'nro_sobre' => '',
-        );
-
-        try{
-
-            $data = $coordinadora->Guias_generarGuia($params);
-
-            if(!$data){
-                echo json_encode([
-                    'status'  	 => false,
-                    'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra transportadora"
-                ]);
-                return;
-            }
-
-            if(!isset($data->id_remision)){
-
-                echo json_encode([
-                    'status'  	 => false,
-                    'message'    => $data
-                ]);
-                return;
-            }
-
-            $comison = ((float)$parametros['valor_declarado'] + (float)$dataCotizador->flete_total)  * self::PORCENTAJE_COMISION;
-
-            if($comison < 4500){
-                $comison = 4500;
-            }
-    
-            $data_insert =[
-                "nombre_remitente"          => $dataSesion['nombre_user'],
-                "direccion_remitente"       => $dataSesion['direccion'],    
-                "telefono_remitente"        => $dataSesion['celular'],
-                "ciudad_remitente"          => $dataSesion['codigo_transportadora'],
-                "nombre_destinatario"       => $parametros['nombre_destinatario'], 
-                "direccion_destinatario"    => $parametros['direccion_destinatario'],   
-                "ciudad_destinatario"       => $parametros['municipio_destinatario'],
-                "telefono_destinatario"     => $parametros['telefono_destinatario'],
-                "valor_declarado"           => $parametros['valor_declarado'],
-                "valor_comision"            => $comison,
-                "valor_flete"               => $dataCotizador->flete_total,
-                "dias_entrega"              => $dataCotizador->dias_entrega,
-                "contenido"                 => $parametros['contenido'],
-                "alto"                      => $parametros['alto'],
-                "ancho"                     => $parametros['ancho'],
-                "largo"                     => $parametros['largo'],
-                "peso"                      => $parametros['peso'], 
-                "unidades"                  => 1,
-                "id_remision"               => $data->id_remision,
-                "codigo_remision"           => $data->codigo_remision,
-                "pdf_guia"                  => $data->pdf_guia,
-                "cuenta_id"                 => $dataSesion['id_cuenta'],
-                "transportadora_id "        => 1,
-                "nit_destinatario"          => $parametros['nit_destinatario']
-            ];    
-    
-    
-            $id_pedido = $this->mgenerales->InsertarElemento('pedido',$data_insert);
-    
-            if(!$id_pedido){
-                //Implementar metodo para cancelar la remision generada en caso tal de que no se pueda insetar en al base de datos 
-                echo json_encode([
-                    'status'  	 => false,
-                    'message'    => "No fue posible guardar el pedido en la base de datos, se procede a cancelar el codigo de remision ".$resp->id_remision. ". Por favor intente nuevamente"
-                ]);
-                return;
-            }
-                        
+        if(isset($parametros['transportadora']) && !empty($parametros['transportadora']) && !in_array($parametros['transportadora'],["1","2"]) ){
+            echo json_encode([
+                'status'  	 => false,
+                'message'    => "La transportadora seleccionada no es valida"
+            ]);
+            return;
         }
-        catch (\Exception $exception){
 
-            if(!is_array($data)){
-                echo json_encode([
-                    'status'  	 => false,
-                    'message'    => $exception->getMessage()
-                ]);
-                return;
-            } 
-        }
         
-        echo json_encode([
-            'status'  	 => true,
-            'data'       => $data
-        ]);
+        if($parametros['transportadora'] == "1"){  
 
-        return;
+            $coordinadora = $this->getWS();
+
+            $cart_prods[] = (object)array(
+                "peso"                  => (int)$parametros['peso'],
+                "ubl"                   => "0", 
+                "alto"                  => (int)$parametros['alto'],
+                "ancho"                 => (int)$parametros['ancho'],
+                "largo"                 => (int)$parametros['largo'],
+                "unidades"              => (int)1,
+                "referencia"            => "",
+                "nombre_empaque"        => "some name"
+            );
+
+            $recaudo[] = (object)array(
+                "referencia"      => '',
+                "valor"           => (float)$parametros['valor_declarado'], 
+                "valor_base_iva"  => 0,
+                "valor_iva	"     => 0,
+                "forma_pago"      => 5
+            );
+
+            $params = array(
+                'codigo_remision'       => '',
+                'fecha'                 => '',
+                'id_remitente'          => '',
+                'nit_remitente'         => '',
+                'nombre_remitente'      => $dataSesion['nombre_user'],
+                "direccion_remitente"   => $dataSesion['direccion'],    
+                "telefono_remitente"    => $dataSesion['celular'],
+                "ciudad_remitente"      => $dataSesion['codigo_transportadora'],
+                'nit_destinatario'      => $parametros['nit_destinatario'],
+                'div_destinatario'      => '0',
+                "nombre_destinatario"   => $parametros['nombre_destinatario'], 
+                "direccion_destinatario"=> $parametros['direccion_destinatario'],   
+                "ciudad_destinatario"   => $parametros['municipio_destinatario'],
+                "telefono_destinatario" => $parametros['telefono_destinatario'],
+                "valor_declarado"       => $parametros['valor_declarado'],
+                'codigo_cuenta'         => "2",
+                'codigo_producto'       => "0",
+                'nivel_servicio'        => "22",
+                'linea'                 => '',
+                "contenido"             => $parametros['contenido'],
+                'referencia'            => '',
+                'observaciones'         => '',
+                'estado'                => 'IMPRESO',
+                'detalle'               => $cart_prods,
+                'cuenta_contable'       => '',
+                'centro_costos'         => '',
+                'recaudos'              => $recaudo,
+                'margen_izquierdo'      => '',
+                'margen_superior'       => '',
+                'id_rotulo'             => '0',
+                'usuario_vmi'           => '',
+                'formato_impresion'     => '',
+                'atributo1_nombre'      => '',
+                'atributo1_valor'       => '',
+                'notificaciones'        => (object)array(
+                ),
+                'atributos_retorno' => (object)array(
+                    'nit' => '',
+                    'div' => '',
+                    'nombre' => '',
+                    'direccion' => '',
+                    'codigo_ciudad' => '',
+                    'telefono' => ''
+                ),
+                'nro_doc_radicados' => '',
+                'nro_sobre' => '',
+            );
+
+            try{
+
+                $data = $coordinadora->Guias_generarGuia($params);
+
+                if(!$data){
+                    echo json_encode([
+                        'status'  	 => false,
+                        'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra transportadora"
+                    ]);
+                    return;
+                }
+
+                if(!isset($data->id_remision)){
+
+                    echo json_encode([
+                        'status'  	 => false,
+                        'message'    => $data
+                    ]);
+                    return;
+                }
+
+                $comison = ((float)$parametros['valor_declarado'] + (float)$dataCotizador->flete_total)  * self::PORCENTAJE_COMISION;
+
+                if($comison < 4500){
+                    $comison = 4500;
+                }
+        
+                $data_insert =[
+                    "nombre_remitente"          => $dataSesion['nombre_user'],
+                    "direccion_remitente"       => $dataSesion['direccion'],    
+                    "telefono_remitente"        => $dataSesion['celular'],
+                    "ciudad_remitente"          => $dataSesion['codigo_transportadora'],
+                    "nombre_destinatario"       => $parametros['nombre_destinatario'], 
+                    "direccion_destinatario"    => $parametros['direccion_destinatario'],   
+                    "ciudad_destinatario"       => $parametros['municipio_destinatario'],
+                    "telefono_destinatario"     => $parametros['telefono_destinatario'],
+                    "valor_declarado"           => $parametros['valor_declarado'],
+                    "valor_comision"            => $comison,
+                    "valor_flete"               => $dataCotizador->flete_total,
+                    "dias_entrega"              => $dataCotizador->dias_entrega,
+                    "contenido"                 => $parametros['contenido'],
+                    "alto"                      => $parametros['alto'],
+                    "ancho"                     => $parametros['ancho'],
+                    "largo"                     => $parametros['largo'],
+                    "peso"                      => $parametros['peso'], 
+                    "unidades"                  => 1,
+                    "id_remision"               => $data->id_remision,
+                    "codigo_remision"           => $data->codigo_remision,
+                    "pdf_guia"                  => $data->pdf_guia,
+                    "cuenta_id"                 => $dataSesion['id_cuenta'],
+                    "transportadora_id "        => 1,
+                    "nit_destinatario"          => $parametros['nit_destinatario']
+                ];    
+        
+        
+                $id_pedido = $this->mgenerales->InsertarElemento('pedido',$data_insert);
+        
+                if(!$id_pedido){
+                    //Implementar metodo para cancelar la remision generada en caso tal de que no se pueda insetar en al base de datos 
+                    echo json_encode([
+                        'status'  	 => false,
+                        'message'    => "No fue posible guardar el pedido en la base de datos, se procede a cancelar el codigo de remision ".$resp->id_remision. ". Por favor intente nuevamente"
+                    ]);
+                    return;
+                }
+                            
+            }
+            catch (\Exception $exception){
+
+                if(!is_array($data)){
+                    echo json_encode([
+                        'status'  	 => false,
+                        'message'    => $exception->getMessage()
+                    ]);
+                    return;
+                } 
+            }
+            
+            echo json_encode([
+                'status'  	 => true,
+                'data'       => $data
+            ]);
+
+            return;
+        }elseif($parametros['transportadora'] == "2"){
+
+            
+            $params = array(
+                'Num_Guia' => 0,
+                'Num_Sobreporte' => 0,
+                'Num_Piezas' => 1,
+                'Des_TipoTrayecto' => 1,
+                'Ide_Producto' => 2,
+                'Ide_Destinatarios' => '00000000-0000-0000-0000-000000000000',
+                'Ide_Manifiesto' => '00000000-0000-0000-0000-000000000000',
+                'Des_FormaPago' => 2,
+                'Des_MedioTransporte' => 1,
+                'Num_PesoTotal' => (int)$parametros['peso'],
+                'Num_ValorDeclaradoTotal' => (float)$parametros['valor_declarado'],
+                'Num_VolumenTotal' => 0,
+                'Num_BolsaSeguridad' => 0,
+                'Num_Precinto' => 0,
+                'Des_TipoDuracionTrayecto' => 1,
+                'Des_Telefono'  => $parametros['telefono_destinatario'],
+                'Des_Ciudad'    => $parametros['municipio_destinatario'],
+                'Des_Direccion' => $parametros['direccion_destinatario'],
+                'Nom_Contacto'  => $parametros['nombre_destinatario'],
+                'Des_VlrCampoPersonalizado1' => '',
+                'Num_ValorLiquidado' => 0,
+                'Des_DiceContener' => substr($parametros['contenido'], 0, 50),
+                'Des_TipoGuia' => 1,
+                'Num_VlrSobreflete' => 0,
+                'Num_VlrFlete' => 0,
+                'Num_Descuento' => 0,
+                'idePaisOrigen' => 1,
+                'idePaisDestino' => 1,
+                'Des_IdArchivoOrigen' => 1,
+                'Nom_Remitente' => $dataSesion['nombre_user'],
+                'Des_DireccionRemitente' => $dataSesion['direccion'],
+                'Num_PesoFacturado' => 0,
+                'Est_CanalMayorista' => false,
+                'Num_IdentiRemitente' => '',
+                'Num_TelefonoRemitente' => $dataSesion['celular'],
+                'Num_Alto' => (int)$parametros['alto'],
+                'Num_Ancho' => (int)$parametros['ancho'],
+                'Num_Largo' => (int)$parametros['largo'],
+                'Des_DepartamentoDestino' => 'Antioquia',
+                'Des_DepartamentoOrigen' => '',
+                'Gen_Cajaporte' => 0,
+                'Gen_Sobreporte' => 0,
+                'Nom_UnidadEmpaque' => 'GENERICA',
+                'Des_UnidadLongitud' => 'cm',
+                'Des_UnidadPeso' => 'kg',
+                'Num_ValorDeclaradoSobreTotal' => 0,
+                'Num_Factura' => 'FACT-001',
+                'Des_CorreoElectronico' => 'example@gmail.com',
+                'Num_Recaudo' => (float)$parametros['valor_declarado'],
+                'Est_EnviarCorreo' => false,
+                'Tipo_Doc_Destinatario' => 'CC',
+                'Ide_Num_Identific_Dest' => $parametros['nit_destinatario']
+            );
+            
+            $servientrega = $this->getWSserviEntrega();
+
+            try{
+
+                $data = $servientrega->CargueMasivoExterno($params);
+
+                if(!$data || !is_object($data)){
+                    
+                    $message = is_string($data) ? $data : "No hubo comunicacion con la transportadora, intente mas tarde o con otra transportadora" ;
+
+                    echo json_encode([
+                        'status'  	 => false,
+                        'message'    => $message
+                    ]);
+                    return;
+                }
+
+                if(!isset($data->arrayGuias)){
+                    
+                    $message = is_string($data) ? $data : "No fue posible generar la guia, intente mas tarde o con otra transportadora" ;
+
+                    echo json_encode([
+                        'status'  	 => false,
+                        'message'    => $message
+                    ]);
+
+                    return;
+                }
+                
+
+                
+
+                $comison = ((float)$parametros['valor_declarado'] + (float)$dataCotizador->flete_total)  * self::PORCENTAJE_COMISION;
+
+                if($comison < 4500){
+                    $comison = 4500;
+                }
+                
+                $data_insert =[
+                    "nombre_remitente"          => $dataSesion['nombre_user'],
+                    "direccion_remitente"       => $dataSesion['direccion'],    
+                    "telefono_remitente"        => $dataSesion['celular'],
+                    "ciudad_remitente"          => $dataSesion['codigo_transportadora'],
+                    "nombre_destinatario"       => $parametros['nombre_destinatario'], 
+                    "direccion_destinatario"    => $parametros['direccion_destinatario'],   
+                    "ciudad_destinatario"       => $parametros['municipio_destinatario'],
+                    "telefono_destinatario"     => $parametros['telefono_destinatario'],
+                    "valor_declarado"           => $parametros['valor_declarado'],
+                    "valor_comision"            => $comison,
+                    "valor_flete"               => (float)$dataCotizador->flete_total,
+                    "dias_entrega"              => 0,//$dataCotizador->dias_entrega,
+                    "contenido"                 => $parametros['contenido'],
+                    "alto"                      => $parametros['alto'],
+                    "ancho"                     => $parametros['ancho'],
+                    "largo"                     => $parametros['largo'],
+                    "peso"                      => $parametros['peso'], 
+                    "unidades"                  => 1,
+                    "id_remision"               => $data->arrayGuias->string,
+                    "codigo_remision"           => $data->arrayGuias->string,
+                    "pdf_guia"                  => '',
+                    "cuenta_id"                 => $dataSesion['id_cuenta'],
+                    "transportadora_id "        => 2,
+                    "nit_destinatario"          => $parametros['nit_destinatario']
+                ];    
+        
+        
+                $id_pedido = $this->mgenerales->InsertarElemento('pedido',$data_insert);
+        
+                if(!$id_pedido){
+                    //Implementar metodo para cancelar la remision generada en caso tal de que no se pueda insetar en al base de datos 
+                    echo json_encode([
+                        'status'  	 => false,
+                        'message'    => "No fue posible guardar el pedido en la base de datos, se procede a cancelar el codigo de remision ".$resp->id_remision. ". Por favor intente nuevamente"
+                    ]);
+                    return;
+                }
+                            
+            }
+            catch (\Exception $exception){
+
+                if(!is_array($data)){
+                    echo json_encode([
+                        'status'  	 => false,
+                        'message'    => $exception->getMessage()
+                    ]);
+                    return;
+                } 
+            }
+       
+
+            $dataresponse = new stdClass();
+            $dataresponse->id_remision = '(NO APLICA)';
+            $dataresponse->codigo_remision = $data->arrayGuias->string;
+
+            echo json_encode([
+                'status'  	 => true,
+                'data'       => $dataresponse
+            ]);
+
+            return;
+        }
+
 
     }
 
@@ -427,83 +598,199 @@ class Pedidos extends CI_Controller {
 
     }
 
-    function descargarrotulo($id_remision = 0){
+    function descargarrotulo($id_remision = 0, $id_transportadora = 0){
 
-        $coordinadora = $this->getWS();
+        if(isset($_GET['id_transportadora']) && $_GET['id_transportadora'] == 1){
 
-        if(isset($_GET['id_remision'])){
-            $id_remision = $_GET['id_remision'];
+            $coordinadora = $this->getWS();
+
+            if(isset($_GET['id_remision'])){
+                $id_remision = $_GET['id_remision'];
+            }
+
+            $params = array(
+                'id_rotulo' => 10,
+                'codigos_remisiones' => array($id_remision)
+            );
+
+            $data = $coordinadora->Guias_imprimirRotulos($params);
+
+            if($data->error){
+                echo $data->errorMessage;
+                return;
+            }
+
+            $this->generarPdfBase64($data->rotulos);
+
+        }elseif(isset($_GET['id_transportadora']) && $_GET['id_transportadora'] == 2){
+            
+            $servientrega = $this->getWSserviEntrega();
+
+            try{
+
+                /*$params = [
+                    'num_Guia' => '2146146564',
+                    'num_GuiaFinal' => '2146146564',
+                    'sFormatoImpresionGuia' => 2,
+                    'Id_ArchivoCargar' => '1',
+                    'interno' => true        
+                ];
+
+                $data = $servientrega->GenerarGuiaSticker($params);
+                echo "<pre>";
+                var_dump($data);*/
+            
+    
+                            
+            }
+            catch (\Exception $exception){
+
+                if(!is_array($data)){
+                    echo json_encode([
+                        'status'  	 => false,
+                        'message'    => $exception->getMessage()
+                    ]);
+                    return;
+                } 
+            }
+
+
         }
 
-         $params = array(
-            'id_rotulo' => 10,
-            'codigos_remisiones' => array($id_remision)
-        );
 
-        $data = $coordinadora->Guias_imprimirRotulos($params);
-
-        if($data->error){
-
-            echo $data->errorMessage;
-            return;
-
-        }
-
-        $this->generarPdfBase64($data->rotulos);
     }
 
     // Revisar porque solo sirve con el sandbox off
     function rastrear_pedido() {
-        $coordinadora = $this->getWS();
+        
         $parametros = $this->input->post();
-        if(isset($parametros['codigo_remision'])) {
+
+    
+        if(!isset($parametros['codigo_remision'],$parametros['id_transportadora'])) {
+            echo json_encode([
+                'status'  	 => false,
+                'message'    => "Faltan parametros para la consulta"
+            ]);
+            return;
+        }
+
+        if($parametros['id_transportadora'] == 1){
+            $coordinadora = $this->getWS();
             $params = ['codigos_remision'=>[$parametros['codigo_remision']]];
             $data = $coordinadora->Guias_rastreoExtendido($params);
             if(!$data){
+
                 echo json_encode([
                     'status'  	 => false,
                     'message'    => "No hubo comunicacion con la transportadora, intente mas tarde o con otra transportadora"
                 ]);
                 return;
-            } else {
-                echo json_encode([
-                    'status'  	 => true,
-                    'message'    => $data
-                ]);
-                return;
-            }            
-        }
+            } 
 
+            echo json_encode([
+                'status'  	 => true,
+                'message'    => $data
+            ]);
+            return;
+        }elseif($parametros['id_transportadora'] == 2){
+
+            $params = [
+                'NumeroGuia' => $parametros['codigo_remision']
+            ];
+
+            $servientrega = $this->getWSserviEntrega();
+            $data = $servientrega->ConsultarGuia($params);
+
+            $objResponse = new stdClass();
+
+            $objResponse->id_transportadora     = 2;
+            $objResponse->codigo_remision       = $data->ConsultarGuiaResult->NumGui;
+            $objResponse->descripcion_estado    = $data->ConsultarGuiaResult->EstAct;
+            $objResponse->fecha_recogida        = $data->ConsultarGuiaResult->FecEnv;
+            $objResponse->nombre_origen         = $data->ConsultarGuiaResult->CiuRem;
+            $objResponse->fecha_entrega         = $data->ConsultarGuiaResult->FecEst;
+            $objResponse->nombre_destino        = $data->ConsultarGuiaResult->CiuDes;            
+            $objResponse->detalle_estados       = $data->ConsultarGuiaResult->Mov->InformacionMov??[];
+        }
+        
+        echo json_encode([
+            'status'  	 => false,
+            'message'    => array($objResponse)
+        ]);
+        return;
     }
 
     function cotizarPedido($parametros){
 
-        $coordinadora = $this->getWS();
 
-        $item_detalle[] = (object)array(
-            "ubl"                   => "2",
-            "alto"                  => (float)$parametros['alto'],
-            "ancho"                 => (float)$parametros['ancho'],
-            "largo"                 => (float)$parametros['largo'],
-            "peso"                  => (float)$parametros['peso'],
-            "unidades"              => (float)1,
-        );
+        if($parametros['transportadora'] == 1){
 
-        $params = array(
-            'nit'               => self::NIT,
-            'div'               => '01',
-            'cuenta'            => '2',
-            'producto'          => '0',
-            'origen'            => $parametros['cod_mpio_origen'],
-            'destino'           => $parametros['municipio_destinatario'],
-            'valoracion'        => (float)$parametros['valor_declarado'],
-            'nivel_servicio'    =>  array(
-                "item"  => ''
-            ),
-            'detalle'           => $item_detalle
-        );
+            $coordinadora = $this->getWS();
 
-        return  $coordinadora->Cotizador_cotizar($params);
+            $item_detalle[] = (object)array(
+                "ubl"                   => "2",
+                "alto"                  => (float)$parametros['alto'],
+                "ancho"                 => (float)$parametros['ancho'],
+                "largo"                 => (float)$parametros['largo'],
+                "peso"                  => (float)$parametros['peso'],
+                "unidades"              => (float)1,
+            );
+
+            $params = array(
+                'nit'               => self::NIT,
+                'div'               => '01',
+                'cuenta'            => '2',
+                'producto'          => '0',
+                'origen'            => $parametros['cod_mpio_origen'],
+                'destino'           => $parametros['municipio_destinatario'],
+                'valoracion'        => (float)$parametros['valor_declarado'],
+                'nivel_servicio'    =>  array(
+                    "item"  => ''
+                ),
+                'detalle'           => $item_detalle
+            );
+
+            return  $coordinadora->Cotizador_cotizar($params);
+
+        }elseif($parametros['transportadora'] == 2){
+
+            $params = [
+                'IdProducto'          => 2,
+                'NumeroPiezas'        => 1,
+                'Piezas'              =>
+                    [
+                        [
+                            'Peso'  => (float)$parametros['peso'] < 3 ? 3 : (float)$parametros['peso'],
+                            'Largo' => (float)$parametros['largo'],
+                            'Ancho' => (float)$parametros['ancho'],
+                            'Alto'  => (float)$parametros['alto'],
+                        ]
+                    ],
+                'ValorDeclarado'      => (float)$parametros['valor_declarado'],
+                'IdDaneCiudadOrigen'  => $parametros['cod_mpio_origen'],
+                'IdDaneCiudadDestino' => $parametros['municipio_destinatario'],
+                'EnvioConCobro'       => true,
+                'FormaPago'           => 2,
+                'TiempoEntrega'       => 1,
+                'MedioTransporte'     => 1,
+                'NumRecaudo'          => 1
+            ];
+
+            $servientrega = $this->getWSserviEntrega();
+            $data = $servientrega->liquidation($params);
+
+            $objresponse = new stdClass();
+
+            if(is_object($data)){
+                $objresponse->dias_entrega = "NO APLICA";
+                $objresponse->flete_total = $data->ValorTotal;
+                return $objresponse;
+            }
+
+            return $data;
+
+        }
+        
     }
 
     function guetGuiasSinLiquidarCuenta(){
@@ -549,41 +836,69 @@ class Pedidos extends CI_Controller {
 
         $parametros = $this->input->post();
 
-        if(!isset($parametros['codigo_remision'])){
+        if(!isset($parametros['codigo_remision'],$parametros['id_transportadora'])){
             echo json_encode([
                 'status'  	 => false,
-                'message'    => 'El codigo de la guia no es valido'
+                'message'    => 'El codigo de la guia o transportadora no es valido'
             ]);
             return;
         }
-        
-        $coordinadora = $this->getWS();
-        $response = $coordinadora->Guias_anularGuia(["codigo_remision" => $parametros['codigo_remision']]);
 
-        if($response !== true){
+        if($parametros['id_transportadora'] == 1){
+
+            $coordinadora = $this->getWS();
+            $response = $coordinadora->Guias_anularGuia(["codigo_remision" => $parametros['codigo_remision']]);
+
+            if($response !== true){
+
+                $responseDB = $this->mpedidos->cambarEstadoGuia($parametros['codigo_remision'],1,self::ESTADO_ANULADO);
+
+                echo json_encode([
+                    'status'  	 => false,
+                    'message'    => $response
+                ]);
+                return;
+            }
 
             $responseDB = $this->mpedidos->cambarEstadoGuia($parametros['codigo_remision'],1,self::ESTADO_ANULADO);
 
-            echo json_encode([
-                'status'  	 => false,
-                'message'    => $response
-            ]);
-            return;
-        }
+            if($responseDB){
+                echo json_encode([
+                    'status'  	 => true,
+                    'message'    => "El codigo de remision <b>".$parametros['codigo_remision']."</b> fue anulado de forma correcta "
+                ]);
+            }else{
+                echo json_encode([
+                    'status'  	 => true,
+                    'message'    => "La transportadora anulo el codigo de remision <b>".$parametros['codigo_remision']."</b> pero nuestro sistema no pudo atulizar el registro<br><b>POR FAVOR CONTACTE A SOPORTE</b>"
+                ]);
+            }
 
-        $responseDB = $this->mpedidos->cambarEstadoGuia($parametros['codigo_remision'],1,self::ESTADO_ANULADO);
+        }elseif($parametros['id_transportadora'] == 2){
+            
+            $params = [
+                'num_Guia' => $parametros['codigo_remision'],
+                'num_GuiaFinal' => $parametros['codigo_remision']
+            ];
 
-        if($responseDB){
-            echo json_encode([
-                'status'  	 => true,
-                'message'    => "El codigo de remision <b>".$parametros['codigo_remision']."</b> fue anulado de forma correcta "
-            ]);
-        }else{
-            echo json_encode([
-                'status'  	 => true,
-                'message'    => "La transportadora anulo el codigo de remision <b>".$parametros['codigo_remision']."</b> pero nuestro sistema no pudo atulizar el registro<br><b>POR FAVOR CONTACTE A SOPORTE</b>"
-            ]);
+            $servientrega = $this->getWSserviEntrega();
+            $data = $servientrega->AnularGuias($params);
+
+            $responseDB = $this->mpedidos->cambarEstadoGuia($parametros['codigo_remision'],1,self::ESTADO_ANULADO);
+
+            if($responseDB){
+                echo json_encode([
+                    'status'  	 => true,
+                    'message'    => "El codigo de remision <b>".$parametros['codigo_remision']."</b> fue anulado de forma correcta "
+                ]);
+            }else{
+                echo json_encode([
+                    'status'  	 => true,
+                    'message'    => "La transportadora anulo el codigo de remision <b>".$parametros['codigo_remision']."</b> pero nuestro sistema no pudo atulizar el registro<br><b>POR FAVOR CONTACTE A SOPORTE</b>"
+                ]);
+            }   
         }
+        
     }
 
     function abrirEditarPedido(){
